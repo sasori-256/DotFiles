@@ -1,7 +1,8 @@
 -- Keymaps are automatically loaded on the VeryLazy event
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
-local keymaps = vim.keymaps
+
+local keymap = vim.keymap
 local opts = { noremap = true, silent = true }
 
 -- Increment/decrement
@@ -18,24 +19,24 @@ keymap.set("n", "<C-a>", "gg<S-v>G")
 keymap.set("n", "<C-m>", "<C-i>", opts)
 
 --New tab
-keymap.set("n", "<s-t>e", ":tabledit", opts)
+keymap.set("n", "<s-t>e", ":tabedit<Return>", opts)
 keymap.set("n", "<tab>", ":tabnext<Return>", opts)
 keymap.set("n", "<s-tab>", ":tabprev<Return>", opts)
 
 --Split window
-keymap.set("n", "<C-w><C-s>", ":split<Return>", opts)
-keymap.set("n", "<C-w><C-v>", ":vsplit<Return>", opts)
+keymap.set("n", "w<C-s>", ":split<Return>", opts)
+keymap.set("n", "w<C-v>", ":vsplit<Return>", opts)
 --Move windows
-keymap.set("n", "<C.w>n", "<C-w>h", opts)
-keymap.set("n", "<C-w>t", "<C-w>j", opts)
-keymap.set("n", "<C-w>s", "<C-w>k", opts)
-keymap.set("n", "<C-w>k", "<C-w>l", opts)
+keymap.set("n", "wn", "<C-w>h", opts)
+keymap.set("n", "wt", "<C-w>j", opts)
+keymap.set("n", "ws", "<C-w>k", opts)
+keymap.set("n", "wk", "<C-w>l", opts)
 
 --Resizo window
-keymap.set("n", "<C-w><left>", "<C-w><")
-keymap.set("n", "<C-w><left>", "<C-w><")
-keymap.set("n", "<C-w><up>", "<C-w>+")
-keymap.set("n", "<C-w><down>", "<C-w>-")
+keymap.set("n", "w<Left>", "<C-w>>")
+keymap.set("n", "w<Right>", "<C-w><")
+keymap.set("n", "w<Up>", "<C-w>+")
+keymap.set("n", "w<Down>", "<C-w>-")
 
 --Diagnostic
 keymap.set("n", "<C-j>", function()
@@ -43,10 +44,16 @@ keymap.set("n", "<C-j>", function()
 end, opts)
 
 --Set Tomisuke
-keymap.set("n", "N", "Nzz", opts)
-keymap.set("n", "K", "nzz", opts)
-keymap.set("n", "n", "h", opts)
-keymap.set("n", "t", "j", opts)
-keymap.set("n", "s", "k", opts)
-keymap.set("n", "k", "l", opts)
-keyamp.set("i", "tt", "<Esc>", opts)
+keymap.set("n", "H", "Nzz", opts)
+keymap.set("n", "h", "nzz", opts)
+keymap.set({ "n", "v" }, "n", "h", opts)
+keymap.set({ "n", "v" }, "t", "j", opts)
+keymap.set({ "n", "v" }, "s", "k", opts)
+keymap.set({ "n", "v" }, "k", "l", opts)
+keymap.set("n", "j", "s", opts)
+
+keymap.set("i", "tt", "<Esc>", opts)
+keymap.set("i", "<C-n>", "<Left>", opts)
+keymap.set("i", "<C-t>", "<Down>", opts)
+keymap.set("i", "<C-s>", "<Up>", opts)
+keymap.set("i", "<C-k>", "<Right>", opts)
