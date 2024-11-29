@@ -13,26 +13,26 @@ keymap.set("n", "-", "<C-x>")
 keymap.set("n", "dw", "vb_d")
 
 -- select all
-keymap.set("n", "<C-a>", "gg<S-v>G")
+keymap.set("n", "<C-a>", "gg<S-v>G", opts)
 
 -- Jumplist
 keymap.set("n", "<C-m>", "<C-i>", opts)
 
 --New tab
-keymap.set("n", "<s-t>e", ":tabedit<Return>", opts)
+keymap.set("n", "<Ctrl><tab>", ":tabedit<Return>", opts)
 keymap.set("n", "<tab>", ":tabnext<Return>", opts)
-keymap.set("n", "<s-tab>", ":tabprev<Return>", opts)
+keymap.set("n", "<S-tab>", ":tabprev<Return>", opts)
 
 --Split window
-keymap.set("n", "w<C-s>", ":split<Return>", opts)
-keymap.set("n", "w<C-v>", ":vsplit<Return>", opts)
+keymap.set("n", "<C-w><C-s>", ":split<Return>", opts)
+keymap.set("n", "<C-w><C-v>", ":vsplit<Return>", opts)
 --Move windows
-keymap.set("n", "wn", "<C-w>h", opts)
-keymap.set("n", "wt", "<C-w>j", opts)
-keymap.set("n", "ws", "<C-w>k", opts)
-keymap.set("n", "wk", "<C-w>l", opts)
+keymap.set("n", "<A-w><A-n>", "<C-w>h", opts)
+keymap.set("n", "<A-w><A-t>", "<C-w>j", opts)
+keymap.set("n", "<A-w><A-s>", "<C-w>k", opts)
+keymap.set("n", "<A-w><A-k>", "<C-w>l", opts)
 
---Resizo window
+--Resize window
 keymap.set("n", "w<Left>", "<C-w>>")
 keymap.set("n", "w<Right>", "<C-w><")
 keymap.set("n", "w<Up>", "<C-w>+")
@@ -52,8 +52,8 @@ keymap.set({ "n", "v" }, "s", "k", opts)
 keymap.set({ "n", "v" }, "k", "l", opts)
 keymap.set("n", "j", "s", opts)
 
-keymap.set("i", "tt", "<Esc>", opts)
-keymap.set("i", "<C-n>", "<Left>", opts)
-keymap.set("i", "<C-t>", "<Down>", opts)
-keymap.set("i", "<C-s>", "<Up>", opts)
-keymap.set("i", "<C-k>", "<Right>", opts)
+keymap.set("i", "tst", "<Esc>", opts)
+keymap.set("i", "<A-n>", "<Left>", opts)
+keymap.set("i", "<A-t>", "<Down>", opts)
+keymap.set("i", "<A-s>", "<Up>", opts)
+keymap.set("i", "<A-k>", "<Right>", opts)

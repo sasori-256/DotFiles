@@ -2,13 +2,13 @@ local mappings = require("telescope.mappings")
 return {
   "telescope.nvim",
   dependencies = {
-    "nvim-telescope/telescope-file-browser.nvim",
     {
       "nvim-telescope/telescope-fzf-native.nvim",
-      build = have_make and "make"
-        or "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
-      enabled = have_make or have_cmake,
+      build = "make",
+  --       or "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
+  --     enabled = have_make or have_cmake,
     },
+    "nvim-telescope/telescope-file-browser.nvim",
   },
   keys = {
     {
