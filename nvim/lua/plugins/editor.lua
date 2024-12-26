@@ -4,9 +4,9 @@ return {
   dependencies = {
     {
       "nvim-telescope/telescope-fzf-native.nvim",
-      build = "make",
-  --       or "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
-  --     enabled = have_make or have_cmake,
+      run = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release &&\
+        cmake --build build --config Release &&\
+        cmake --install build --prefix build",
     },
     "nvim-telescope/telescope-file-browser.nvim",
   },
@@ -131,12 +131,12 @@ return {
               vim.cmd("startinsert")
             end,
             ["<C-u>"] = function(prompt_bunfnr)
-              for i = 1, 10 do
+              for _ = 1, 10 do
                 actions.move_selection_previous(prompt_bunfnr)
               end
             end,
             ["<C-d>"] = function(prompt_bunfnr)
-              for i = 1, 10 do
+              for _ = 1, 10 do
                 actions.move_selection_next(prompt_bunfnr)
               end
             end,
