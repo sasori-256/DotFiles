@@ -2,22 +2,36 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 
-local discipline = require("craftzdog.discipline")
-
-discipline.cowboy()
-
 local keymap = vim.keymap
 local opts = { noremap = true, silent = true }
 
+-- Turn off no-comandline exit
+keymap.set("n", "ZZ", "<NOP>")
+keymap.set("n", "ZQ", "<NOP>")
+
 -- Increment/decrement
-keymap.set("n", "+", "<C-a>")
-keymap.set("n", "-", "<C-x>")
+keymap.set("n", "+", "<C-a>", opts)
+keymap.set("n", "-", "<C-x>", opts)
+
+-- Scroll
+keymap.set("n", "<Up>", "<C-y>", opts)
+keymap.set("n", "<Down>", "<C-e>", opts)
 
 -- Delete a word backwards
 keymap.set("n", "dw", 'vb"_d')
 
--- select all
+-- Select all
 keymap.set("n", "<C-a>", "gg<S-v>G", opts)
+
+-- Yank following sentence in a row
+keymap.set("n", "Y", "y$")
+
+-- Redo
+keymap.set("n", "U", "<C-r>", opts)
+
+-- Delete without overwrite clipboard
+keymap.set("n", "x", '"_x', opts)
+keymap.set("n", "X", '"_X', opts)
 
 -- Jumplist
 keymap.set("n", "<C-m>", "<C-i>", opts)
@@ -30,7 +44,8 @@ keymap.set("n", "<S-tab>", ":tabprev<Return>", opts)
 --Split window
 keymap.set("n", "<C-w><C-s>", ":split<Return>", opts)
 keymap.set("n", "<C-w><C-v>", ":vsplit<Return>", opts)
---Move windows
+
+--Move splited windows
 keymap.set("n", "<A-w><A-n>", "<C-w>h", opts)
 keymap.set("n", "<A-w><A-t>", "<C-w>j", opts)
 keymap.set("n", "<A-w><A-s>", "<C-w>k", opts)
@@ -54,9 +69,9 @@ keymap.set({ "n", "v" }, "n", "h", opts)
 keymap.set({ "n", "v" }, "t", "gj", opts)
 keymap.set({ "n", "v" }, "s", "gk", opts)
 keymap.set({ "n", "v" }, "k", "l", opts)
-keymap.set("n", "j", "s", opts)
+keymap.set("n", "j", '"_s', opts)
 
-keymap.set("i", "stt", "<Esc>", opts)
+keymap.set("i", "nh", "<Esc>", opts)
 keymap.set("i", "<A-n>", "<Left>", opts)
 keymap.set("i", "<A-t>", "<Down>", opts)
 keymap.set("i", "<A-s>", "<Up>", opts)

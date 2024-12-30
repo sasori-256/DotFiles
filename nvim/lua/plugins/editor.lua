@@ -1,153 +1,124 @@
-local mappings = require("telescope.mappings")
 return {
-  "telescope.nvim",
-  dependencies = {
-    {
-      "nvim-telescope/telescope-fzf-native.nvim",
-      run = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release &&\
-        cmake --build build --config Release &&\
-        cmake --install build --prefix build",
-    },
-    "nvim-telescope/telescope-file-browser.nvim",
-  },
+  "nvim-neo-tree/neo-tree.nvim",
+  cmd = "Neotree",
   keys = {
     {
-      "<leader>fP",
+      "<Leader>fe",
       function()
-        require("telescope.builtin").find_files({
-          cwd = require("lazy.core.config").options.root,
-        })
+        require("neo-tree.command").execute({ toggle = true, dir = LazyVim.root() })
       end,
-      desc = "Find Plugin File",
+      desc = "Explorer NeoTree (Root Dir)",
     },
     {
-      ";f",
+      "<Leader>fE",
       function()
-        local builtin = require("telescope.builtin")
-        builtin.find_files({
-          no_ignore = false,
-          hidden = true,
-        })
+        require("neo-tree.command").execute({ toggle = true, dir = vim.uv.cwd() })
       end,
+      desc = "Explorer NeoTree (cwd)",
+    },
+    { "<Leader>e", "<Leader>fe", desc = "Explorer NeoTree (Root Dir)", remap = true },
+    { "<Leader>E", "<Leader>fE", desc = "Explorer NeoTree (cwd)", remap = true },
+    {
+      "<Leader>ge",
+      function()
+        require("neo-tree.command").execute({ source = "git_status", toggle = true })
+      end,
+      desc = "Git Explorer",
     },
     {
-      ";r",
+      "<Leader>be",
       function()
-        local builtin = require("telescope.builtin")
-        builtin.live_grep()
+        require("neo-tree.command").execute({ source = "buffers", toggle = true })
       end,
+      desc = "Buffer Explorer",
     },
-    {
-      "\\\\",
-      function()
-        local builtin = require("telescope.builtin")
-        builtin.buffers()
-      end,
-    },
-    {
-      ";t",
-      function()
-        local builtin = require("telescope.builtin")
-        builtin.help_tags()
-      end,
-    },
-    {
-      ";;",
-      function()
-        local builtin = require("telescope.builtin")
-        builtin.resume()
-      end,
-    },
-    {
-      ";e",
-      function()
-        local builtin = require("telescope.builtin")
-        builtin.diagnostics()
-      end,
-    },
-    {
-      ";s",
-      function()
-        local builtin = require("telescope.builtin")
-        builtin.treesitter()
-      end,
-    },
-    {
-      "sf",
-      function()
-        local telescope = require("telescope")
-        local function telescope_buffer_dir()
-          return vim.fn.expand("%:p:h")
+  },
+  deactivate = function()
+    vim.cmd([[Neotree close]])
+  end,
+  init = function()
+    -- FIX: use `autocmd` for lazy-loading neo-tree instead of directly requiring it,
+    -- because `cwd` is not set up properly.
+    vim.api.nvim_create_autocmd("BufEnter", {
+      group = vim.api.nvim_create_augroup("Neotree_start_directory", { clear = true }),
+      desc = "Start Neo-tree with directory",
+      once = true,
+      callback = function()
+        if package.loaded["neo-tree"] then
+          return
+        else
+          local stats = vim.uv.fs_stat(vim.fn.argv(0))
+          if stats and stats.type == "directory" then
+            require("neo-tree")
+          end
         end
-
-        telescope.extensions.file_browser.file_browser({
-          path = "%:p:h",
-          cwd = telescope_buffer_dir(),
-          respect_gitignore = false,
-          hidden = true,
-          grouped = true,
-          previewer = false,
-          initial_mode = "normal",
-          layout_config = { height = 40 },
-        })
       end,
+    })
+  end,
+  opts = {
+    sources = { "filesystem", "buffers", "git_status" },
+    open_files_do_not_replace_types = { "terminal", "Trouble", "trouble", "qf", "Outline" },
+    filesystem = {
+      bind_to_cwd = false,
+      follow_current_file = { enabled = true },
+      use_libuv_file_watcher = true,
+    },
+    window = {
+      mappings = {
+        ["l"] = "open",
+        ["h"] = "close_node",
+        ["<space>"] = "none",
+        ["Y"] = {
+          function(state)
+            local node = state.tree:get_node()
+            local path = node:get_id()
+            vim.fn.setreg("+", path, "c")
+          end,
+          desc = "Copy Path to Clipboard",
+        },
+        ["O"] = {
+          function(state)
+            require("lazy.util").open(state.tree:get_node().path, { system = true })
+          end,
+          desc = "Open with System Application",
+        },
+        ["P"] = { "toggle_preview", config = { use_float = false } },
+      },
+    },
+    default_component_configs = {
+      indent = {
+        with_expanders = true, -- if nil and file nesting is enabled, will enable expanders
+        expander_collapsed = "",
+        expander_expanded = "",
+        expander_highlight = "NeoTreeExpander",
+      },
+      git_status = {
+        symbols = {
+          unstaged = "󰄱",
+          staged = "󰱒",
+        },
+      },
     },
   },
   config = function(_, opts)
-    local telescope = require("telescope")
-    local actions = require("telescope.actions")
-    local fb_actions = require("telescope").extensions.file_browser.actions
+    local function on_move(data)
+      Snacks.rename.on_rename_file(data.source, data.destination)
+    end
 
-    opts.defaults = vim.tbl_deep_extend("force", opts.defaults or {}, {
-      wrap_results = true,
-      layout_strategy = "horizontal",
-      layout_config = { prompt_position = "top" },
-      sorting_strategy = "ascending",
-      winblend = 0,
-      mappings = {
-        n = {},
-      },
+    local events = require("neo-tree.events")
+    opts.event_handlers = opts.event_handlers or {}
+    vim.list_extend(opts.event_handlers, {
+      { event = events.FILE_MOVED, handler = on_move },
+      { event = events.FILE_RENAMED, handler = on_move },
     })
-    opts.pickers = {
-      diagnostics = {
-        theme = "ivy",
-        initial_mode = "normal",
-        layout_config = {
-          preview_cutoff = 9999,
-        },
-      },
-    }
-    opts.extensions = {
-      file_browser = {
-        theme = "dropdown",
-        -- disables netw and use telescope-file-browser in its place
-        hijack_netw = true,
-        mappings = {
-          ["n"] = {
-            -- your custom normal mode mappings
-            ["N"] = fb_actions.create,
-            ["n"] = fb_actions.goto_parent_dir,
-            ["/"] = function()
-              vim.cmd("startinsert")
-            end,
-            ["<C-u>"] = function(prompt_bunfnr)
-              for _ = 1, 10 do
-                actions.move_selection_previous(prompt_bunfnr)
-              end
-            end,
-            ["<C-d>"] = function(prompt_bunfnr)
-              for _ = 1, 10 do
-                actions.move_selection_next(prompt_bunfnr)
-              end
-            end,
-            ["<PageUp>"] = actions.preview_scrolling_up,
-            ["<PageDown"] = actions.preview_scrolling_down,
-          },
-        },
-      },
-    }
-    telescope.setup(opts)
-    require("telescope").load_extension("fzf")
-    require("telescope").load_extension("file_browser")
+    require("neo-tree").setup(opts)
+    vim.api.nvim_create_autocmd("TermClose", {
+      pattern = "*lazygit",
+      callback = function()
+        if package.loaded["neo-tree.sources.git_status"] then
+          require("neo-tree.sources.git_status").refresh()
+        end
+      end,
+    })
   end,
 }
