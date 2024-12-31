@@ -8,7 +8,7 @@
 local opt = vim.opt
 
 vim.g.mapleader = " "
-vim.g.lazyvim_picker = "telescope"
+-- vim.g.lazyvim_picker = "telescope"
 vim.g.lazyvim_picker = "fzf"
 
 opt.encoding = "utf-8"
