@@ -1,21 +1,86 @@
 format = """
+[](fg:#8caaee)\
+$os\
+[](fg:#8caaee bg:#414559)\
 $directory\
-[](fg:#88C0D0 bg:#394260)\
 $git_branch\
 $git_status\
-[](fg:#394260)\
+[](fg:#414559)\
 $fill\
-[](fg:#212736)\
-$nodejs\
-$rust\
+[](fg:#414559)\
+$buf\
+$conda\
+$meson\
+$spack\
+$aws\
+$gcloud\
+$openstack\
+$azure\
+$crystal\
+[](fg:#8caaee bg:#414559)\
+$package\
+[](fg:#99d1db bg:#8caaee)\
+$status\
+[ ](fg:#99d1db)\
+\n\
+$username\
+$character\
+"""
+
+right_format = """
+[](fg:#414559)\
+$singularity\
+$kubernetes\
+$pijul_channel\
+$docker_context\
+$c\
+$cmake\
+$cobol\
+$daml\
+$dart\
+$deno\
+$dotnet\
+$elixir\
+$elm\
+$erlang\
+$fennel\
 $golang\
+$guix_shell\
+$haskell\
+$haxe\
+$helm\
+$java\
+$julia\
+$kotlin\
+$gradle\
+$lua\
+$nim\
+$nodejs\
+$ocaml\
+$opa\
+$perl\
 $php\
-[](fg:#1d2230 bg:#212736)\
+$pulumi\
+$purescript\
+$python\
+$raku\
+$rlang\
+$red\
+$ruby\
+$rust\
+$scala\
+$solidity\
+$swift\
+$terraform\
+$vlang\
+$vagrant\
+$zig\
+$custom\
+$cmd_duration\
+[](fg:#8caaee bg:#414559)\
 $time\
-[](fg:#88C0D0 bg:#1d2230)\
-$os\
-[](fg:#88C0D0)\
-\n$character"""
+[ ](fg:#8caaee)\
+"""
 
 # コマンドラインに1行分のスペースを入れない
 add_newline = false
@@ -25,22 +90,24 @@ add_newline = false
 symbol = ' '
 
 [os]
-format = "[$symbol]($style)"
-style = "fg:#2E3440 bg:#88C0D0 bold"
+format = "[$symbol ]($style)"
+style = "fg:#303446 bg:#8caaee bold"
 disabled = false
 
 [os.symbols]
 Macos = "  " # nf-fa-apple
 Ubuntu = "  " # nf-linux-ubuntu
 Debian = "  " # nf-linux-debian
-Arch = "" # nf-linux-archlinux
+Arch = "  " # nf-linux-archlinux
 
 [directory]
-style = "fg:#2E3440 bg:#88C0D0 bold"
-format = "[ $path ]($style)"
+style = "fg:#8caaee bg:#414559 bold"
+format = "[ $symbol $path ]($style)"
 truncation_length = 10
 truncate_to_repo = false
 truncation_symbol = "…/"
+home_symbol = "󰠦 "
+read_only = "󰌾 "
 
 [directory.substitutions]
 "Documents" = "󰈙 "
@@ -48,42 +115,134 @@ truncation_symbol = "…/"
 "Music" = " "
 "Pictures" = " "
 
+[character]
+success_symbol = "[❯](#a6d189)"
+error_symbol = "[❯](#e78284)"
+
+[cmd_duration]
+min_time = 0
+show_milliseconds = false
+format = '[ $duration ](fg:#8caaee bg:#414559)'
+
+[package]
+format = 'via [🎁 $symbol $version](fg:#8caaee bg:#414559 bold)'
+
+[time]
+disabled = false
+time_format = "%R" # Hour:Minute Format
+style = "fg:#303446 bg:#8caaee bold"
+format = '[  $time ]($style)'
+
+[username]
+style_user = '#99d1db bold'
+style_root = '#e78284 bold'
+format = '[ $user]($style) '
+disabled = false
+show_always = true
+aliases = { "corpuser034g" = "matchai" }
+
+
+# 各言語の設定
 [aws]
-disabled = true
+style = "fg:#8caaee bg:#414559"
+format = '[[ $symbol ](fg:#e5c890 bg:#414559)($profile $region) ]($style)'
+
+[c]
+symbol = ""  # nf-custom-c
+style = "fg:#8caaee bg:#414559"
+format = '[[ $symbol ](fg:#e5c890 bg:#414559)($version) ]($style)'
+
+[conda]
+symbol = ""  # nf-dev-anaconda
+style = "fg:#8caaee bg:#414559"
+format = '[[ $symbol ](fg:#e5c890 bg:#414559)($version) ]($style)'
+
+[dart]
+symbol = " "  # nf-seti-dart
+style = "fg:#8caaee bg:#414559"
+format = '[[ $symbol ](fg:#e5c890 bg:#414559)($version) ]($style)'
+
+[docker_context]
+style = "fg:#8caaee bg:#414559"
+format = '[[ $symbol ](fg:#e5c890 bg:#414559)($context) ]($style)'
+
 [gcloud]
 disabled = true
 
 [git_branch]
 symbol = ""
-style = "bg:#394260"
-format = '[[ $symbol $branch ](fg:#769ff0 bg:#394260)]($style)'
+style = "bg:#414559"
+format = '[[ $symbol $branch ](fg:#8caaee bg:#414559)]($style)'
 
 [git_status]
-style = "bg:#394260"
-format = '[[($all_status$ahead_behind )](fg:#769ff0 bg:#394260)]($style)'
+style = "bg:#414559"
+format = '[[($all_status $ahead_behind)](fg:#8caaee bg:#414559)]($style)'
+
+[java]
+symbol = " "
+style = "fg:#8caaee bg:#414559"
+format = '[[ $symbol ](fg:#e5c890 bg:#414559)($version) ]($style)'
+
+[lua]
+symbol = "󰢱"
+style = "fg:#8caaee bg:#414559"
+format = '[[ $symbol ](fg:#e5c890 bg:#414559)($version) ]($style)'
 
 [nodejs]
 symbol = ""
-style = "bg:#212736"
-format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+style = "fg:#8caaee bg:#414559"
+format = '[[ $symbol ](fg:#e5c890 bg:#414559)($version) ]($style)'
+
+[ruby]
+symbol = ""  # nf-seti-ruby
+style = "fg:#8caaee bg:#414559"
+format = '[[ $symbol ](fg:#e5c890 bg:#414559)($version) ]($style)'
 
 [rust]
 symbol = ""
-style = "bg:#212736"
-format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+style = "fg:#8caaee bg:#414559"
+format = '[[ $symbol ](fg:#e5c890 bg:#414559)($version) ]($style)'
 
 [golang]
 symbol = ""
-style = "bg:#212736"
-format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+style = "fg:#8caaee bg:#414559"
+format = '[[ $symbol ](fg:#e5c890 bg:#414559)($version) ]($style)'
 
 [php]
 symbol = ""
-style = "bg:#212736"
-format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+style = "fg:#8caaee bg:#414559"
+format = '[[ $symbol ](fg:#e5c890 bg:#414559)($version) ]($style)'
 
-[time]
-disabled = false
-time_format = "%R" # Hour:Minute Format
-style = "bg:#1d2230"
-format = '[[  $time ](fg:#a0a9cb bg:#1d2230)]($style)'
+[python]
+symbol = " "
+style = "fg:#8caaee bg:#414559"
+python_binary = ["python3", "python"]
+format = '[[ $symbol ](fg:#e5c890 bg:#414559)($version) ]($style)'
+
+# catppuccin-frappe color schemes
+  # rosewater = "#f2d5cf"
+  # flamingo =  "#eebebe"
+  # pink =      "#f4b8e4"
+  # mauve =     "#ca9ee6"
+  # red =       "#e78284"
+  # maroon =    "#ea999c"
+  # peach =     "#ef9f76"
+  # yellow =    "#e5c890"
+  # green =     "#a6d189"
+  # teal =      "#81c8be"
+  # sky =       "#99d1db"
+  # sapphire =  "#85c1dc"
+  # blue =      "#8caaee"
+  # lavender =  "#babbf1"
+  # text =      "#c6d0f5"
+  # subtext1 =  "#b5bfe2"
+  # subtext0 =  "#a5adce"
+  # overlay2 =  "#949cbb"
+  # overlay1 =  "#838ba7"
+  # overlay0 =  "#737994"
+  # surface2 =  "#626880"
+  # surface1 =  "#51576d"
+  # surface0 =  "#414559"
+  # base =      "#303446"
+  # mantle =    "#292c3c"
+  # crust =     "#232634"
