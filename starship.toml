@@ -5,29 +5,9 @@ $os\
 $directory\
 $git_branch\
 $git_status\
+$cmd_duration\
 [](fg:#414559)\
 $fill\
-[](fg:#414559)\
-$buf\
-$conda\
-$meson\
-$spack\
-$aws\
-$gcloud\
-$openstack\
-$azure\
-$crystal\
-[](fg:#8caaee bg:#414559)\
-$package\
-[](fg:#99d1db bg:#8caaee)\
-$status\
-[ ](fg:#99d1db)\
-\n\
-$username\
-$character\
-"""
-
-right_format = """
 [](fg:#414559)\
 $singularity\
 $kubernetes\
@@ -76,10 +56,23 @@ $vlang\
 $vagrant\
 $zig\
 $custom\
-$cmd_duration\
+$buf\
+$conda\
+$meson\
+$spack\
+$aws\
+$gcloud\
+$openstack\
+$azure\
+$crystal\
+$package\
+$status\
 [](fg:#8caaee bg:#414559)\
 $time\
 [ ](fg:#8caaee)\
+\n\
+$username\
+$character\
 """
 
 # コマンドラインに1行分のスペースを入れない
@@ -95,6 +88,7 @@ style = "fg:#303446 bg:#8caaee bold"
 disabled = false
 
 [os.symbols]
+Windows = "  " # nf-dev-windows
 Macos = "  " # nf-fa-apple
 Ubuntu = "  " # nf-linux-ubuntu
 Debian = "  " # nf-linux-debian
@@ -122,7 +116,7 @@ error_symbol = "[❯](#e78284)"
 [cmd_duration]
 min_time = 0
 show_milliseconds = false
-format = '[ $duration ](fg:#8caaee bg:#414559)'
+format = '[ $duration ](fg:#8caaee bg:#414559)'
 
 [package]
 format = 'via [🎁 $symbol $version](fg:#8caaee bg:#414559 bold)'
