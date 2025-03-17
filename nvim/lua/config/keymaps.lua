@@ -63,6 +63,13 @@ keymap.set("n", "<C-j>", function()
 end, opts)
 
 --Set Tomisuke
+local keymap_mode = "Tomisuke"
+if keymap_mode == "Tomisuke" then
+  keymap.set("n", "<A-n>", "<C-w>h", opts)
+  keymap.set("n", "<A-t>", "<C-w>j", opts)
+  keymap.set("n", "<A-s>", "<C-w>k", opts)
+  keymap.set("n", "<A-k>", "<C-w>l", opts)
+end
 keymap.set("n", "H", "Nzz", opts)
 keymap.set("n", "h", "nzz", opts)
 keymap.set({ "n", "v" }, "n", "h", opts)
