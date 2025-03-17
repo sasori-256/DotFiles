@@ -31,10 +31,11 @@ return {
       native_lsp = {
         enabled = true,
         underlines = {
-          errors = { "undercurl" },
-          hints = { "undercurl" },
-          warnings = { "undercurl" },
-          information = { "undercurl" },
+          errors = { "underline" },
+          hints = { "underline" },
+          warnings = { "underline" },
+          information = { "underline" },
+          ok = { "underline" },
         },
       },
       navic = { enabled = true, custom_bg = "lualine" },
@@ -54,12 +55,20 @@ return {
   specs = {
     {
       "akinsho/bufferline.nvim",
+      dependencies = "nvim-web-devicons",
       optional = true,
       opts = function(_, opts)
         if (vim.g.colors_name or ""):find("catppuccin") then
           opts.highlights = require("catppuccin.groups.integrations.bufferline").get()
         end
       end,
+      options = {
+        hover = {
+          enabled = true,
+          delay = 200,
+          reveal = { "close" },
+        },
+      },
     },
   },
 }

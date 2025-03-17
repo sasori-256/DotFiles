@@ -37,9 +37,9 @@ keymap.set("n", "X", '"_X', opts)
 keymap.set("n", "<C-m>", "<C-i>", opts)
 
 -- New tab
-keymap.set("n", "<tab>e", ":tabedit<Return>", opts)
-keymap.set("n", "<tab>", ":tabnext<Return>", opts)
-keymap.set("n", "<S-tab>", ":tabprev<Return>", opts)
+-- keymap.set("n", "<tab>e", ":tabedit<Return>", opts)
+-- keymap.set("n", "<tab>", ":tabnext<Return>", opts)
+-- keymap.set("n", "<S-tab>", ":tabprev<Return>", opts)
 
 --Split window
 keymap.set("n", "<C-w><C-s>", ":split<Return>", opts)
@@ -71,7 +71,7 @@ keymap.set({ "n", "v" }, "s", "gk", opts)
 keymap.set({ "n", "v" }, "k", "l", opts)
 keymap.set("n", "j", '"_s', opts)
 
-keymap.set("i", "nh", "<Esc>", opts)
+keymap.set("i", "hh", "<Esc>", opts)
 keymap.set("i", "<A-n>", "<Left>", opts)
 keymap.set("i", "<A-t>", "<Down>", opts)
 keymap.set("i", "<A-s>", "<Up>", opts)
