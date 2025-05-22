@@ -11,6 +11,7 @@ return {
         "tailwindcss-language-server",
         "css-lsp",
         "dart-debug-adapter",
+        "tinymist",
       })
     end,
   },
