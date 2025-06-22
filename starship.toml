@@ -77,6 +77,7 @@ $character\
 
 # コマンドラインに1行分のスペースを入れない
 add_newline = false
+command_timeout = 1200
 
 # left_promptとright_promptの間を何で埋めるか設定
 [fill]
@@ -147,9 +148,10 @@ style = "fg:#8caaee bg:#414559"
 format = '[[ $symbol ](fg:#e5c890 bg:#414559)($version) ]($style)'
 
 [conda]
-symbol = ""                                                        # nf-dev-anaconda
+symbol = ""                                                                     # nf-dev-anaconda
 style = "fg:#8caaee bg:#414559"
-format = '[[ $symbol ](fg:#e5c890 bg:#414559)($version) ]($style)'
+format = '[[ $symbol $environment ](fg:#e5c890 bg:#414559)($version) ]($style)'
+ignore_base = false
 
 [dart]
 symbol = " "                                                       # nf-seti-dart
