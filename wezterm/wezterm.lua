@@ -2,6 +2,7 @@
 local wezterm = require("wezterm")
 -- Pull Nerd  font
 local nerd_font = require("wezterm").font("Moralerspace Neon NF")
+
 -- This table will hold the configuration.
 local config = {}
 
@@ -29,7 +30,7 @@ end
 -- config.default_prog = { 'wsl', '-d', 'Arch' }
 config.color_scheme = "Catppuccin Frappe"
 config.font = nerd_font
-config.font_size = 12.0
+config.font_size = 20.0
 -- config.window_decorations = 'RESIZE'
 -- config.window_frame = {
 --   font = wezterm.font { family = 'Roboto', weight = 'Bold' },
