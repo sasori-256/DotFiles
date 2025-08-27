@@ -14,8 +14,8 @@ keymap.set("n", "+", "<C-a>", opts)
 keymap.set("n", "-", "<C-x>", opts)
 
 -- Scroll
-keymap.set("n", "<Up>", "<C-y>", opts)
-keymap.set("n", "<Down>", "<C-e>", opts)
+-- keymap.set("n", "<Up>", "<C-y>", opts)
+-- keymap.set("n", "<Down>", "<C-e>", opts)
 
 -- Delete a word backwards
 keymap.set("n", "dw", 'vb"_d')
