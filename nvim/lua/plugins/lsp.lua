@@ -8,8 +8,6 @@ return {
         "luacheck",
         "shellcheck",
         "shfmt",
-        "tailwindcss-language-server",
-        "css-lsp",
         "dart-debug-adapter",
         "tinymist",
       })
