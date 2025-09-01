@@ -82,8 +82,8 @@ keymap.set("i", "<A-s>", "<Up>", opts)
 keymap.set("i", "<A-k>", "<Right>", opts)
 
 -- Gemini
-local gemini = require("utils.gemini")
-keymap.set("n", "<leader>ga", gemini.ask, { desc = "Ask Gemini" })
-keymap.set("v", "<leader>ga", gemini.visual_action, { desc = "Ask Gemini about selection" })
-keymap.set("n", "<leader>gc", gemini.chat, { desc = "Chat with Gemini" })
-keymap.set("n", "<leader>gq", ":GeminiChatEnd<CR>", { desc = "Quit Gemini Chat" })
+-- local gemini = require("utils.gemini")
+-- keymap.set("n", "<leader>ga", gemini.ask, { desc = "Ask Gemini" })
+-- keymap.set("v", "<leader>ga", gemini.visual_action, { desc = "Ask Gemini about selection" })
+-- keymap.set("n", "<leader>gc", gemini.chat, { desc = "Chat with Gemini" })
+-- keymap.set("n", "<leader>gq", ":GeminiChatEnd<CR>", { desc = "Quit Gemini Chat" })
