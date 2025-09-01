@@ -20,7 +20,7 @@ return {
     },
   },
 
--- Navic: shows wherein the code structure you are
+  -- Navic: shows wherein the code structure you are
   {
     "SmiteshP/nvim-navic",
     lazy = true,
@@ -32,7 +32,7 @@ return {
         end
       end)
     end,
-    opts = function ()
+    opts = function()
       return {
         separator = " ",
         highlight = true,
@@ -40,7 +40,7 @@ return {
         icons = LazyVim.config.icons.kinds,
         lazy_update_context = true,
       }
-    end
+    end,
   },
 
   -- statusline
@@ -51,11 +51,11 @@ return {
       "nvim-tree/nvim-web-devicons",
     },
     optional = true,
-    opts = function (_, opts)
+    opts = function(_, opts)
       if not vim.g.trouble_lua_lualine then
         table.insert(opts.sections.lualine_c, { "navic", color_correction = "dynamic" })
       end
-    end
+    end,
   },
 
   -- filename

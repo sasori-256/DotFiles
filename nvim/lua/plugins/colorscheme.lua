@@ -55,7 +55,9 @@ return {
   specs = {
     {
       "akinsho/bufferline.nvim",
-      dependencies = "nvim-web-devicons",
+      version = "*",
+      event = "VeryLazy",
+      dependencies = { "nvim-tree/nvim-web-devicons" },
       optional = true,
       opts = function(_, opts)
         if (vim.g.colors_name or ""):find("catppuccin") then
