@@ -1,75 +1,92 @@
 return {
-  {
-    -- Treesitter
-    "nvim-treesitter/nvim-treesitter",
-    build = ":TSUpdate",
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter-textobjects",
-      "nvim-treesitter/playground",
-      "windwp/nvim-ts-autotag",
+  "nvim-treesitter/nvim-treesitter",
+  build = ":TSUpdate",
+  dependencies = {
+    "nvim-treesitter/nvim-treesitter-textobjects",
+  },
+  main = "nvim-treesitter.configs",
+  opts = {
+    ensure_installed = {
+      "bash",
+      "c",
+      "cpp",
+      "css",
+      "html",
+      "javascript",
+      "json",
+      "jsonc",
+      "lua",
+      "luadoc",
+      "luap",
+      "make",
+      "markdown",
+      "markdown_inline",
+      "python",
+      "rust",
+      "scss",
+      "toml",
+      "tsx",
+      "typescript",
+      "vim",
+      "vimdoc",
+      "yaml",
+      "query",
     },
-    main = "nvim-treesitter.configs",
-    install = function()
-      require("nvim-treesitter.install").setup({
-        prefer_git = false,
-        compilers = { "gcc" },
-      })
-    end,
-    opts = {
-      ensure_installed = {
-        "bash",
-        "dart",
-        "fish",
-        "gitignore",
-        "lua",
-        "markdown",
-        "markdown_inline",
-        "query",
-        "sql",
-      },
-      highlight = {
-        enable = true,
-        additional_vim_regex_highlighting = false,
-      },
+    auto_install = true,
+    highlight = {
+      enable = true,
     },
-    config = function(_, opts)
-      require("nvim-treesitter.configs").setup(opts)
-
-      -- MDX
-      vim.filetype.add({
-        extention = {
-          mdx = "mdx",
-        },
-      })
-      vim.treesitter.language.register("markdown", "mdx")
-    end,
+    indent = { enable = true },
   },
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
-    event = "CursorMoved",
-  },
-  {
-    "nvim-treesitter/playground",
-    cmd = "TSPlaygroundToggle",
-  },
-  {
-    "windwp/nvim-ts-autotag",
-    event = "InsertEnter",
+    event = "VeryLazy",
     opts = {
-      filetypes = {
-        "html",
-        "javascript",
-        "typescript",
-        "javascriptreact",
-        "typescriptreact",
-        "svelte",
-        "vue",
-        "tsx",
-        "jsx",
-        "xml",
-        "php",
-        "markdown",
-        "mdx",
+      textobjects = {
+        select = {
+          enable = true,
+          lookahead = true,
+          keymaps = {
+            ["af"] = "@function.outer",
+            ["if"] = "@function.inner",
+            ["ac"] = "@class.outer",
+            ["ic"] = "@class.inner",
+            ["al"] = "@loop.outer",
+            ["il"] = "@loop.inner",
+            ["aa"] = "@parameter.outer",
+            ["ia"] = "@parameter.inner",
+            ["as"] = "@statement.outer",
+          },
+        },
+        move = {
+          enable = true,
+          set_jumps = true,
+          goto_next_start = {
+            ["]m"] = "@function.outer",
+            ["]]"] = "@class.outer",
+          },
+          goto_next_end = {
+            ["]M"] = "@function.outer",
+            ["]["] = "@class.outer",
+          },
+          goto_previous_start = {
+            ["[m"] = "@function.outer",
+            ["[["] = "@class.outer",
+          },
+          goto_previous_end = {
+            ["[M"] = "@function.outer",
+            ["[]"] = "@class.outer",
+          },
+        },
+        swap = {
+          enable = true,
+          swap_next = {
+            ["<leader>a"] = "@parameter.inner",
+          },
+          swap_previous = {
+            ["<leader>A"] = "@parameter.inner",
+          },
+        },
       },
     },
   },
