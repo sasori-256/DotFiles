@@ -32,6 +32,9 @@ vim.g.lazyvim_cmp = "auto"
 -- use that instead of inline suggestions
 vim.g.ai_cmp = true
 
+vim.g.lazyvim_python_lsp = "pyright"
+vim.g.lazyvim_python_ruff = "ruff"
+
 opt.encoding = "utf-8"
 opt.fileencoding = "utf-8"
 opt.fileencodings = { "utf-8", "ascii", "cp932", "euc-jp", "sjis" }

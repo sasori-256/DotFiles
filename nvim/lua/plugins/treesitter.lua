@@ -1,10 +1,10 @@
 return {
   "nvim-treesitter/nvim-treesitter",
   build = ":TSUpdate",
+  branch = "main",
   dependencies = {
     "nvim-treesitter/nvim-treesitter-textobjects",
   },
-  main = "nvim-treesitter.configs",
   opts = {
     ensure_installed = {
       "bash",
@@ -19,8 +19,6 @@ return {
       "luadoc",
       "luap",
       "make",
-      "markdown",
-      "markdown_inline",
       "python",
       "rust",
       "scss",

@@ -25,6 +25,10 @@ require("lazy").setup({
       import = "lazyvim.plugins",
       opts = {
         colorscheme = "catppuccin",
+        rocks = {
+          hererocks = true,
+          enabled = true,
+        },
         news = {
           lazyvim = true,
           neovim = true,
@@ -32,7 +36,12 @@ require("lazy").setup({
       },
     },
     -- import/override with your plugins
-    { import = "plugins" },
+    { import = "plugins.colorscheme" },
+    { import = "plugins.copilot" },
+    { import = "plugins.editor" },
+    { import = "plugins.lsp" },
+    { import = "plugins.treesitter" },
+    { import = "plugins.ui" },
   },
   defaults = {
     -- By default, only LazyVim plugins will be lazy-loaded. Your custom plugins will load during startup.

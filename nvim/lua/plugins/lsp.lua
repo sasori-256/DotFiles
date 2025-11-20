@@ -1,4 +1,11 @@
 return {
+  -- lsp icons like vscode
+  {
+    "onsails/lspkind.nvim",
+    -- nvim-cmp.lua
+    event = "InsertEnter",
+  },
+  -- mason.nvim and mason-lspconfig.nvim
   {
     "mason-org/mason.nvim",
     version = "*",
