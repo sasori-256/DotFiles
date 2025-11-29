@@ -7,3 +7,6 @@ foo.*
 *.log
 data
 nvim/lazy-lock.json
+
+.gemini/
+gha-creds-*.json
