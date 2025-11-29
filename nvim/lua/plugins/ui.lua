@@ -24,15 +24,8 @@ return {
   {
     "SmiteshP/nvim-navic",
     lazy = true,
-    init = function()
-      vim.g.navic_silence = true
-      LazyVim.lsp.on_attach(function(client, buffer)
-        if client.supports_method("textDocument/documentSymbol") then
-          require("nvim-navic").attach(client, buffer)
-        end
-      end)
-    end,
     opts = function()
+      vim.g.navic_silence = true
       return {
         separator = " ",
         highlight = true,
