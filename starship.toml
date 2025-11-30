@@ -1,76 +1,40 @@
+# Starship Prompt Configuration File
+# https://starship.rs/config/
+# This configuration uses the Catppuccin Frappe color scheme and customizes various modules.
+
+# 全体のプロンプトフォーマット設定
 format = """
-[](fg:#8caaee)\
+[](fg:yellow)\
 $os\
-[](fg:#8caaee bg:#414559)\
+[](fg:yellow bg:green)\
 $directory\
+[](fg:green bg:sky)\
 $git_branch\
 $git_status\
-$cmd_duration\
-[](fg:#414559)\
-$fill\
-[](fg:#414559)\
-$singularity\
-$kubernetes\
-$pijul_channel\
-$docker_context\
+[](fg:sky bg:sapphire)\
 $c\
-$cmake\
-$cobol\
-$daml\
 $dart\
-$deno\
-$dotnet\
-$elixir\
-$elm\
-$erlang\
-$fennel\
+$gcloud\
 $golang\
-$guix_shell\
-$haskell\
-$haxe\
-$helm\
-$java\
-$julia\
-$kotlin\
 $gradle\
+$java\
+$kotlin\
 $lua\
-$nim\
 $nodejs\
-$ocaml\
-$opa\
-$perl\
 $php\
-$pulumi\
-$purescript\
 $python\
-$raku\
-$rlang\
-$red\
+$typst\
 $ruby\
 $rust\
-$scala\
-$solidity\
-$swift\
-$terraform\
-$vlang\
-$vagrant\
-$zig\
-$custom\
-$buf\
+[](fg:sapphire bg:blue)\
 $conda\
-$meson\
-$spack\
-$aws\
-$gcloud\
-$openstack\
-$azure\
-$crystal\
+$docker_context\
 $package\
-$status\
-[](fg:#8caaee bg:#414559)\
-$time\
-[ ](fg:#8caaee)\
-\n\
+$aws\
+[](fg:blue bg:surface0)\
+$cmd_duration\
+[](fg:surface0)\
+$line_break\
 $username\
 $character\
 """
@@ -79,30 +43,48 @@ $character\
 add_newline = false
 command_timeout = 1200
 
+# catppuccin-frappeのcolor schemes
+palette = "CatppuccinFrappe"
+
 # left_promptとright_promptの間を何で埋めるか設定
 [fill]
 symbol = ' '
 
 [os]
 format = "[$symbol ]($style)"
-style = "fg:#303446 bg:#8caaee bold"
+style = "fg:crust bg:yellow"
 disabled = false
 
 [os.symbols]
-Windows = "  " # nf-dev-windows
-Macos = "  "   # nf-fa-apple
-Ubuntu = "  "  # nf-linux-ubuntu
-Debian = "  "  # nf-linux-debian
-Arch = "  "    # nf-linux-archlinux
+Windows = "  "        # nf-dev-windows
+Macos = "  "          # nf-fa-apple
+Fedora = "󰣛 "          # nf-linux-fedora
+Alpine = " "          # nf-linux-alpine
+Ubuntu = "  "         # nf-linux-ubuntu
+Debian = "  "         # nf-linux-debian
+Arch = "  "           # nf-linux-archlinux
+Artix = "󰣇 "           # nf-linux-artixlinux
+CentOS = " "          # nf-linux-centos
+Redhat = "󱄛 "          # nf-linux-redhat
+RedHatEnterprise = "󱄛" # nf-linux-redhat
 
 [directory]
-style = "fg:#8caaee bg:#414559 bold"
-format = "[ $symbol $path ]($style)"
 truncation_length = 3
 truncate_to_repo = false
 truncation_symbol = "…/"
 home_symbol = "󰠦 "
 read_only = "󰌾 "
+format = "[ $symbol $path ]($style)([$read_only ]($read_only_style))"
+style = "fg:crust bg:green"
+read_only_style = "fg:red bold bg:green"
+repo_root_format = """
+[ $before_root_path]($before_repo_root_style)\
+[$repo_root]($repo_root_style)\
+[$path]($style)\
+[$read_only ]($read_only_style)\
+"""
+repo_root_style = "fg:crust bold bg:green"
+before_repo_root_style = "fg:overlay0 bg:green"
 
 [directory.substitutions]
 "Documents" = "󰈙 "
@@ -111,134 +93,156 @@ read_only = "󰌾 "
 "Pictures" = " "
 
 [character]
-success_symbol = "[❯](#a6d189)"
-error_symbol = "[❯](#e78284)"
+success_symbol = "[❯](green)"
+error_symbol = "[❯](red)"
 
+# コマンドの実行時間
 [cmd_duration]
 min_time = 0
 show_milliseconds = false
-format = '[ $duration ](fg:#8caaee bg:#414559)'
+format = '[ $duration ](fg:blue bold bg:surface0)'
 
-[package]
-format = 'via [🎁 $symbol $version](fg:#8caaee bg:#414559 bold)'
-
+# 現在時刻
 [time]
-disabled = false
-time_format = "%R"                   # Hour:Minute Format
-style = "fg:#303446 bg:#8caaee bold"
+disabled = true                # 時間表示はWezTermのステータスバーで代用するため無効化
+time_format = "%R"             # Hour:Minute Format
+style = "fg:crust bg:blue"
 format = '[  $time ]($style)'
 
+# ユーザー名の表示
 [username]
-style_user = '#99d1db bold'
-style_root = '#e78284 bold'
-format = '[ $user]($style) '
+style_user = 'sapphire bold'
+style_root = 'red bold'
+format = '[  $user]($style) '
 disabled = false
 show_always = true
-aliases = { "corpuser034g" = "matchai" }
+aliases = { "sasor" = "おいら" }  # ユーザー名の別名設定
 
+# Git関連の設定
+[git_branch]
+symbol = ""
+style = "fg:crust bg:sky"
+format = '[ $symbol $branch]($style)'
 
-# 各言語の設定
+[git_status]
+style = "fg:crust bg:sky"
+format = '[($all_status $ahead_behind) ]($style)'
+
+# 各種開発環境の設定
 [aws]
-style = "fg:#8caaee bg:#414559"
-format = '[[ $symbol ](fg:#e5c890 bg:#414559)($profile $region) ]($style)'
-
-[c]
-symbol = ""                                                        # nf-custom-c
-style = "fg:#8caaee bg:#414559"
-format = '[[ $symbol ](fg:#e5c890 bg:#414559)($version) ]($style)'
+style = "fg:crust bg:blue"
+format = '[[ $symbol ](fg:yellow bg:blue)($profile $region) ]($style)'
 
 [conda]
-symbol = ""                                                                     # nf-dev-anaconda
-style = "fg:#8caaee bg:#414559"
-format = '[[ $symbol $environment ](fg:#e5c890 bg:#414559)($version) ]($style)'
+symbol = ""                                                                # nf-dev-anaconda
+style = "fg:crust bg:blue"
+format = '[[ $symbol $environment ](fg:yellow bg:blue)($version) ]($style)'
 ignore_base = false
 
-[dart]
-symbol = " "                                                       # nf-seti-dart
-style = "fg:#8caaee bg:#414559"
-format = '[[ $symbol ](fg:#e5c890 bg:#414559)($version) ]($style)'
-
 [docker_context]
-style = "fg:#8caaee bg:#414559"
-format = '[[ $symbol ](fg:#e5c890 bg:#414559)($context) ]($style)'
+style = "fg:crust bg:blue"
+format = '[[ $symbol ](fg:yellow bg:blue)($context) ]($style)'
+
+[package]
+symbol = ""                                                             # nf-oct-package
+format = '[[ $symbol ](fg:yellow bg:blue)($version) ](fg:crust bg:blue)'
+
+# 各言語の設定
+[c]
+symbol = ""                                                      # nf-custom-c
+style = "fg:crust bg:sapphire"
+format = '[[ $symbol ](fg:yellow bg:sapphire)($version)]($style)'
+
+[dart]
+symbol = " "                                                     # nf-seti-dart
+style = "fg:crust bg:sapphire"
+format = '[[ $symbol ](fg:yellow bg:sapphire)($version)]($style)'
 
 [gcloud]
 disabled = true
 
-[git_branch]
-symbol = ""
-style = "bg:#414559"
-format = '[[ $symbol $branch ](fg:#8caaee bg:#414559)]($style)'
+[golang]
+symbol = ""
+style = "fg:crust bg:sapphire"
+format = '[[ $symbol ](fg:yellow bg:sapphire)($version) ]($style)'
 
-[git_status]
-style = "bg:#414559"
-format = '[[($all_status $ahead_behind)](fg:#8caaee bg:#414559)]($style)'
+[gradle]
+symbol = " "                                                      # nf-dev-gradle
+style = "fg:crust bg:sapphire"
+format = '[[ $symbol ](fg:yellow bg:sapphire)($version) ]($style)'
 
 [java]
 symbol = " "
-style = "fg:#8caaee bg:#414559"
-format = '[[ $symbol ](fg:#e5c890 bg:#414559)($version) ]($style)'
+style = "fg:crust bg:sapphire"
+format = '[[ $symbol ](fg:yellow bg:sapphire)($version) ]($style)'
+
+[kotlin]
+symbol = " "
+style = "fg:crust bg:sapphire"
+format = '[[ $symbol ](fg:yellow bg:sapphire)($version) ]($style)'
 
 [lua]
 symbol = "󰢱"
-style = "fg:#8caaee bg:#414559"
-format = '[[ $symbol ](fg:#e5c890 bg:#414559)($version) ]($style)'
+style = "fg:crust bg:sapphire"
+format = '[[ $symbol ](fg:yellow bg:sapphire)($version) ]($style)'
 
 [nodejs]
 symbol = ""
-style = "fg:#8caaee bg:#414559"
-format = '[[ $symbol ](fg:#e5c890 bg:#414559)($version) ]($style)'
-
-[ruby]
-symbol = ""                                                        # nf-seti-ruby
-style = "fg:#8caaee bg:#414559"
-format = '[[ $symbol ](fg:#e5c890 bg:#414559)($version) ]($style)'
-
-[rust]
-symbol = ""
-style = "fg:#8caaee bg:#414559"
-format = '[[ $symbol ](fg:#e5c890 bg:#414559)($version) ]($style)'
-
-[golang]
-symbol = ""
-style = "fg:#8caaee bg:#414559"
-format = '[[ $symbol ](fg:#e5c890 bg:#414559)($version) ]($style)'
+style = "fg:crust bg:sapphire"
+format = '[[ $symbol ](fg:yellow bg:sapphire)($version) ]($style)'
 
 [php]
 symbol = ""
-style = "fg:#8caaee bg:#414559"
-format = '[[ $symbol ](fg:#e5c890 bg:#414559)($version) ]($style)'
+style = "fg:crust bg:sapphire"
+format = '[[ $symbol ](fg:yellow bg:sapphire)($version) ]($style)'
 
 [python]
 symbol = " "
-style = "fg:#8caaee bg:#414559"
-python_binary = ["python3", "python"]
-format = '[[ $symbol ](fg:#e5c890 bg:#414559)($version) ]($style)'
+style = "fg:crust bg:sapphire"
+python_binary = ["python", "python3"]
+format = '[[ $symbol ](fg:yellow bg:sapphire)($version) ]($style)'
 
-# catppuccin-frappe color schemes
-# rosewater = "#f2d5cf"
-# flamingo =  "#eebebe"
-# pink =      "#f4b8e4"
-# mauve =     "#ca9ee6"
-# red =       "#e78284"
-# maroon =    "#ea999c"
-# peach =     "#ef9f76"
-# yellow =    "#e5c890"
-# green =     "#a6d189"
-# teal =      "#81c8be"
-# sky =       "#99d1db"
-# sapphire =  "#85c1dc"
-# blue =      "#8caaee"
-# lavender =  "#babbf1"
-# text =      "#c6d0f5"
-# subtext1 =  "#b5bfe2"
-# subtext0 =  "#a5adce"
-# overlay2 =  "#949cbb"
-# overlay1 =  "#838ba7"
-# overlay0 =  "#737994"
-# surface2 =  "#626880"
-# surface1 =  "#51576d"
-# surface0 =  "#414559"
-# base =      "#303446"
-# mantle =    "#292c3c"
-# crust =     "#232634"
+[typst]
+symbol = ""                                                       # nf-linux-typst
+style = "fg:crust bg:sapphire"
+format = '[[ $symbol ](fg:yellow bg:sapphire)($version) ]($style)'
+
+[ruby]
+symbol = ""                                                       # nf-seti-ruby
+style = "fg:crust bg:sapphire"
+format = '[[ $symbol ](fg:yellow bg:sapphire)($version) ]($style)'
+
+[rust]
+symbol = ""
+style = "fg:crust bg:sapphire"
+format = '[[ $symbol ](fg:yellow bg:sapphire)($version) ]($style)'
+
+
+# Color palette definition
+[palettes.CatppuccinFrappe]
+rosewater = "#f2d5cf"
+flamingo = "#eebebe"
+pink = "#f4b8e4"
+mauve = "#ca9ee6"
+red = "#e78284"
+maroon = "#ea999c"
+peach = "#ef9f76"
+yellow = "#e5c890"
+green = "#a6d189"
+teal = "#81c8be"
+sky = "#99d1db"
+sapphire = "#85c1dc"
+blue = "#8caaee"
+lavender = "#babbf1"
+text = "#c6d0f5"
+subtext1 = "#b5bfe2"
+subtext0 = "#a5adce"
+overlay2 = "#949cbb"
+overlay1 = "#838ba7"
+overlay0 = "#737994"
+surface2 = "#626880"
+surface1 = "#51576d"
+surface0 = "#414559"
+base = "#303446"
+mantle = "#292c3c"
+crust = "#232634"
