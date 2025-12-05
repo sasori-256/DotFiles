@@ -1,7 +1,7 @@
 -- Pull in the wezterm API
 local wezterm = require("wezterm")
 -- Pull Nerd  font
-local nerd_font = require("wezterm").font("Moralerspace Neon NF")
+local nerd_font = require("wezterm").font("Moralerspace Neon")
 
 -- This table will hold the configuration.
 local config = {}

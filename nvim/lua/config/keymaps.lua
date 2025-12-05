@@ -63,13 +63,10 @@ keymap.set("n", "<C-j>", function()
 end, opts)
 
 --Set Tomisuke
-local keymap_mode = "Tomisuke"
-if keymap_mode == "Tomisuke" then
-  keymap.set("n", "<A-n>", "<C-w>h", opts)
-  keymap.set("n", "<A-t>", "<C-w>j", opts)
-  keymap.set("n", "<A-s>", "<C-w>k", opts)
-  keymap.set("n", "<A-k>", "<C-w>l", opts)
-end
+keymap.set("n", "<A-n>", "<C-w>h", opts)
+keymap.set("n", "<A-t>", "<C-w>j", opts)
+keymap.set("n", "<A-s>", "<C-w>k", opts)
+keymap.set("n", "<A-k>", "<C-w>l", opts)
 keymap.set("n", "H", "Nzz", opts)
 keymap.set("n", "h", "nzz", opts)
 keymap.set({ "n", "v" }, "n", "h", opts)
@@ -83,3 +80,10 @@ keymap.set("i", "<A-n>", "<Left>", opts)
 keymap.set("i", "<A-t>", "<Down>", opts)
 keymap.set("i", "<A-s>", "<Up>", opts)
 keymap.set("i", "<A-k>", "<Right>", opts)
+
+-- Gemini
+-- local gemini = require("utils.gemini")
+-- keymap.set("n", "<leader>ga", gemini.ask, { desc = "Ask Gemini" })
+-- keymap.set("v", "<leader>ga", gemini.visual_action, { desc = "Ask Gemini about selection" })
+-- keymap.set("n", "<leader>gc", gemini.chat, { desc = "Chat with Gemini" })
+-- keymap.set("n", "<leader>gq", ":GeminiChatEnd<CR>", { desc = "Quit Gemini Chat" })

@@ -1,7 +1,13 @@
 return {
   "nvim-neo-tree/neo-tree.nvim",
   cmd = "Neotree",
+  requires = {
+    "nvim-lua/plenary.nvim",
+    "kyazdani42/nvim-web-devicons", -- オプション、ファイルアイコン用
+    "MunifTanjim/nui.nvim",
+  },
   keys = {
+    -- NeoTreeの表示
     {
       "<Leader>fe",
       function()
@@ -18,6 +24,8 @@ return {
     },
     { "<Leader>e", "<Leader>fe", desc = "Explorer NeoTree (Root Dir)", remap = true },
     { "<Leader>E", "<Leader>fE", desc = "Explorer NeoTree (cwd)", remap = true },
+
+    -- Gitステータスの表示
     {
       "<Leader>ge",
       function()
@@ -25,6 +33,8 @@ return {
       end,
       desc = "Git Explorer",
     },
+
+    -- バッファ一覧の表示
     {
       "<Leader>be",
       function()
@@ -65,11 +75,14 @@ return {
     },
     window = {
       mappings = {
+        -- Tomisuke mappings
         ["t"] = "j",
         ["s"] = "k",
         ["k"] = "open",
         ["n"] = "close_node",
+        -- Disable unused mappings
         ["<space>"] = "none",
+        -- Custom mappings
         ["Y"] = {
           function(state)
             local node = state.tree:get_node()
@@ -78,12 +91,14 @@ return {
           end,
           desc = "Copy Path to Clipboard",
         },
+        -- Open file with system application
         ["O"] = {
           function(state)
             require("lazy.util").open(state.tree:get_node().path, { system = true })
           end,
           desc = "Open with System Application",
         },
+        -- Preview file
         ["P"] = { "toggle_preview", config = { use_float = false } },
       },
     },
@@ -103,10 +118,12 @@ return {
     },
   },
   config = function(_, opts)
+    -- Rename/moveしたときにSnacksも更新する
     local function on_move(data)
       Snacks.rename.on_rename_file(data.source, data.destination)
     end
 
+    -- Neo-treeのセットアップ
     local events = require("neo-tree.events")
     opts.event_handlers = opts.event_handlers or {}
     vim.list_extend(opts.event_handlers, {

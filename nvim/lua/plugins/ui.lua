@@ -20,19 +20,12 @@ return {
     },
   },
 
--- Navic: shows wherein the code structure you are
+  -- Navic: shows wherein the code structure you are
   {
     "SmiteshP/nvim-navic",
     lazy = true,
-    init = function()
+    opts = function()
       vim.g.navic_silence = true
-      LazyVim.lsp.on_attach(function(client, buffer)
-        if client.supports_method("textDocument/documentSymbol") then
-          require("nvim-navic").attach(client, buffer)
-        end
-      end)
-    end,
-    opts = function ()
       return {
         separator = " ",
         highlight = true,
@@ -40,7 +33,7 @@ return {
         icons = LazyVim.config.icons.kinds,
         lazy_update_context = true,
       }
-    end
+    end,
   },
 
   -- statusline
@@ -51,26 +44,25 @@ return {
       "nvim-tree/nvim-web-devicons",
     },
     optional = true,
-    opts = function (_, opts)
+    opts = function(_, opts)
       if not vim.g.trouble_lua_lualine then
         table.insert(opts.sections.lualine_c, { "navic", color_correction = "dynamic" })
       end
-    end
+    end,
   },
 
   -- filename
   {
     "b0o/incline.nvim",
-    dependencies = { "craftzdog/solarized-osaka.nvim" },
     event = "BufReadPre",
     priority = 1200,
     config = function()
-      local colors = require("solarized-osaka.colors").setup()
+      local palette = require("catppuccin.palettes").get_palette("frappe")
       require("incline").setup({
         highlight = {
           groups = {
-            InclineNormal = { guibg = colors.magenta500, guifg = colors.base04 },
-            InclineNormalNC = { guifg = colors.violet500, guibg = colors.base03 },
+            InclineNormal = { guibg = palette.mauve, guifg = palette.base },
+            InclineNormalNC = { guifg = palette.surface2, guibg = palette.mantle },
           },
         },
         window = { margin = { vertical = 0, horizontal = 1 } },
@@ -92,7 +84,7 @@ return {
 
   -- animations
   {
-    "echasnovski/mini.animate",
+    "nvim-mini/mini.animate",
     event = "VeryLazy",
     opts = function(_, opts)
       opts.scroll = {
