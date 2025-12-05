@@ -3,15 +3,6 @@
 
 $ErrorActionPreference = "Stop"
 
-function Check-Admin {
-    $currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
-    if (-not $currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
-        Write-Warning "このスクリプトは管理者権限での実行を推奨します（シンボリックリンク作成のため）。"
-        Write-Warning "PowerShellを「管理者権限での実行」してから再実行してください。"
-        # 開発者モードが有効なら続行可能ですが、念の為3秒待ちます
-        Start-Sleep -Seconds 3
-    }
-}
 
 function Install-Scoop {
     Write-Host "`n[1/4] Setting up Scoop..." -ForegroundColor Cyan
@@ -44,13 +35,14 @@ function Install-Scoop {
     }
 
     Write-Host "Adding Scoop buckets..."
-    scoop bucket add extras
-    scoop bucket add versions
-    scoop bucket add nerd-fonts
+    scoop bucket add extras  # For GUI apps
+    scoop bucket add versions  # For alternative versions
+    scoop bucket add nerd-fonts  # For fonts like Hack-NF
 }
 
 function Install-CLI-Tools {
     Write-Host "`n[2/4] Installing CLI tools via Scoop..." -ForegroundColor Cyan
+    # If you want to add more apps, just add them to this array
     $apps = @(
         "git",
         "neovim",
@@ -146,7 +138,7 @@ function Setup-Symlinks {
 }
 
 # --- Main Execution ---
-Check-Admin
+
 Install-Scoop
 Install-CLI-Tools
 Install-GUI-Apps

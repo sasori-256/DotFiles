@@ -52,7 +52,7 @@ symbol = ' '
 
 [os]
 format = "[$symbol ]($style)"
-style = "fg:crust bg:yellow"
+style = "fg:surface0 bg:yellow"
 disabled = false
 
 [os.symbols]
@@ -75,7 +75,7 @@ truncation_symbol = "…/"
 home_symbol = "󰠦 "
 read_only = "󰌾 "
 format = "[ $symbol $path ]($style)([$read_only ]($read_only_style))"
-style = "fg:crust bg:green"
+style = "fg:surface0 bg:green"
 read_only_style = "fg:red bold bg:green"
 repo_root_format = """
 [ $before_root_path]($before_repo_root_style)\
@@ -83,7 +83,7 @@ repo_root_format = """
 [$path]($style)\
 [$read_only ]($read_only_style)\
 """
-repo_root_style = "fg:crust bold bg:green"
+repo_root_style = "fg:surface0 bold bg:green"
 before_repo_root_style = "fg:overlay0 bg:green"
 
 [directory.substitutions]
@@ -106,7 +106,7 @@ format = '[ $duration ](fg:blue bold bg:surface0)'
 [time]
 disabled = true                # 時間表示はWezTermのステータスバーで代用するため無効化
 time_format = "%R"             # Hour:Minute Format
-style = "fg:crust bg:blue"
+style = "fg:surface0 bg:blue"
 format = '[  $time ]($style)'
 
 # ユーザー名の表示
@@ -121,41 +121,41 @@ aliases = { "sasor" = "おいら" }  # ユーザー名の別名設定
 # Git関連の設定
 [git_branch]
 symbol = ""
-style = "fg:crust bg:sky"
+style = "fg:surface0 bg:sky"
 format = '[ $symbol $branch]($style)'
 
 [git_status]
-style = "fg:crust bg:sky"
+style = "fg:surface0 bg:sky"
 format = '[($all_status $ahead_behind) ]($style)'
 
 # 各種開発環境の設定
 [aws]
-style = "fg:crust bg:blue"
+style = "fg:surface0 bg:blue"
 format = '[[ $symbol ](fg:yellow bg:blue)($profile $region) ]($style)'
 
 [conda]
 symbol = ""                                                                # nf-dev-anaconda
-style = "fg:crust bg:blue"
+style = "fg:surface0 bg:blue"
 format = '[[ $symbol $environment ](fg:yellow bg:blue)($version) ]($style)'
 ignore_base = false
 
 [docker_context]
-style = "fg:crust bg:blue"
+style = "fg:surface0 bg:blue"
 format = '[[ $symbol ](fg:yellow bg:blue)($context) ]($style)'
 
 [package]
-symbol = ""                                                             # nf-oct-package
-format = '[[ $symbol ](fg:yellow bg:blue)($version) ](fg:crust bg:blue)'
+symbol = ""                                                                # nf-oct-package
+format = '[[ $symbol ](fg:yellow bg:blue)($version) ](fg:surface0 bg:blue)'
 
 # 各言語の設定
 [c]
 symbol = ""                                                      # nf-custom-c
-style = "fg:crust bg:sapphire"
+style = "fg:surface0 bg:sapphire"
 format = '[[ $symbol ](fg:yellow bg:sapphire)($version)]($style)'
 
 [dart]
 symbol = " "                                                     # nf-seti-dart
-style = "fg:crust bg:sapphire"
+style = "fg:surface0 bg:sapphire"
 format = '[[ $symbol ](fg:yellow bg:sapphire)($version)]($style)'
 
 [gcloud]
@@ -163,58 +163,58 @@ disabled = true
 
 [golang]
 symbol = ""
-style = "fg:crust bg:sapphire"
+style = "fg:surface0 bg:sapphire"
 format = '[[ $symbol ](fg:yellow bg:sapphire)($version) ]($style)'
 
 [gradle]
 symbol = " "                                                      # nf-dev-gradle
-style = "fg:crust bg:sapphire"
+style = "fg:surface0 bg:sapphire"
 format = '[[ $symbol ](fg:yellow bg:sapphire)($version) ]($style)'
 
 [java]
 symbol = " "
-style = "fg:crust bg:sapphire"
+style = "fg:surface0 bg:sapphire"
 format = '[[ $symbol ](fg:yellow bg:sapphire)($version) ]($style)'
 
 [kotlin]
 symbol = " "
-style = "fg:crust bg:sapphire"
+style = "fg:surface0 bg:sapphire"
 format = '[[ $symbol ](fg:yellow bg:sapphire)($version) ]($style)'
 
 [lua]
 symbol = "󰢱"
-style = "fg:crust bg:sapphire"
+style = "fg:surface0 bg:sapphire"
 format = '[[ $symbol ](fg:yellow bg:sapphire)($version) ]($style)'
 
 [nodejs]
 symbol = ""
-style = "fg:crust bg:sapphire"
+style = "fg:surface0 bg:sapphire"
 format = '[[ $symbol ](fg:yellow bg:sapphire)($version) ]($style)'
 
 [php]
 symbol = ""
-style = "fg:crust bg:sapphire"
+style = "fg:surface0 bg:sapphire"
 format = '[[ $symbol ](fg:yellow bg:sapphire)($version) ]($style)'
 
 [python]
 symbol = " "
-style = "fg:crust bg:sapphire"
+style = "fg:surface0 bg:sapphire"
 python_binary = ["python", "python3"]
 format = '[[ $symbol ](fg:yellow bg:sapphire)($version) ]($style)'
 
 [typst]
 symbol = ""                                                       # nf-linux-typst
-style = "fg:crust bg:sapphire"
+style = "fg:surface0 bg:sapphire"
 format = '[[ $symbol ](fg:yellow bg:sapphire)($version) ]($style)'
 
 [ruby]
 symbol = ""                                                       # nf-seti-ruby
-style = "fg:crust bg:sapphire"
+style = "fg:surface0 bg:sapphire"
 format = '[[ $symbol ](fg:yellow bg:sapphire)($version) ]($style)'
 
 [rust]
 symbol = ""
-style = "fg:crust bg:sapphire"
+style = "fg:surface0 bg:sapphire"
 format = '[[ $symbol ](fg:yellow bg:sapphire)($version) ]($style)'
 
 
