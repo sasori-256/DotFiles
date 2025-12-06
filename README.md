@@ -52,7 +52,7 @@ Neovim, WezTerm, Starshipなどの設定が含まれており、Catppuccin Frapp
 1. このリポジトリをクローンします。
 
    ```bash
-   git clone https://github.com/your-username/dotfiles.git ~/.dotfiles
+   git clone https://github.com/sasori-256/DotFiles.git
    ```
 
 2. Windows環境の場合、PowerShellを管理者権限で開き、セットアップスクリプトを実行します。
