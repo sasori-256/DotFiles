@@ -81,9 +81,14 @@ function Install-GUI-Apps {
     )
 
     foreach ($id in $apps) {
-        Write-Host "Installing $id..."
-        # winget handles "already installed" checks, though it might check for updates
-        winget install --id $id -e --source winget --accept-source-agreements --accept-package-agreements
+        # Explicitly check if the app is already installed to avoid unnecessary install attempts
+        $installed = winget list --id $id | Select-String $id
+        if (-not $installed) {
+            Write-Host "Installing $id..."
+            winget install --id $id -e --source winget --accept-source-agreements --accept-package-agreements
+        } else {
+            Write-Host "$id is already installed."
+        }
     }
 
     # Font (Moralerspace Neon is recommended in your config, but trying a generic Nerd Font via Scoop is safer for automation)
