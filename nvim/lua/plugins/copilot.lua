@@ -1,5 +1,5 @@
 return {
-  "copilot.lua",
+  "zbirenbaum/copilot.lua",
   opts = {
     suggestion = { enabled = true },
   },

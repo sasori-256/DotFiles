@@ -1,7 +1,7 @@
 return {
   "nvim-neo-tree/neo-tree.nvim",
   cmd = "Neotree",
-  requires = {
+  dependencies = {
     "nvim-lua/plenary.nvim",
     "kyazdani42/nvim-web-devicons", -- オプション、ファイルアイコン用
     "MunifTanjim/nui.nvim",
