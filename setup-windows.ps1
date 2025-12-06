@@ -70,13 +70,25 @@ function Install-CLI-Tools {
 
 function Install-GUI-Apps {
     Write-Host "`n[3/4] Installing GUI apps via Winget..." -ForegroundColor Cyan
-    
-    # WezTerm
-    if (-not (Get-Command wezterm -ErrorAction SilentlyContinue)) {
-        Write-Host "Installing WezTerm..."
-        winget install --id wez.wezterm -e --source winget --accept-source-agreements --accept-package-agreements
-    } else {
-        Write-Host "WezTerm is already installed."
+
+    $apps = @(
+        "wez.wezterm",                # WezTerm
+        "Microsoft.VisualStudioCode", # Visual Studio Code
+        "Unity.UnityHub",             # Unity Hub
+        "TigerVNC.TigerVNC",          # TigerVNC
+        "Discord.Discord",            # Discord
+        "Brave.Brave"                 # Brave Browser
+    )
+
+    foreach ($id in $apps) {
+        # Explicitly check if the app is already installed to avoid unnecessary install attempts
+        $installed = winget list --id $id | Select-String $id
+        if (-not $installed) {
+            Write-Host "Installing $id..."
+            winget install --id $id -e --source winget --accept-source-agreements --accept-package-agreements
+        } else {
+            Write-Host "$id is already installed."
+        }
     }
 
     # Font (Moralerspace Neon is recommended in your config, but trying a generic Nerd Font via Scoop is safer for automation)
