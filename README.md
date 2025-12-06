@@ -9,7 +9,7 @@ Neovim, WezTerm, Starshipなどの設定が含まれており、Catppuccin Frapp
 - **powershell**: Windows環境用のPowershellの設定ファイル群
 - **wezterm**: GPUアクセラレーション対応のターミナルエミュレータ用の設定ファイル群
 - **fish**: Fishシェル用の設定ファイル群(追加予定)
-- **hyprlandscape**: Hyprlandウィンドウマネージャ用の設定ファイル群(追加予定)
+- **hyprland**: Hyprlandウィンドウマネージャ用の設定ファイル群(追加予定)
 - **setup-nvim.ps1**: Windows環境向けのNeovimセットアップ用PowerShellスクリプト(deprecated)
 - **setup-windows.ps1**: Windows環境向けの全体セットアップ用PowerShellスクリプト
 - **starship.toml**: 高速でカスタマイズ性の高いプロンプト用の設定ファイル
