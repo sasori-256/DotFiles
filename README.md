@@ -58,8 +58,8 @@ Neovim, WezTerm, Starshipなどの設定が含まれており、Catppuccin Frapp
 2. Windows環境の場合、PowerShellを管理者権限で開き、セットアップスクリプトを実行します。
 
    ```powershell
-    cd ~/.dotfiles
-    .\setup-windows.ps1
+   cd ~/.dotfiles
+   .\setup-windows.ps1
    ```
 
 3. NeovimやWezTermの設定が正しく反映されていることを確認します。
