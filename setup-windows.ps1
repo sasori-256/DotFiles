@@ -100,7 +100,7 @@ function Install-GUI-Apps {
 function Setup-Symlinks {
     Write-Host "`n[4/4] Linking Dotfiles..." -ForegroundColor Cyan
     
-    $dotfiles = "$env:USERPROFILE\DotFiles"
+    $dotfiles = $PSScriptRoot
     $config   = "$env:USERPROFILE\.config"
     
     if (-not (Test-Path $config)) { New-Item -ItemType Directory -Path $config | Out-Null }
