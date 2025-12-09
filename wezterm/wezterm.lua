@@ -19,23 +19,29 @@ if wezterm.config_builder then
 	config = wezterm.config_builder()
 end
 
-if wezterm.target_triple == "x86_64-pc-windows-msvc" then
+if wezterm.target_triple:find("windows") ~= nil then
 	-- Windows の場合は PowerShell を指定
 	config.default_prog = { "pwsh.exe", "-NoLogo" }
 else
-	-- 他の OS (例: Linux/macOS) の場合は bash を指定
+	-- 他の OS (例: Linux/macOS) の場合は fish を指定
 	config.default_prog = { "/usr/sbin/fish" }
 end
 
+-- WSLだけで使いたい場合は以下のコメントを外す
 -- config.default_prog = { 'wsl', '-d', 'Arch' }
+
 config.color_scheme = "Catppuccin Frappe"
 config.font = nerd_font
 config.font_size = 20.0
+
+-- 設定中
 -- config.window_decorations = 'RESIZE'
 -- config.window_frame = {
 --   font = wezterm.font { family = 'Roboto', weight = 'Bold' },
 --   font_size = 10.0,
 -- }
+
+-- 背景の不透過度
 config.window_background_opacity = 0.85
 
 -- Tab Bar
@@ -52,6 +58,7 @@ config.leader = { key = ",", mods = "CTRL", timeout_milliseconds = 1500 }
 config.keys = keybinds.keys
 config.key_tables = keybinds.key_tables
 
+-- 設定中
 -- config.mouse_bindings = require('mousebinds').mouse_bindings
 
 return config
