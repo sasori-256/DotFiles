@@ -37,7 +37,7 @@ require("lazy").setup({
     },
     -- import/override with your plugins
     { import = "plugins.colorscheme" },
-    { import = "plugins.copilot" },
+    -- { import = "plugins.copilot" },
     { import = "plugins.editor" },
     { import = "plugins.lsp" },
     { import = "plugins.treesitter" },
