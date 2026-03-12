@@ -21,7 +21,7 @@ if (Get-Module -ListAvailable -Name posh-git) {
 }
 
 # --- 3. Starship ---
-if (Get-Command starship -ErrorAction SilentlyContinue) {
+if ((Get-Command starship -ErrorAction SilentlyContinue) -and ($env:TERM -ne "dumb")) {
     # Transient Prompt (コマンド実行後にプロンプトを簡略化する機能)
     function Invoke-Starship-TransientFunction {
         &starship module character
