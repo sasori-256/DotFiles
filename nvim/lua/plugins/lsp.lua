@@ -58,11 +58,82 @@ return {
           },
           settings = {
             java = {
-              signatureHelp = { enabled = true },
-              contentProvider = { enabled = true },
+              -- 基本設定
+              signatureHelp = { enabled = true }, -- 引数のヒントを有効化
+              contentProvider = { enabled = true }, -- 定義ジャンプ時にソースコードを表示
+
+              -- プロジェクト設定
+              project = {
+                resourceConfiguration = {
+                  filter = {
+                    "node_modules/**",
+                    ".git/**",
+                  },
+                },
+              },
+
+              -- 補完設定
+              completion = {
+                -- staticメソッドやフィールドを補完候補の上位に表示
+                favoriteStaticMembers = {
+                  -- "org.junit.Assert.*",
+                  -- "org.junit.Assume.*",
+                  -- "org.junit.jupiter.api.Assertions.*",
+                  -- "org.junit.jupiter.api.Assumptions.*",
+                  -- "org.mockito.Mockito.*",
+                  -- "org.mockito.ArgumentMatchers.*",
+                  -- "org.mockito.Answers.*",
+                },
+                -- 補完候補から除外する型
+                filteredTypes = {
+                  -- "com.sun.*",
+                  -- "java.awt.*",
+                  -- "jdk.*",
+                  -- "sun.*",
+                },
+                importOrder = {
+                  "java",
+                  "javax",
+                  "com",
+                  "org",
+                  "net",
+                  "io",
+                  "dev",
+                },
+              },
+
+              -- import整理の設定
+              sources = {
+                organizeImports = {
+                  starThreshold = 9999, -- インポートを*にまとめる閾値
+                  staticStarThreshold = 9999, -- staticインポートを*にまとめる閾値
+                },
+              },
+
+              -- コード生成の設定
+              codeGeneration = {
+                toString = {
+                  -- toStringメソッドのテンプレート設定
+                  -- template = "${object.className}{${member.name()}=${member.value}, ${otherMembers}}",
+                },
+                useBlocks = true, -- コード生成時にif文などでブロックを使用
+              },
+
+              -- インレイヒントの設定
               inlayHints = {
                 parameterNames = {
-                  enabled = "all",
+                  enabled = "all", -- 常にパラメータ名のインレイヒントを表示
+                },
+              },
+
+              -- ランタイム設定
+              configuration = {
+                runtimes = {
+                  {
+                    name = "JavaSE-25",
+                    path = "C:\\Program Files\\Microsoft\\jdk-25.0.0.36-hotspot",
+                    default = true,
+                  },
                 },
               },
             },
