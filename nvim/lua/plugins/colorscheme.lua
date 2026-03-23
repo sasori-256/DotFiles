@@ -51,13 +51,6 @@ return {
       which_key = true,
     },
   },
-  init = function()
-    local ok, mod = pcall(require, "catppuccin.special.bufferline")
-    if ok and mod and not mod.get and type(mod.get_tehme) == "function" then
-      mod.get = mod.get_tehme
-    end
-  end,
-
   specs = {
     {
       "akinsho/bufferline.nvim",
@@ -68,7 +61,7 @@ return {
         if (vim.g.colors_name or ""):find("catppuccin") then
           local ok, mod = pcall(require, "catppuccin.special.bufferline")
           if ok then
-            local get = mod.get_tehme or mod.get
+            local get = mod.get_theme or mod.get or mod.get_tehme
             if type(get) == "function" then
               opts.highlights = get({})
             end
