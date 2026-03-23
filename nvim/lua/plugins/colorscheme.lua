@@ -51,17 +51,22 @@ return {
       which_key = true,
     },
   },
+  init = function()
+    local ok, mod = pcall(require, "catppuccin.special.bufferline")
+    if ok and mod and not mod.get and type(mod.get_tehme) == "function" then
+      mod.get = mod.get_tehme
+    end
+  end,
 
   specs = {
     {
       "akinsho/bufferline.nvim",
       version = "*",
-      event = "VeryLazy",
       dependencies = { "nvim-tree/nvim-web-devicons" },
       optional = true,
       opts = function(_, opts)
         if (vim.g.colors_name or ""):find("catppuccin") then
-          local ok, mod = pcall(require, "catppuccin.groups.integrations.bufferline")
+          local ok, mod = pcall(require, "catppuccin.special.bufferline")
           if ok then
             local get = mod.get_tehme or mod.get
             if type(get) == "function" then
