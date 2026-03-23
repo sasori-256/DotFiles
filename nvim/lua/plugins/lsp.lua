@@ -147,12 +147,6 @@ return {
           opts.handlers = opts.handlers or {}
           opts.handlers["textDocument/publishDiagnostics"] = function() end
 
-          -- Disable diagnostic capability
-          if not opts.capabilities then
-            opts.capabilities = vim.lsp.protocol.make_client_capabilities()
-          end
-          opts.capabilities.textDocument.publishDiagnostics = false
-
           -- Execute setup and return true to skip LazyVim's default setup
           require("lspconfig")[server].setup(opts)
           return true
