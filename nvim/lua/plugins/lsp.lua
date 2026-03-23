@@ -9,14 +9,14 @@ return {
   {
     "mason-org/mason.nvim",
     version = "*",
-    build = ":MasonUpdate", -- :MasonUpdate updates registry contents
+    build = ":MasonUpdate",
     cmd = { "Mason", "MasonInstall", "MasonUninstall", "MasonUninstallAll", "MasonLog", "MasonUpdate" },
     opts = {
       registries = {
         "github:mason-org/mason-registry",
       },
     },
-    config = true,
+    -- Removed config = true to let LazyVim handle it
   },
   -- mason-lspconfig configuration
   {
@@ -27,17 +27,31 @@ return {
       { "neovim/nvim-lspconfig" },
     },
     opts = {
-      ensure_installed = { -- インストールを保証するサーバー
+      ensure_installed = {
         "jdtls",
       },
     },
-    config = true,
+    -- Removed config = true to let LazyVim handle it
   },
-  -- jdtls configuration via nvim-lspconfig opts
+  -- lsp server configurations
   {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
+        -- pyright: Configure but we will handle its setup manually to silence it
+        pyright = {
+          settings = {
+            python = {
+              analysis = {
+                typeCheckingMode = "off",
+                diagnosticMode = "openFilesOnly",
+              },
+            },
+          },
+        },
+        -- ruff: Primary diagnostics
+        ruff = {},
+        -- jdtls: Java settings
         jdtls = {
           vmargs = {
             "-Dfile.encoding=UTF-8",
@@ -125,6 +139,18 @@ return {
             },
           },
         },
+      },
+      setup = {
+        -- Take full control of pyright setup to ensure silence
+        pyright = function(server, opts)
+          -- Silence diagnostics
+          opts.handlers = opts.handlers or {}
+          opts.handlers["textDocument/publishDiagnostics"] = function() end
+
+          -- Execute setup and return true to skip LazyVim's default setup
+          require("lspconfig")[server].setup(opts)
+          return true
+        end,
       },
     },
   },
