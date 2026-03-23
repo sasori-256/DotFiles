@@ -9,14 +9,14 @@ return {
   {
     "mason-org/mason.nvim",
     version = "*",
-    build = ":MasonUpdate", -- :MasonUpdate updates registry contents
+    build = ":MasonUpdate",
     cmd = { "Mason", "MasonInstall", "MasonUninstall", "MasonUninstallAll", "MasonLog", "MasonUpdate" },
     opts = {
       registries = {
         "github:mason-org/mason-registry",
       },
     },
-    config = true,
+    -- Removed config = true to let LazyVim handle it
   },
   -- mason-lspconfig configuration
   {
@@ -27,104 +27,65 @@ return {
       { "neovim/nvim-lspconfig" },
     },
     opts = {
-      ensure_installed = { -- インストールを保証するサーバー
+      ensure_installed = {
         "jdtls",
       },
     },
-    config = true,
+    -- Removed config = true to let LazyVim handle it
   },
-  -- jdtls configuration via nvim-lspconfig opts
+  -- lsp server configurations
   {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
+        -- pyright: Configure but we will handle its setup manually to silence it
+        pyright = {
+          settings = {
+            python = {
+              analysis = {
+                typeCheckingMode = "off",
+                diagnosticMode = "openFilesOnly",
+              },
+            },
+          },
+        },
+        -- ruff: Primary diagnostics
+        ruff = {},
+        -- jdtls: Java settings
         jdtls = {
           vmargs = {
             "-Dfile.encoding=UTF-8",
           },
           settings = {
             java = {
-              -- 基本設定
-              signatureHelp = { enabled = true }, -- 引数のヒントを有効化
-              contentProvider = { enabled = true }, -- 定義ジャンプ時にソースコードを表示
-
-              -- プロジェクト設定
-              project = {
-                resourceConfiguration = {
-                  filter = {
-                    "node_modules/**",
-                    ".git/**",
-                  },
-                },
-              },
-
-              -- 補完設定
-              completion = {
-                -- staticメソッドやフィールドを補完候補の上位に表示
-                favoriteStaticMembers = {
-                  -- "org.junit.Assert.*",
-                  -- "org.junit.Assume.*",
-                  -- "org.junit.jupiter.api.Assertions.*",
-                  -- "org.junit.jupiter.api.Assumptions.*",
-                  -- "org.mockito.Mockito.*",
-                  -- "org.mockito.ArgumentMatchers.*",
-                  -- "org.mockito.Answers.*",
-                },
-                -- 補完候補から除外する型
-                filteredTypes = {
-                  -- "com.sun.*",
-                  -- "java.awt.*",
-                  -- "jdk.*",
-                  -- "sun.*",
-                },
-                importOrder = {
-                  "java",
-                  "javax",
-                  "com",
-                  "org",
-                  "net",
-                  "io",
-                  "dev",
-                },
-              },
-
-              -- import整理の設定
-              sources = {
-                organizeImports = {
-                  starThreshold = 9999, -- インポートを*にまとめる閾値
-                  staticStarThreshold = 9999, -- staticインポートを*にまとめる閾値
-                },
-              },
-
-              -- コード生成の設定
-              codeGeneration = {
-                toString = {
-                  -- toStringメソッドのテンプレート設定
-                  -- template = "${object.className}{${member.name()}=${member.value}, ${otherMembers}}",
-                },
-                useBlocks = true, -- コード生成時にif文などでブロックを使用
-              },
-
-              -- インレイヒントの設定
+              signatureHelp = { enabled = true },
+              contentProvider = { enabled = true },
               inlayHints = {
                 parameterNames = {
-                  enabled = "all", -- 常にパラメータ名のインレイヒントを表示
-                },
-              },
-
-              -- ランタイム設定
-              configuration = {
-                runtimes = {
-                  {
-                    name = "JavaSE-25",
-                    path = "C:\\Program Files\\Microsoft\\jdk-25.0.0.36-hotspot",
-                    default = true,
-                  },
+                  enabled = "all",
                 },
               },
             },
           },
         },
+      },
+      setup = {
+        -- Take full control of pyright setup to ensure silence
+        pyright = function(server, opts)
+          -- Silence diagnostics
+          opts.handlers = opts.handlers or {}
+          opts.handlers["textDocument/publishDiagnostics"] = function() end
+
+          -- Disable diagnostic capability
+          if not opts.capabilities then
+            opts.capabilities = vim.lsp.protocol.make_client_capabilities()
+          end
+          opts.capabilities.textDocument.publishDiagnostics = false
+
+          -- Execute setup and return true to skip LazyVim's default setup
+          require("lspconfig")[server].setup(opts)
+          return true
+        end,
       },
     },
   },
