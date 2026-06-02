@@ -3,7 +3,7 @@ return {
   cmd = "Neotree",
   dependencies = {
     "nvim-lua/plenary.nvim",
-    "kyazdani42/nvim-web-devicons", -- オプション、ファイルアイコン用
+    "nvim-tree/nvim-web-devicons",
     "MunifTanjim/nui.nvim",
   },
   keys = {

@@ -23,8 +23,7 @@ if wezterm.target_triple:find("windows") ~= nil then
 	-- Windows の場合は PowerShell を指定
 	config.default_prog = { "pwsh.exe", "-NoLogo" }
 else
-	-- 他の OS (例: Linux/macOS) の場合は fish を指定
-	config.default_prog = { "/usr/sbin/fish" }
+	config.default_prog = { os.getenv("SHELL") or "/bin/zsh", "-l" }
 end
 
 -- WSLだけで使いたい場合は以下のコメントを外す
