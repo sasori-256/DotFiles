@@ -71,6 +71,8 @@
       "wezterm"
       "brave-browser"
       "claude"
+      "azookey"
+      "github"
     ];
   };
 }
