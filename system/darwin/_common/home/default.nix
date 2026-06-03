@@ -4,6 +4,7 @@
   imports = [
     ./packages.nix
     ./programs/fzf.nix
+    ./programs/git.nix
     ./programs/neovim.nix
     ./programs/starship.nix
     ./programs/wezterm.nix

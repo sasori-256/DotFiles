@@ -60,7 +60,8 @@
   homebrew = {
     enable = true;
     onActivation = {
-      cleanup = "uninstall";
+      # 最新バージョンのHomebrewでcleanupにforce、force-cleanupが必要になったため、いったんオフ
+      cleanup = "none";
       autoUpdate = true;
       upgrade = true;
     };
