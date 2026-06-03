@@ -6,7 +6,7 @@ debug
 foo.*
 *.log
 data
-nvim/lazy-lock.json
+temp.md
 
 .gemini/
 gha-creds-*.json

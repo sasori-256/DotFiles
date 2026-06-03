@@ -59,12 +59,6 @@ return {
     config = function()
       local palette = require("catppuccin.palettes").get_palette("frappe")
       require("incline").setup({
-        highlight = {
-          groups = {
-            InclineNormal = { guibg = palette.mauve, guifg = palette.base },
-            InclineNormalNC = { guifg = palette.surface2, guibg = palette.mantle },
-          },
-        },
         window = { margin = { vertical = 0, horizontal = 1 } },
         hide = {
           cursorline = true,
@@ -79,6 +73,8 @@ return {
           return { { icon, guifg = color }, { " " }, { filename } }
         end,
       })
+      vim.api.nvim_set_hl(0, "InclineNormal", { bg = palette.mauve, fg = palette.base })
+      vim.api.nvim_set_hl(0, "InclineNormalNC", { bg = palette.mantle, fg = palette.surface2 })
     end,
   },
 
