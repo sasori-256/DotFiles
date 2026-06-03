@@ -45,15 +45,15 @@ return {
           enable = true,
           lookahead = true,
           keymaps = {
-            ["af"] = "@function.outer",
-            ["if"] = "@function.inner",
-            ["ac"] = "@class.outer",
-            ["ic"] = "@class.inner",
-            ["al"] = "@loop.outer",
-            ["il"] = "@loop.inner",
-            ["aa"] = "@parameter.outer",
-            ["ia"] = "@parameter.inner",
-            ["as"] = "@statement.outer",
+            ["<leader>taf"] = "@function.outer",
+            ["<leader>tif"] = "@function.inner",
+            ["<leader>tac"] = "@class.outer",
+            ["<leader>tic"] = "@class.inner",
+            ["<leader>tal"] = "@loop.outer",
+            ["<leader>til"] = "@loop.inner",
+            ["<leader>taa"] = "@parameter.outer",
+            ["<leader>tia"] = "@parameter.inner",
+            ["<leader>tas"] = "@statement.outer",
           },
         },
         move = {
@@ -79,10 +79,10 @@ return {
         swap = {
           enable = true,
           swap_next = {
-            ["<leader>a"] = "@parameter.inner",
+            ["<leader>tsa"] = "@parameter.inner",
           },
           swap_previous = {
-            ["<leader>A"] = "@parameter.inner",
+            ["<leader>tsA"] = "@parameter.inner",
           },
         },
       },

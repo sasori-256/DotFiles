@@ -39,6 +39,7 @@ opt.encoding = "utf-8"
 opt.fileencoding = "utf-8"
 opt.fileencodings = { "utf-8", "ascii", "cp932", "euc-jp", "sjis" }
 opt.fileformats = { "dos", "unix" }
+-- opt.ambiwidth removed in Neovim 0.12
 opt.backspace = { "indent", "eol", "start" }
 opt.clipboard:append("unnamedplus")
 opt.mouse = ""
@@ -60,7 +61,8 @@ opt.whichwrap = "b,s,<,>"
 opt.wrap = false
 -- opt.linebreak = true
 -- opt.showbreak = "=>>>"
-opt.foldmethod = "syntax"
+opt.foldmethod = "expr"
+opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 opt.foldlevelstart = 99
 opt.listchars = { eol = "↵", tab = ">~", trail = "-", extends = ">", precedes = "<", nbsp = "%" }
 opt.list = true
@@ -111,6 +113,4 @@ opt.splitbelow = true
 opt.splitright = true
 opt.splitkeep = "cursor"
 
--- Undercurl
-vim.cmd([[let &t_Cs = "\e[4:3m"]])
-vim.cmd([[let &t_Ce = "\e[4:0m"]])
+-- Undercurl (handled natively in Neovim 0.12+ on supporting terminals)
