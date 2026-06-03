@@ -39,7 +39,6 @@ opt.encoding = "utf-8"
 opt.fileencoding = "utf-8"
 opt.fileencodings = { "utf-8", "ascii", "cp932", "euc-jp", "sjis" }
 opt.fileformats = { "dos", "unix" }
-opt.ambiwidth = "single"
 opt.backspace = { "indent", "eol", "start" }
 opt.clipboard:append("unnamedplus")
 opt.mouse = ""
