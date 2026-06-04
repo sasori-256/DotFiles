@@ -41,7 +41,7 @@ opt.fileencodings = { "utf-8", "ascii", "cp932", "euc-jp", "sjis" }
 opt.fileformats = { "dos", "unix" }
 -- opt.ambiwidth removed in Neovim 0.12
 opt.backspace = { "indent", "eol", "start" }
-opt.clipboard:append("unnamedplus")
+opt.clipboard:append({ "unnamedplus" })
 opt.mouse = ""
 
 -------------------------------------------------------------------------------

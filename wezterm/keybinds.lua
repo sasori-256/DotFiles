@@ -81,6 +81,35 @@ return {
 
 		{ key = "z", mods = "LEADER", action = act.TogglePaneZoomState },
 
+		-- Claude Code
+		{
+			key = "a",
+			mods = "LEADER",
+			action = wezterm.action_callback(function(window, pane)
+				local tab = window:active_tab()
+				for _, p in ipairs(tab:panes()) do
+					local proc = p:get_foreground_process_name() or ""
+					if proc:find("claude") then
+						p:activate()
+						return
+					end
+				end
+				window:perform_action(
+					act.SplitPane({
+						direction = "Right",
+						command = { args = { "claude" } },
+						size = { Percent = 40 },
+					}),
+					pane
+				)
+			end),
+		},
+		{
+			key = "A",
+			mods = "LEADER",
+			action = act.SpawnCommandInNewTab({ args = { "claude" } }),
+		},
+
 		-- Move Window
 		{ key = "n", mods = "LEADER", action = act.ActivatePaneDirection("Left") },
 		{ key = "N", mods = "LEADER", action = act.AdjustPaneSize({ "Left", 1 }) },

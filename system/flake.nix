@@ -10,8 +10,12 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
-  outputs = { self, nixpkgs, nix-darwin, home-manager }:
+  outputs = { self, nixpkgs, nix-darwin, home-manager, nixvim }:
     let
       lib = nixpkgs.lib;
       df-root = path: ./../${path};
@@ -19,7 +23,9 @@
       mkDarwinSystem = { hostname, username }: nix-darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         modules = [
+	  # Packages shared with every user
           ./darwin/_common/system.nix
+	  # Packages bound each user
           ./darwin/${hostname}/system.nix
           home-manager.darwinModules.home-manager
           {
@@ -35,6 +41,7 @@
             ]; };
 
             home-manager.sharedModules = [
+              nixvim.homeModules.nixvim
               {
                 _module.args = {
                   inherit lib username hostname df-root;

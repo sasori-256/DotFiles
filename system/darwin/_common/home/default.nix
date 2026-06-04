@@ -2,10 +2,10 @@
 
 {
   imports = [
+    ../../../_common/home/programs/neovim.nix
     ./packages.nix
     ./programs/fzf.nix
     ./programs/git.nix
-    ./programs/neovim.nix
     ./programs/starship.nix
     ./programs/wezterm.nix
     ./programs/zoxide.nix

@@ -72,7 +72,7 @@ function Setup-Symlinks {
     }
 
     # Symlinks
-    Link-Item -Src "$dotfiles\nvim" -Dest "$env:LOCALAPPDATA\nvim"
+    Link-Item -Src "$dotfiles\nvim-windows" -Dest "$env:LOCALAPPDATA\nvim"
     Link-Item -Src "$dotfiles\wezterm" -Dest "$config\wezterm"
     Link-Item -Src "$dotfiles\starship.toml" -Dest "$config\starship.toml"
 
