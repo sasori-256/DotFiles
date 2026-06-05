@@ -7,15 +7,15 @@ in
 {
   programs.git = {
     enable = true;
-    userName = "黄泉比良坂46(むつみん)";
-    userEmail = email;
 
     signing = {
       key = signingKey;
       signByDefault = true;
     };
 
-    extraConfig = {
+    settings = {
+      user.name  = "黄泉比良坂46(むつみん)";
+      user.email = email;
       gpg.format = "ssh";
       gpg.ssh.allowedSignersFile = "~/.ssh/allowed_signers";
     };

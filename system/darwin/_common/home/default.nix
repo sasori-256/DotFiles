@@ -1,9 +1,16 @@
-{ pkgs, lib, username, ... }:
+{
+  pkgs,
+  lib,
+  username,
+  ...
+}:
 
 {
   imports = [
     ../../../_common/home/programs/neovim.nix
+    ../../../_common/home/programs/nh.nix
     ./packages.nix
+    ./programs/direnv.nix
     ./programs/fzf.nix
     ./programs/git.nix
     ./programs/starship.nix
