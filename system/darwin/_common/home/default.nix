@@ -22,6 +22,7 @@
   home.username = username;
   home.homeDirectory = lib.mkForce "/Users/${username}";
   home.stateVersion = "24.11";
+  home.sessionPath = [ "/Users/${username}/.local/bin" ];
 
   programs.home-manager.enable = true;
   targets.darwin.linkApps.enable = true;
