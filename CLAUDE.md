@@ -6,12 +6,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **macOS (nix-darwin):**
 ```bash
-darwin-rebuild switch --flake ~/DotFiles/system
+nh darwin switch
 ```
-`nix-output-monitor` が入っているので `nom` でラップすると出力が見やすい:
-```bash
-darwin-rebuild switch --flake ~/DotFiles/system |& nom
-```
+`nh` が自動で nix-output-monitor を使って出力を整形する。dry-run 確認は `nh darwin switch --dry-run`。
 
 **Windows:**
 ```powershell

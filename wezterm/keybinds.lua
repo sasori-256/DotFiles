@@ -90,7 +90,7 @@ return {
 				for _, p in ipairs(tab:panes()) do
 					local proc = p:get_foreground_process_name() or ""
 					if proc:find("claude") then
-						p:activate()
+						window:perform_action(act.ActivatePaneById(p:pane_id()), pane)
 						return
 					end
 				end

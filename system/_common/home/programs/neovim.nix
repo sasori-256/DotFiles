@@ -234,7 +234,7 @@
       {
         mode = "n";
         key = "j";
-        action = '''"_s'';
+        action = "\"_s";
         options = {
           noremap = true;
           silent = true;
@@ -783,7 +783,28 @@
           yamlls.enable = true;
           jsonls.enable = true;
           sqls.enable = true;
-          jdtls.enable = true;
+          jdtls = {
+            enable = true;
+            extraOptions = {
+              # Per-project workspace: cache/jdtls/<project-name>
+              cmd.__raw = ''
+                {
+                  "jdtls",
+                  "--data=" .. vim.fn.stdpath("cache") .. "/jdtls/" ..
+                    vim.fn.fnamemodify(vim.fn.getcwd(), ":t"),
+                }
+              '';
+              settings.java.configuration.runtimes.__raw = ''
+                (function()
+                  local h = vim.fn.getenv("JAVA_HOME")
+                  if h ~= vim.NIL and h ~= "" then
+                    return {{ name = "JavaSE-25", path = h, default = true }}
+                  end
+                  return {}
+                end)()
+              '';
+            };
+          };
         };
       };
 
@@ -1143,6 +1164,12 @@
         modules = {
           files = {
             windows.preview = true;
+            mappings = {
+              go_in = "k";
+              go_in_plus = "K";
+              go_out = "n";
+              go_out_plus = "N";
+            };
           };
           icons = { };
           surround = {
