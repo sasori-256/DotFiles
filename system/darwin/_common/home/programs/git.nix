@@ -34,7 +34,7 @@ in
       ControlPath = "~/.ssh/control/%C";
       ControlPersist = "10m";
     };
-    matchBlocks."github.com".user = "git";
+    settings."github.com".User = "git";
   };
 
   home.file.".ssh/control/.keep".text = "";
