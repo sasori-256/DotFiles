@@ -23,11 +23,21 @@ in
 
   programs.ssh = {
     enable = true;
-    extraConfig = ''
-      Host *
-        IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
-    '';
+    enableDefaultConfig = false;
+    settings."*" = {
+      IdentityAgent = "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock";
+      AddKeysToAgent = "no";
+      ServerAliveInterval = 60;
+      ServerAliveCountMax = 3;
+      StrictHostKeyChecking = "accept-new";
+      ControlMaster = "auto";
+      ControlPath = "~/.ssh/control/%C";
+      ControlPersist = "10m";
+    };
+    matchBlocks."github.com".user = "git";
   };
+
+  home.file.".ssh/control/.keep".text = "";
 
   home.file.".ssh/allowed_signers".text = ''
     ${email} ${signingKey}
