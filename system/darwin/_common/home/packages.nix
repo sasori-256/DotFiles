@@ -29,12 +29,21 @@
     # node
     biome
     prettierd
+    eslint
+    markdownlint-cli2
+
+    # python
+    ruff
 
     # lua
     stylua
+    selene
 
     # nix
     nixfmt
     statix
+
+    # yaml / html
+    yamllint
   ];
 }

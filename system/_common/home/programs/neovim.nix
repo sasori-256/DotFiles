@@ -892,6 +892,7 @@
             html.__raw = ''{ "prettierd", "prettier", stop_after_first = true }'';
             yaml.__raw = ''{ "prettierd", "prettier", stop_after_first = true }'';
             markdown.__raw = ''{ "prettierd", "prettier", stop_after_first = true }'';
+            mdx.__raw = ''{ "prettierd", "prettier", stop_after_first = true }'';
             python = [ "ruff_format" ];
             lua = [ "stylua" ];
             nix = [ "nixfmt" ];
@@ -929,6 +930,9 @@
           html = [ "htmllint" ];
           yaml = [ "yamllint" ];
           markdown = [ "markdownlint" ];
+          mdx = [
+            "eslint"
+          ];
           python = [ "ruff" ];
           lua = [ "selene" ];
           nix = [ "statix" ];
