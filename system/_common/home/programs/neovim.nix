@@ -89,7 +89,7 @@
       laststatus = 3;
       splitbelow = true;
       splitright = true;
-      splitkeep = "screen";
+      splitkeep = "cursor";
     };
 
     keymaps = [
