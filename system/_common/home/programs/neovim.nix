@@ -1181,12 +1181,7 @@
           };
           ai = { };
           pairs = { };
-          animate = {
-            cursor.enable = true;
-            scroll.enable = true;
-            resize.enable = true;
-            win_open.enable = true;
-          };
+          animate = { };
           hipatterns = {
             # highlighters = {
             #   fixme = {
