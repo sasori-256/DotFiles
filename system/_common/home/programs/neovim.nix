@@ -46,8 +46,7 @@
       visualbell = true;
       whichwrap = "b,s,<,>,[,],"; # Not wrap by using h and l (in tomisuke keymap, n and k)
       wrap = false;
-      foldmethod = "expr";
-      foldexpr = "v:lua.vim.treesitter.foldexpr()";
+      foldmethod = "indent";
       foldlevelstart = 99;
       list = true; # Visualize following chars
       listchars = {
@@ -1131,7 +1130,7 @@
 
       # --- Indent Guide ---
       hlchunk = {
-        enable = false;
+        enable = true;
         settings = {
           chunk = {
             enable = true;
@@ -1161,7 +1160,7 @@
           blank.enable = false;
         };
       };
-
+      #
       # --- Mini ---
       mini = {
         enable = true;
@@ -1215,15 +1214,23 @@
       vim.filetype.add({ extension = { mdx = "mdx" } })
       vim.treesitter.language.register("markdown", "mdx")
 
-      -- vsplit直後に scrollbind/cursorbind がコピーされて同期スクロールが起きる問題を防ぐ
-      vim.api.nvim_create_autocmd({ "WinNew", "WinEnter" }, {
+      -- vsplit時のスクロールティア修正:
+      -- Neovimのターミナルスクロール最適化(DECSTBM+CSI S/T)は画面全幅に適用されるため、
+      -- 縦分割時に非アクティブウィンドウの表示が崩れる。
+      -- スクロール毎に強制再描画して修正する。
+      local _in_redraw = false
+      vim.api.nvim_create_autocmd("WinScrolled", {
         callback = function()
-          vim.schedule(function()
-            for _, winid in ipairs(vim.api.nvim_list_wins()) do
-              pcall(vim.api.nvim_win_set_option, winid, "scrollbind", false)
-              pcall(vim.api.nvim_win_set_option, winid, "cursorbind", false)
+          if _in_redraw then return end
+          local cur = vim.api.nvim_get_current_win()
+          for _, w in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+            if w ~= cur and vim.api.nvim_win_get_config(w).relative == "" then
+              _in_redraw = true
+              vim.cmd("redraw!")
+              _in_redraw = false
+              return
             end
-          end)
+          end
         end,
       })
     '';
