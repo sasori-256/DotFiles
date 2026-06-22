@@ -1182,10 +1182,10 @@
           ai = { };
           pairs = { };
           animate = {
-            enable = true;
-            cursor = true;
-            scroll = true;
-            resize = true;
+            cursor.enable = true;
+            scroll.enable = true;
+            resize.enable = true;
+            win_open.enable = true;
           };
           hipatterns = {
             # highlighters = {
