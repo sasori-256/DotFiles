@@ -1214,6 +1214,18 @@
     extraConfigLua = ''
       vim.filetype.add({ extension = { mdx = "mdx" } })
       vim.treesitter.language.register("markdown", "mdx")
+
+      -- vsplit直後に scrollbind/cursorbind がコピーされて同期スクロールが起きる問題を防ぐ
+      vim.api.nvim_create_autocmd({ "WinNew", "WinEnter" }, {
+        callback = function()
+          vim.schedule(function()
+            for _, winid in ipairs(vim.api.nvim_list_wins()) do
+              pcall(vim.api.nvim_win_set_option, winid, "scrollbind", false)
+              pcall(vim.api.nvim_win_set_option, winid, "cursorbind", false)
+            end
+          end)
+        end,
+      })
     '';
   };
 }
