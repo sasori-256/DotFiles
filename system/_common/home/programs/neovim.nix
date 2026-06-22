@@ -586,7 +586,7 @@
         term_colors = true;
 
         dim_inactive = {
-          enable = true;
+          enable = false;
           shade = "dark";
           percentage = 0.10;
         };
@@ -1211,7 +1211,7 @@
 
     extraConfigLuaPre = "vim.g._start_time = vim.uv.hrtime()";
 
-    extraLuaConfig = ''
+    extraConfigLua = ''
       vim.filetype.add({ extension = { mdx = "mdx" } })
       vim.treesitter.language.register("markdown", "mdx")
     '';
