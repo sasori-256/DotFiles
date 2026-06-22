@@ -708,6 +708,7 @@
             "luadoc"
             "markdown"
             "markdown_inline"
+            "mdx"
             "nix"
             "python"
             "rust"
@@ -1018,7 +1019,7 @@
             enable = false;
           };
           scroll = {
-            enable = true;
+            enable = false;
           };
           words = {
             enable = true;
@@ -1210,6 +1211,8 @@
 
     extraConfigLuaPre = "vim.g._start_time = vim.uv.hrtime()";
 
-    extraLuaConfig = "";
+    extraLuaConfig = ''
+      vim.filetype.add({ extension = { mdx = "mdx" } })
+    '';
   };
 }
