@@ -1131,7 +1131,7 @@
 
       # --- Indent Guide ---
       hlchunk = {
-        enable = true;
+        enable = false;
         settings = {
           chunk = {
             enable = true;
