@@ -8,7 +8,7 @@
     globals = {
       mapleader = " ";
       autoformat = true;
-      snacks_animate = true;
+      snacks_animate = false;
     };
 
     opts = {
@@ -1017,6 +1017,7 @@
           indent = {
             enable = false;
           };
+          # mini.animate is now enabled by default, but it can be disabled if you want to use Snacks.animate instead
           scroll = {
             enable = false;
           };
