@@ -1136,8 +1136,8 @@
           chunk = {
             enable = true;
             use_treesitter = true;
-            delay = 100;
-            duration = 100;
+            delay = 0;
+            duration = 0;
             style = [
               { fg = "#ca9ee6"; }
               { fg = "#c6d0f5"; }
@@ -1213,6 +1213,7 @@
 
     extraLuaConfig = ''
       vim.filetype.add({ extension = { mdx = "mdx" } })
+      vim.treesitter.language.register("markdown", "mdx")
     '';
   };
 }
