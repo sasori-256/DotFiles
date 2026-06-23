@@ -46,7 +46,8 @@
       visualbell = true;
       whichwrap = "b,s,<,>,[,],"; # Not wrap by using h and l (in tomisuke keymap, n and k)
       wrap = false;
-      foldmethod = "indent";
+      foldmethod = "expr";
+      foldexpr = "v:lua.vim.treesitter.foldexpr()";
       foldlevelstart = 99;
       list = true; # Visualize following chars
       listchars = {
