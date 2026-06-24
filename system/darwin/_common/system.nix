@@ -86,6 +86,7 @@
       "azookey"
       "github"
       "orbstack"
+      "windows-app"
     ];
   };
 }
