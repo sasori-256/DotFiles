@@ -12,6 +12,7 @@
       "obsidian"
       "adobe-creative-cloud"
       "voicevox"
+      "zap"
     ];
   };
 }
