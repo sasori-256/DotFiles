@@ -8,7 +8,6 @@
     casks = [
       "discord"
       "notion"
-      "processing"
       "obsidian"
       "adobe-creative-cloud"
       "voicevox"
