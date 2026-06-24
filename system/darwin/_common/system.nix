@@ -10,7 +10,16 @@
     fi
   '';
 
+  # Rosetta 2 を未インストールなら入れる（x86_64 macOS バイナリ実行のため）
+  system.activationScripts.extraActivation.text = ''
+    if ! /usr/bin/arch -x86_64 /usr/bin/true 2>/dev/null; then
+      echo "Installing Rosetta 2..."
+      /usr/sbin/softwareupdate --install-rosetta --agree-to-license
+    fi
+  '';
+
   nix.settings.experimental-features = "nix-command flakes";
+  nix.settings.extra-platforms = [ "x86_64-darwin" ];
   nix.package = pkgs.nix;
   nixpkgs.config.allowUnfree = true;
   nixpkgs.hostPlatform = "aarch64-darwin";
