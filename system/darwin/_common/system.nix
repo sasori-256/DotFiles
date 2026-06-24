@@ -87,6 +87,7 @@
       "github"
       "orbstack"
       "windows-app"
+      "tailscale"
     ];
   };
 }
