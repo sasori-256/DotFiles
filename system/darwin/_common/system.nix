@@ -88,6 +88,7 @@
       "orbstack"
       "windows-app"
       "tailscale"
+      "obsidian"
     ];
   };
 }
