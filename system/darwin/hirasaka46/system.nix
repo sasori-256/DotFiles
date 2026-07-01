@@ -12,6 +12,7 @@
       "adobe-creative-cloud"
       "voicevox"
       "zap"
+      "prismlauncher"
     ];
   };
 }
