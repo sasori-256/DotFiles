@@ -14,6 +14,7 @@
       "zap"
       "prismlauncher"
       "firefox"
+      "parsec"
     ];
   };
 }
