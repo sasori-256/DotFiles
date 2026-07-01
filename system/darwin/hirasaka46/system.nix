@@ -13,6 +13,7 @@
       "voicevox"
       "zap"
       "prismlauncher"
+      "firefox"
     ];
   };
 }
