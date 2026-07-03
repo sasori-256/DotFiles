@@ -18,8 +18,14 @@
     fi
   '';
 
-  nix.settings.experimental-features = "nix-command flakes";
-  nix.settings.extra-platforms = [ "x86_64-darwin" ];
+  nix.settings = {
+    experimental-features = "nix-command flakes";
+    extra-platforms = [ "x86_64-darwin" ];
+    substituters = [ "https://devenv.cachix.org" ];
+    trusted-public-keys = [
+      "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
+    ];
+  };
   nix.package = pkgs.nix;
   nixpkgs.config.allowUnfree = true;
   nixpkgs.hostPlatform = "aarch64-darwin";

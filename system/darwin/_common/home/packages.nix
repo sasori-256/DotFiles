@@ -23,6 +23,9 @@
     moralerspace
 
     # --- Dev tools ---
+    # Environment management
+    devenv
+
     # python
     uv
 
