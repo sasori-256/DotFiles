@@ -16,6 +16,7 @@
     starship
     fastfetch
     claude-code
+    antigravity-cli
     tree-sitter
     chafa # Create ASCII/Unicode art from images in the terminal
 
