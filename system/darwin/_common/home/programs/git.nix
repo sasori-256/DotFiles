@@ -14,7 +14,7 @@ in
     };
 
     settings = {
-      user.name  = "黄泉比良坂46(むつみん)";
+      user.name = "黄泉比良坂46(むつみん)";
       user.email = email;
       gpg.format = "ssh";
       gpg.ssh.allowedSignersFile = "~/.ssh/allowed_signers";
@@ -24,6 +24,9 @@ in
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
+    extraConfig = ''
+      Include ~/.ssh.config.local
+    '';
     settings."*" = {
       IdentityAgent = ''"~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"'';
       AddKeysToAgent = "no";
