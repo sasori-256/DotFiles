@@ -1,6 +1,11 @@
 { pkgs, username, ... }:
 
 {
+  # Disable NixOS 22.11 and later's automatic documentation generation
+  # to avoid nixvim's conflict with
+  # "nixos-render-docs manual html: error: --toc-depth has been removed, …"
+  documentation.enable = false;
+
   environment.systemPackages = with pkgs; [
   ];
 
