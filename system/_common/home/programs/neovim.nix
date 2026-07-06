@@ -1080,8 +1080,8 @@
       };
 
       render-markdown = {
+        # "completion" is deprecated
         enable = true;
-        completions.blink.enable = true;
         settings = {
           latex.enabled = false;
         };
