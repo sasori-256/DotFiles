@@ -1,10 +1,15 @@
 { pkgs, username, ... }:
 
 {
-  # Disable NixOS 22.11 and later's automatic documentation generation
-  # to avoid nixvim's conflict with
+  # Disable nix-darwin manual generation to avoid upstream bug:
   # "nixos-render-docs manual html: error: --toc-depth has been removed, …"
+  # (nix-darwin still passes --toc-depth, which was removed in newer nixpkgs)
   documentation.enable = false;
+  # darwin-uninstaller は内部で nix-darwin を再評価しており、
+  # そこでは documentation.enable のデフォルトが true になるため、
+  # 上の設定だけでは darwin-manual-html のビルドを止められない。
+  # uninstaller 自体を無効化して再帰評価を回避する。
+  system.tools.darwin-uninstaller.enable = false;
 
   environment.systemPackages = with pkgs; [
   ];

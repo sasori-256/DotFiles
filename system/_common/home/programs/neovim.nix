@@ -712,6 +712,7 @@
             "nix"
             "python"
             "rust"
+            "scheme"
             "toml"
             "tsx"
             "typescript"
@@ -784,6 +785,10 @@
           yamlls.enable = true;
           jsonls.enable = true;
           sqls.enable = true;
+          guile_ls = {
+            enable = true;
+            package = null;
+          };
           jdtls = {
             enable = true;
             extraOptions = {
@@ -897,10 +902,17 @@
             python = [ "ruff_format" ];
             lua = [ "stylua" ];
             nix = [ "nixfmt" ];
+            scheme = [ "schemat" ];
           };
           format_on_save = {
             timeout_ms = 500;
             lsp_fallback = true;
+          };
+          formatters = {
+            schemat = {
+              command = "schemat";
+              stdin = true;
+            };
           };
         };
       };

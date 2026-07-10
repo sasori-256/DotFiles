@@ -38,6 +38,11 @@
               networking.hostName = hostname;
               users.users.${username}.home = "/Users/${username}";
 
+              # Disable documentation generation
+              # to avoid issues with building packages that require documentation tools
+              documentation.enable = false;
+              documentation.doc.enable = false;
+
               home-manager.useUserPackages = true;
               home-manager.backupFileExtension = "backup";
 

@@ -48,6 +48,9 @@
     nixfmt
     statix
 
+    # scheme
+    schemat
+
     # yaml / html
     yamllint
   ];
