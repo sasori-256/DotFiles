@@ -1,9 +1,20 @@
 { ... }:
 
 {
-  homebrew.casks = [
-    "discord"
-    "notion"
-    "processing"
-  ];
+  homebrew = {
+    taps = [
+      "VOICEVOX/voicevox"
+    ];
+    casks = [
+      "discord"
+      "notion"
+      "obsidian"
+      "adobe-creative-cloud"
+      "voicevox"
+      "zap"
+      "prismlauncher"
+      "firefox"
+      "parsec"
+    ];
+  };
 }

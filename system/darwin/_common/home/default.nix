@@ -1,11 +1,18 @@
-{ pkgs, lib, username, ... }:
+{
+  pkgs,
+  lib,
+  username,
+  ...
+}:
 
 {
   imports = [
+    ../../../_common/home/programs/neovim.nix
+    ../../../_common/home/programs/nh.nix
     ./packages.nix
+    ./programs/direnv.nix
     ./programs/fzf.nix
     ./programs/git.nix
-    ./programs/neovim.nix
     ./programs/starship.nix
     ./programs/wezterm.nix
     ./programs/zoxide.nix
@@ -15,6 +22,7 @@
   home.username = username;
   home.homeDirectory = lib.mkForce "/Users/${username}";
   home.stateVersion = "24.11";
+  home.sessionPath = [ "/Users/${username}/.local/bin" ];
 
   programs.home-manager.enable = true;
   targets.darwin.linkApps.enable = true;

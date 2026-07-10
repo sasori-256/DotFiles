@@ -1,60 +1,96 @@
 { pkgs, username, ... }:
 
 {
+  # Disable NixOS 22.11 and later's automatic documentation generation
+  # to avoid nixvim's conflict with
+  # "nixos-render-docs manual html: error: --toc-depth has been removed, …"
+  documentation.enable = false;
+
   environment.systemPackages = with pkgs; [
   ];
 
-  system.activationScripts.preActivation.text = ''
-    if [ -f /etc/nix/nix.conf ]; then
-      mv /etc/nix/nix.conf /etc/nix/nix.conf.before-nix-darwin || true;
-    fi
-  '';
+  system = {
+    activationScripts.preActivation.text = ''
+      if [ -f /etc/nix/nix.conf ]; then
+        mv /etc/nix/nix.conf /etc/nix/nix.conf.before-nix-darwin || true;
+      fi
+    '';
 
-  nix.settings.experimental-features = "nix-command flakes";
-  nix.package = pkgs.nix;
-  nixpkgs.config.allowUnfree = true;
-  nixpkgs.hostPlatform = "aarch64-darwin";
+    # Rosetta 2 を未インストールなら入れる（x86_64 macOS バイナリ実行のため）
+    activationScripts.extraActivation.text = ''
+      if ! /usr/bin/arch -x86_64 /usr/bin/true 2>/dev/null; then
+        echo "Installing Rosetta 2..."
+        /usr/sbin/softwareupdate --install-rosetta --agree-to-license
+      fi
+    '';
 
-  # Garbage Collection of Nix
-  nix.gc = {
-    automatic = true;
-    interval = { Day = 7; };
-    options = "--delete-older-than 30d";
+    primaryUser = username;
+
+    stateVersion = 4;
+
+    defaults = {
+      # Finder
+      finder = {
+      };
+
+      # Dock
+      dock = {
+      };
+
+      # Global settings
+      NSGlobalDomain = {
+      };
+
+      # Control Center
+      controlcenter = {
+      };
+
+      # Trackpad
+      trackpad = {
+      };
+    };
   };
 
-  system.primaryUser = username;
+  nix = {
+    settings = {
+      experimental-features = "nix-command flakes";
+      extra-platforms = [ "x86_64-darwin" ];
+      substituters = [ "https://devenv.cachix.org" ];
+      trusted-users = [
+        "root"
+        "${username}"
+      ];
+      trusted-public-keys = [
+        "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
+      ];
+    };
+    package = pkgs.nix;
+
+    # Garbage Collection of Nix
+    gc = {
+      automatic = true;
+      interval = {
+        Day = 7;
+      };
+      options = "--delete-older-than 30d";
+    };
+  };
+
+  nixpkgs = {
+    config.allowUnfree = true;
+    hostPlatform = "aarch64-darwin";
+  };
 
   environment.variables = {
     EDITOR = "nvim";
   };
 
-  system.stateVersion = 4;
   ids.gids.nixbld = 350;
 
   security.pam.services.sudo_local.touchIdAuth = true;
 
   programs.zsh.enable = true;
   users.users.${username}.shell = pkgs.zsh;
-
-  # Finder
-  system.defaults.finder = {
-  };
-
-  # Dock
-  system.defaults.dock = {
-  };
-
-  # Global settings
-  system.defaults.NSGlobalDomain = {
-  };
-
-  # Control Center
-  system.defaults.controlcenter = {
-  };
-
-  # Trackpad
-  system.defaults.trackpad = {
-  };
 
   # Homebrew for GUI installation
   homebrew = {
@@ -74,6 +110,10 @@
       "claude"
       "azookey"
       "github"
+      "orbstack"
+      "windows-app"
+      "tailscale"
+      "obsidian"
     ];
   };
 }

@@ -2,13 +2,11 @@
 
 {
   home.packages = with pkgs; [
-    # CLI tools
-    nix-output-monitor
+    # --- CLI tools ---
     _1password-cli
     git
     gh
     lazygit
-    neovim
     fd
     fzf
     ripgrep
@@ -18,11 +16,39 @@
     starship
     fastfetch
     claude-code
+    antigravity-cli
+    tree-sitter
+    chafa # Create ASCII/Unicode art from images in the terminal
+    p7zip
 
-    # Fonts
+    # --- Fonts ---
     moralerspace
 
-    # Dev tools
+    # --- Dev tools ---
+    # Environment management
+    devenv
+
+    # python
     uv
+
+    # node
+    biome
+    prettierd
+    eslint
+    markdownlint-cli2
+
+    # python
+    ruff
+
+    # lua
+    stylua
+    selene
+
+    # nix
+    nixfmt
+    statix
+
+    # yaml / html
+    yamllint
   ];
 }
