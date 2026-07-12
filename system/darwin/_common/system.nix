@@ -117,7 +117,7 @@
       "github"
       "orbstack"
       "windows-app"
-      "tailscale"
+      "tailscale-app"
       "obsidian"
     ];
   };
