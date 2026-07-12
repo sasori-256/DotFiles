@@ -15,6 +15,7 @@
       "prismlauncher"
       "firefox"
       "parsec"
+      "microsoft-office"
     ];
   };
 }
