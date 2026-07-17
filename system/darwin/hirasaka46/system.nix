@@ -16,6 +16,7 @@
       "firefox"
       "parsec"
       "microsoft-office"
+      "blender"
     ];
   };
 }
