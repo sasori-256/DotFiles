@@ -7,6 +7,7 @@
     ];
     casks = [
       "discord"
+      "slack"
       "notion"
       "obsidian"
       "adobe-creative-cloud"
