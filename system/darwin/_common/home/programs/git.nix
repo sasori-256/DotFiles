@@ -51,6 +51,6 @@ in
   home.file.".ssh/control/.keep".text = "";
 
   home.file.".ssh/allowed_signers".text = ''
-    ${email} ${signingKey}
+    ${noreply-email} ${signingKey}
   '';
 }
