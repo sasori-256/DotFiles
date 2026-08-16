@@ -15,12 +15,6 @@
   ];
 
   system = {
-    activationScripts.preActivation.text = ''
-      if [ -f /etc/nix/nix.conf ]; then
-        mv /etc/nix/nix.conf /etc/nix/nix.conf.before-nix-darwin || true;
-      fi
-    '';
-
     # Rosetta 2 を未インストールなら入れる（x86_64 macOS バイナリ実行のため）
     activationScripts.extraActivation.text = ''
       if ! /usr/bin/arch -x86_64 /usr/bin/true 2>/dev/null; then
@@ -104,7 +98,11 @@
       # 最新バージョンのHomebrewでcleanupにforce、force-cleanupが必要になったため、いったんオフ
       cleanup = "none";
       autoUpdate = true;
-      upgrade = true;
+      # true だと brew bundle に --no-upgrade が付かず、switch のたびに
+      # 古い cask を全部ダウンロードし直す（24 casks あるのでほぼ毎回発生し、
+      # activation が数百 MB のダウンロード待ちになる）。
+      # cask 側の自動更新に任せ、まとめて上げたいときは `brew upgrade --cask`。
+      upgrade = false;
     };
     casks = [
       "raycast"

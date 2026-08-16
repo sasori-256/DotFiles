@@ -14,6 +14,7 @@
     ./programs/fzf.nix
     ./programs/git.nix
     ./programs/starship.nix
+    ./programs/typst.nix
     ./programs/wezterm.nix
     ./programs/zoxide.nix
     ./programs/zsh.nix
@@ -22,7 +23,13 @@
   home.username = username;
   home.homeDirectory = lib.mkForce "/Users/${username}";
   home.stateVersion = "24.11";
-  home.sessionPath = [ "/Users/${username}/.local/bin" ];
+  home.sessionPath = [
+    "/Users/${username}/.local/bin"
+    # Homebrew。cask 管理は nix-darwin 経由で宣言的に行うので、
+    # ここに通すのは brew 自体をデバッグ用に叩けるようにするため。
+    # formula は入れない（CLI ツールは Nix に寄せる方針）。
+    "/opt/homebrew/bin"
+  ];
 
   programs.home-manager.enable = true;
   targets.darwin.linkApps.enable = true;
