@@ -1,6 +1,12 @@
 _:
 
 let
+  # 1Password の SSH 鍵。この鍵を差し替えたら GitHub 側で Authentication Key と
+  # Signing Key の両方に登録し直すこと。GitHub は同じ公開鍵でも別物として扱うので、
+  # Authentication Key だけだと push は通るのにコミットが Unverified のままになる
+  # （ローカルは allowed_signers を持っているので `git log --show-signature` は Good と出る）。
+  #   gh auth refresh -h github.com -s admin:ssh_signing_key
+  #   gh api --method POST /user/ssh_signing_keys -f title=... -f key=...
   signingKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHD0yfaaR4biXau0lsvSkungOTqJ0PY0MJ3Y5NXL3yI/";
   noreply-email = "72808408+sasori-256@users.noreply.github.com";
 in
