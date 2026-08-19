@@ -105,6 +105,7 @@
       upgrade = false;
     };
     casks = [
+      "linearmouse"
       "raycast"
       "visual-studio-code"
       "1password"
