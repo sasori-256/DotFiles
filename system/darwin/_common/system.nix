@@ -118,6 +118,7 @@
       "windows-app"
       "tailscale-app"
       "obsidian"
+      "zoom"
     ];
   };
 }
