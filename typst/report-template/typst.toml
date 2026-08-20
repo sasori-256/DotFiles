@@ -1,0 +1,7 @@
+[package]
+name = "report-template"
+version = "0.1.0"
+entrypoint = "lib.typ"
+authors = ["sasori-256"]
+license = "MIT"
+description = "Personal Typst template for university lab reports (Japanese, A4)"

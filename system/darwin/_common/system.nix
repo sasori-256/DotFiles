@@ -1,21 +1,20 @@
 { pkgs, username, ... }:
 
 {
-  # Disable NixOS 22.11 and later's automatic documentation generation
-  # to avoid nixvim's conflict with
+  # Disable nix-darwin manual generation to avoid upstream bug:
   # "nixos-render-docs manual html: error: --toc-depth has been removed, …"
+  # (nix-darwin still passes --toc-depth, which was removed in newer nixpkgs)
   documentation.enable = false;
+  # darwin-uninstaller は内部で nix-darwin を再評価しており、
+  # そこでは documentation.enable のデフォルトが true になるため、
+  # 上の設定だけでは darwin-manual-html のビルドを止められない。
+  # uninstaller 自体を無効化して再帰評価を回避する。
+  system.tools.darwin-uninstaller.enable = false;
 
   environment.systemPackages = with pkgs; [
   ];
 
   system = {
-    activationScripts.preActivation.text = ''
-      if [ -f /etc/nix/nix.conf ]; then
-        mv /etc/nix/nix.conf /etc/nix/nix.conf.before-nix-darwin || true;
-      fi
-    '';
-
     # Rosetta 2 を未インストールなら入れる（x86_64 macOS バイナリ実行のため）
     activationScripts.extraActivation.text = ''
       if ! /usr/bin/arch -x86_64 /usr/bin/true 2>/dev/null; then
@@ -99,9 +98,14 @@
       # 最新バージョンのHomebrewでcleanupにforce、force-cleanupが必要になったため、いったんオフ
       cleanup = "none";
       autoUpdate = true;
-      upgrade = true;
+      # true だと brew bundle に --no-upgrade が付かず、switch のたびに
+      # 古い cask を全部ダウンロードし直す（24 casks あるのでほぼ毎回発生し、
+      # activation が数百 MB のダウンロード待ちになる）。
+      # cask 側の自動更新に任せ、まとめて上げたいときは `brew upgrade --cask`。
+      upgrade = false;
     };
     casks = [
+      "linearmouse"
       "raycast"
       "visual-studio-code"
       "1password"
@@ -112,8 +116,9 @@
       "github"
       "orbstack"
       "windows-app"
-      "tailscale"
+      "tailscale-app"
       "obsidian"
+      "zoom"
     ];
   };
 }

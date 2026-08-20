@@ -7,6 +7,7 @@
     ];
     casks = [
       "discord"
+      "slack"
       "notion"
       "obsidian"
       "adobe-creative-cloud"
@@ -15,6 +16,8 @@
       "prismlauncher"
       "firefox"
       "parsec"
+      "microsoft-office"
+      "blender"
     ];
   };
 }

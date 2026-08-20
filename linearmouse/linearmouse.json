@@ -1,0 +1,39 @@
+{
+  "$schema" : "https:\/\/schema.linearmouse.app\/0.11.4",
+  "schemes" : [
+    {
+      "if" : {
+        "device" : {
+          "category" : "mouse",
+          "productID" : "0x615e",
+          "productName" : "Lalapad",
+          "vendorID" : "0x1d50"
+        }
+      },
+      "pointer" : {
+        "acceleration" : 0,
+        "speed" : 0.5
+      },
+      "scrolling" : {
+        "acceleration" : 3
+      }
+    },
+    {
+      "if" : {
+        "device" : {
+          "category" : "trackpad",
+          "productID" : "0x0",
+          "productName" : "Apple Internal Keyboard \/ Trackpad",
+          "serialNumber" : "FM7HNE0AP5G0000UQS+AKXN",
+          "vendorID" : "0x0"
+        }
+      },
+      "scrolling" : {
+        "acceleration" : {
+          "horizontal" : 1
+        },
+        "reverse" : true
+      }
+    }
+  ]
+}
