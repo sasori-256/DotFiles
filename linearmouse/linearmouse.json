@@ -28,11 +28,18 @@
           "vendorID" : "0x0"
         }
       },
+      "pointer" : {
+        "acceleration" : 40,
+        "disableAcceleration" : true
+      },
       "scrolling" : {
         "acceleration" : {
           "horizontal" : 1
         },
-        "reverse" : true
+        "reverse" : true,
+        "speed" : {
+          "vertical" : 0
+        }
       }
     }
   ]
