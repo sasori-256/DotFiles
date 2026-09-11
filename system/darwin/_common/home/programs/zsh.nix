@@ -16,6 +16,13 @@
       }
     ];
 
+    sessionVariables = {
+      "EDITOR" = "nvim";
+      "VISUAL" = "nvim";
+      "MANPAGER" = "sh -c 'col -bx | bat -l man -p'";
+      "PROTO_HOME" = "$HOME/.proto";
+    };
+
     initContent = ''
       # --- 1Password SSH Agent ---
       export SSH_AUTH_SOCK="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
@@ -43,6 +50,18 @@
 
       # --- Welcome Message ---
       fastfetch
+    '';
+
+    # initExtra = ''
+    #   # --- FZF Key Bindings ---
+    #   source "${pkgs.fzf}/share/fzf/key-bindings.zsh"
+    # '';
+
+    initExtra = ''
+      export PATH="$PROTO_HOME/shims:PROTO_HOME/bin:$PATH"
+      if command -v proto >/dev/null 2>&1; then
+        eval "$(proto activate zsh)"
+      fi
     '';
   };
 }
