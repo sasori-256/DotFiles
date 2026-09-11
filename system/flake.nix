@@ -65,7 +65,12 @@
                       ;
                   };
 
-                  programs.nixvim.nixpkgs.source = nixvim.inputs.nixpkgs;
+                  # nixvim は nixpkgs.useGlobalPackages がデフォルト false なので、
+                  # nixvim 自身の入力の nixpkgs を import して独自の pkgs を作る。
+                  # そのインスタンスには下の nixpkgs.config が伝播しないため、
+                  # nixvim 側にも同じ設定を渡し直す必要がある。
+                  # (copilot-lua が unfree な copilot-language-server を引くため)
+                  programs.nixvim.nixpkgs.config.allowUnfree = true;
 
                   nixpkgs.config.allowUnfree = true;
 
