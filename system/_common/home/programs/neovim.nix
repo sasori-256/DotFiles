@@ -5,6 +5,27 @@
     enable = true;
     defaultEditor = true;
 
+    # TODO: nixpkgs 側が直ったら消す。
+    # vimPlugins.copilot-lua は tag = "v3.0.4" という可変 ref で src を取っているが、
+    # そのタグの中身が差し替わって (bundled な copilot/js が消えた) 記録済み hash と
+    # 合わなくなり、hash mismatch でビルドが落ちる。タグの指すコミットを直接固定する。
+    nixpkgs.overlays = [
+      (final: prev: {
+        vimPlugins = prev.vimPlugins.extend (
+          _: pluginsPrev: {
+            copilot-lua = pluginsPrev.copilot-lua.overrideAttrs {
+              src = final.fetchFromGitHub {
+                owner = "zbirenbaum";
+                repo = "copilot.lua";
+                rev = "9d391a02dc0281713cbb7c3bc87cdd38287b92eb"; # v3.0.4
+                hash = "sha256-kDQOm7/N6T7wOw1JlkcxNMnQrDE4oTRyGCZkvT8HZQw=";
+              };
+            };
+          }
+        );
+      })
+    ];
+
     globals = {
       mapleader = " ";
       autoformat = true;
