@@ -27,6 +27,7 @@
     # --- Dev tools ---
     # Environment management
     devenv
+    proto
 
     # python
     uv
