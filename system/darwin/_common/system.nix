@@ -104,6 +104,9 @@
       # cask 側の自動更新に任せ、まとめて上げたいときは `brew upgrade --cask`。
       upgrade = false;
     };
+    taps = [
+      "stablyai/orca"
+    ];
     casks = [
       "linearmouse"
       "raycast"
@@ -119,6 +122,7 @@
       "tailscale-app"
       "obsidian"
       "zoom"
+      "stablyai/orca/orca"
     ];
   };
 }
