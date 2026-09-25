@@ -9,6 +9,7 @@
   imports = [
     ../../../_common/home/programs/neovim.nix
     ../../../_common/home/programs/nh.nix
+    ../../../_common/home/programs/ssh.nix
     ./packages.nix
     ./programs/direnv.nix
     ./programs/fzf.nix
