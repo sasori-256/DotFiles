@@ -34,4 +34,12 @@ in
       };
     };
   };
+
+  # gpg.ssh.allowedSignersFile の実体。これが無いと
+  # `git log --show-signature` でのローカル検証が落ちる
+  # （GitHub 側の Verified 表示には影響しない）。
+  # 1Password は allowed_signers を自動生成しないので自分で作る。
+  home.file.".ssh/allowed_signers".text = ''
+    ${noreply-email} ${signingKey}
+  '';
 }
