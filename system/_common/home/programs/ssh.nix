@@ -36,6 +36,13 @@ in
     };
   };
 
-  home.file.".ssh/control/.keep".text = "";
-  home.file.".ssh/config.d/.keep".text = "";
+  home.file = {
+    ".ssh/control/.keep".text = "";
+    ".ssh/config.d/.keep".text = "";
+    # IdentityFile + IdentitiesOnly で「このホストではこの鍵だけ試す」と
+    # エージェントに指示するためにこのファイルが必要。
+    ".ssh/homelab-admin.pub".text = ''
+      ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILEc+rIJl0NXcd7E8RCbaaFNq3rR9i4y6uqEefIjAbCH homelab-admin
+    '';
+  };
 }
