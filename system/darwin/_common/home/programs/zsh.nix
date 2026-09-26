@@ -40,6 +40,9 @@
         # --- Functions ---
         function vf() { nvim "$(fzf)" }
         function cf() { bat "$(fzf)" }
+
+        # --- Zsh Options ---
+        setopt interactive_comments
       '')
       # # --- FZF Key Bindings ---
       # source "${pkgs.fzf}/share/fzf/key-bindings.zsh"
