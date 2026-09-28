@@ -18,12 +18,15 @@ let
   # ここを更新しないと古いままになる（description は Claude Code が skill を
   # 読み込むか判断する材料なので、放置すると発火精度が落ちる）。
   # rev と hash の更新は ./orca-skills-update.sh で行う。
-  rev = "0b2dd0a99ba9d235b81763ac3787a0f94dbcc832";
+  rev = "a8797138ef5c74d6d0a28ce8c34bc6d7a0d3b751";
 
   # 追加できる skill 名は `orca skills list` で一覧できる。
   # ここに名前を足して ./orca-skills-update.sh を走らせれば hash が埋まる。
   skills = {
     computer-use = "sha256-KDmTP9NSFoRUYUZkA+YGFIgAX231cSbQzQ92nqRXU/M=";
+    orca-cli = "sha256-qnb4ZQUBAJbo6p7doXBaeKrnr0XlRIXz/gRgZkwdnko=";
+    orca-emulator = "sha256-PacZEXnkbLDhpqk28etUJU9umOw4hJ4clfDhEHMHa0g=";
+    orca-emulator-android = "sha256-Ot5Ob48nF8qJn9hB5h8RaWOkBulScBW4A4VMFtAS4ng=";
     orchestration = "sha256-zRs2S/NXgbrQa/dasXZq+o1s7GnLIGBSlpHYmHGiCYo=";
   };
 in
