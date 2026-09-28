@@ -77,7 +77,5 @@
         fastfetch
       '')
     ];
-    # initExtra = ''
-    # '';
   };
 }

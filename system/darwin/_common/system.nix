@@ -123,6 +123,7 @@
       "obsidian"
       "zoom"
       "stablyai/orca/orca"
+      "android-studio"
     ];
   };
 }
