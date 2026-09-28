@@ -92,6 +92,20 @@ darwinConfigurations.<hostname> = mkDarwinSystem {
 
 **formula は入れない。** `/opt/homebrew/bin` は `home.sessionPath` で PATH に通してあるが、これは `brew` 自体をデバッグ用に叩くため。`home.sessionPath` は PATH の**先頭**に足すので、`brew install <formula>` すると Nix 側の CLI ツールを黙って上書きする。CLI ツールは `home/packages.nix` に足すこと。
 
+### Xcode（`homebrew.masApps`）
+
+Xcode は `masApps` で App Store から入れる。`--no-upgrade` のおかげでインストール済みなら `mas upgrade` も `mas outdated` も呼ばれず、switch への影響は `mas list` 1 回だけ（`Library/Homebrew/bundle/extensions/mac_app_store.rb` の `preinstall!`）。**`upgrade = true` に戻すと switch 中に Xcode の数 GB 更新が走るので戻さないこと。**
+
+- **初回**: App Store にサインインしてから `nh darwin switch`。10 GB 超のダウンロード中も `Activating configuration` のまま無反応に見えるが正常。終わったら手で:
+  ```bash
+  sudo xcode-select -s /Applications/Xcode.app
+  sudo xcodebuild -license accept
+  xcodebuild -runFirstLaunch
+  xcodebuild -downloadPlatform iOS   # iOS シミュレータランタイム
+  ```
+- **更新**: App Store の自動アップデートは切っておき、上げたいときに App Store から手動で更新する（作業中に勝手に上がって壊れるのを防ぐ）。更新後は `xcodebuild -runFirstLaunch` をもう一度。
+- `mas` は nix-darwin が nixpkgs 版を `brew bundle` の PATH に通すので formula は入らない。
+
 ### `brew bundle` の fetch 失敗
 
 ```

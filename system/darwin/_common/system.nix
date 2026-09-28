@@ -125,5 +125,11 @@
       "stablyai/orca/orca"
       "android-studio"
     ];
+    # upgrade = false (--no-upgrade) なので、インストール済みのアプリは
+    # switch 時に mas upgrade されない。更新は App Store 側で手動で行う。
+    # mas 自体は nix-darwin が nixpkgs 版を brew bundle の PATH に通すので formula は入らない。
+    masApps = {
+      Xcode = 497799835;
+    };
   };
 }
