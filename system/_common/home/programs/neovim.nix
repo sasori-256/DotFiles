@@ -806,12 +806,11 @@
               "clangd"
               "--background-index"
               "--clang-tidy"
-              "--completion-style=detail"
+              "--completion-style=detailed"
               "--header-insertion=iwyu"
-              "--pct-storage=memory"
+              "--pch-storage=memory"
             ];
           };
-          cmake.enable = true;
           tailwindcss.enable = true;
           dockerls.enable = true;
           cmake.enable = true;
@@ -1260,7 +1259,7 @@
       };
 
       # --- Languages ---
-      clangd-extentions = {
+      clangd-extensions = {
         enable = true;
         enableOffsetEncodingWorkaround = true;
       };
@@ -1268,9 +1267,9 @@
       cmake-tools = {
         enable = true;
         settings = {
-          cmake_bulid_directory = "bulid";
+          cmake_build_directory = "build";
           cmake_soft_link_compile_commands = true;
-          cmake_generate_options = [ "-DCMAKE_EXPORT_COMPILE_COMMANDS=1" ];
+          cmake_generate_options.__raw = ''{ "-DCMAKE_EXPORT_COMPILE_COMMANDS=1" }'';
         };
       };
     };
