@@ -720,6 +720,7 @@
             "bash"
             "c"
             "cpp"
+            "cmake"
             "css"
             "html"
             "java"
@@ -799,7 +800,18 @@
         servers = {
           ruff.enable = true;
           ts_ls.enable = true;
-          clangd.enable = true;
+          clangd = {
+            enable = true;
+            cmd = [
+              "clangd"
+              "--background-index"
+              "--clang-tidy"
+              "--completion-style=detail"
+              "--header-insertion=iwyu"
+              "--pct-storage=memory"
+            ];
+          };
+          cmake.enable = true;
           tailwindcss.enable = true;
           dockerls.enable = true;
           cmake.enable = true;
@@ -1246,6 +1258,21 @@
           };
         };
       };
+
+      # --- Languages ---
+      clangd-extentions = {
+        enable = true;
+        enableOffsetEncodingWorkaround = true;
+      };
+
+      cmake-tools = {
+        enable = true;
+        settings = {
+          cmake_bulid_directory = "bulid";
+          cmake_soft_link_compile_commands = true;
+          cmake_generate_options = [ "-DCMAKE_EXPORT_COMPILE_COMMANDS=1" ];
+        };
+      };
     };
 
     extraPlugins = with pkgs.vimPlugins; [
@@ -1256,6 +1283,11 @@
     extraConfigLua = ''
       vim.filetype.add({ extension = { mdx = "mdx" } })
       vim.treesitter.language.register("markdown", "mdx")
+
+      -- LSP inlay hints
+      if vim.lsp.inlay_hint then
+        vim.lsp.inlay_hint.enable(true)
+      end
 
       -- vsplit時のスクロールティア修正:
       -- Neovimのターミナルスクロール最適化(DECSTBM+CSI S/T)は画面全幅に適用されるため、
