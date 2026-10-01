@@ -35,27 +35,10 @@ in
     };
   };
 
-  programs.ssh = {
-    enable = true;
-    enableDefaultConfig = false;
-    extraConfig = ''
-      Include ~/.ssh.config.local
-    '';
-    settings."*" = {
-      IdentityAgent = ''"~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"'';
-      AddKeysToAgent = "no";
-      ServerAliveInterval = 60;
-      ServerAliveCountMax = 3;
-      StrictHostKeyChecking = "accept-new";
-      ControlMaster = "auto";
-      ControlPath = "~/.ssh/control/%C";
-      ControlPersist = "10m";
-    };
-    settings."github.com".User = "git";
-  };
-
-  home.file.".ssh/control/.keep".text = "";
-
+  # gpg.ssh.allowedSignersFile の実体。これが無いと
+  # `git log --show-signature` でのローカル検証が落ちる
+  # （GitHub 側の Verified 表示には影響しない）。
+  # 1Password は allowed_signers を自動生成しないので自分で作る。
   home.file.".ssh/allowed_signers".text = ''
     ${noreply-email} ${signingKey}
   '';

@@ -5,6 +5,27 @@
     enable = true;
     defaultEditor = true;
 
+    # TODO: nixpkgs 側が直ったら消す。
+    # vimPlugins.copilot-lua は tag = "v3.0.4" という可変 ref で src を取っているが、
+    # そのタグの中身が差し替わって (bundled な copilot/js が消えた) 記録済み hash と
+    # 合わなくなり、hash mismatch でビルドが落ちる。タグの指すコミットを直接固定する。
+    nixpkgs.overlays = [
+      (final: prev: {
+        vimPlugins = prev.vimPlugins.extend (
+          _: pluginsPrev: {
+            copilot-lua = pluginsPrev.copilot-lua.overrideAttrs {
+              src = final.fetchFromGitHub {
+                owner = "zbirenbaum";
+                repo = "copilot.lua";
+                rev = "9d391a02dc0281713cbb7c3bc87cdd38287b92eb"; # v3.0.4
+                hash = "sha256-kDQOm7/N6T7wOw1JlkcxNMnQrDE4oTRyGCZkvT8HZQw=";
+              };
+            };
+          }
+        );
+      })
+    ];
+
     globals = {
       mapleader = " ";
       autoformat = true;
@@ -699,6 +720,7 @@
             "bash"
             "c"
             "cpp"
+            "cmake"
             "css"
             "html"
             "java"
@@ -778,7 +800,17 @@
         servers = {
           ruff.enable = true;
           ts_ls.enable = true;
-          clangd.enable = true;
+          clangd = {
+            enable = true;
+            cmd = [
+              "clangd"
+              "--background-index"
+              "--clang-tidy"
+              "--completion-style=detailed"
+              "--header-insertion=iwyu"
+              "--pch-storage=memory"
+            ];
+          };
           tailwindcss.enable = true;
           dockerls.enable = true;
           cmake.enable = true;
@@ -800,13 +832,20 @@
                     vim.fn.fnamemodify(vim.fn.getcwd(), ":t"),
                 }
               '';
+              # Register $JAVA_HOME (set per project by devenv) under the name
+              # matching its actual version; a mismatched name is ignored by jdtls.
               settings.java.configuration.runtimes.__raw = ''
                 (function()
-                  local h = vim.fn.getenv("JAVA_HOME")
-                  if h ~= vim.NIL and h ~= "" then
-                    return {{ name = "JavaSE-25", path = h, default = true }}
-                  end
-                  return {}
+                  local h = vim.env.JAVA_HOME
+                  if not h or h == "" then return {} end
+                  local f = io.open(h .. "/release")
+                  if not f then return {} end
+                  local v = f:read("*a"):match('JAVA_VERSION="([^"]+)"')
+                  f:close()
+                  if not v then return {} end
+                  local major = v:match("^1%.(%d+)") or v:match("^(%d+)")
+                  local name = major == "8" and "JavaSE-1.8" or ("JavaSE-" .. major)
+                  return {{ name = name, path = h, default = true }}
                 end)()
               '';
             };
@@ -1218,6 +1257,21 @@
           };
         };
       };
+
+      # --- Languages ---
+      clangd-extensions = {
+        enable = true;
+        enableOffsetEncodingWorkaround = true;
+      };
+
+      cmake-tools = {
+        enable = true;
+        settings = {
+          cmake_build_directory = "build";
+          cmake_soft_link_compile_commands = true;
+          cmake_generate_options.__raw = ''{ "-DCMAKE_EXPORT_COMPILE_COMMANDS=1" }'';
+        };
+      };
     };
 
     extraPlugins = with pkgs.vimPlugins; [
@@ -1228,6 +1282,11 @@
     extraConfigLua = ''
       vim.filetype.add({ extension = { mdx = "mdx" } })
       vim.treesitter.language.register("markdown", "mdx")
+
+      -- LSP inlay hints
+      if vim.lsp.inlay_hint then
+        vim.lsp.inlay_hint.enable(true)
+      end
 
       -- vsplit時のスクロールティア修正:
       -- Neovimのターミナルスクロール最適化(DECSTBM+CSI S/T)は画面全幅に適用されるため、

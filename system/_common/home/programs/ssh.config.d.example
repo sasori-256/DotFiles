@@ -1,0 +1,35 @@
+# ---------------------------------------------------------------------------
+# これはテンプレート。このファイル自体はリポジトリにコミットする（中身はプレースホルダのみ）。
+#
+# 使い方: このファイルを ~/.ssh/config.d/10-homelab.conf にコピーし、
+#         <> の部分を実際の値に書き換える。
+#         コピー先（~/.ssh/config.d/*.conf）はリポジトリ外なので公開されない。
+#         ホスト名や IP はコピー先にだけ書き、ここには書かない。
+#
+# ファイル名を 2 桁の数字で始める理由:
+#   ssh_config は「キーワードごとに最初に得た値」が勝つ仕様で、
+#   Include のグロブは辞書順に展開されるため、ファイル名が優先順位になる。
+#   将来 sops-nix に移行して同じパスへ出力すれば ssh.nix は変更不要。
+#
+# Host * は ssh.nix 側が持っているのでここには書かない。
+# IdentityAgent / ControlMaster / StrictHostKeyChecking をホスト単位で
+# 上書きしたい場合だけ明示する（includes は config 先頭に出るので上書きが効く）。
+# ---------------------------------------------------------------------------
+
+Host <alias>
+  HostName <IP or MagicDNS>
+  User root
+  # 秘密鍵は 1Password 内にあるので、ここは公開鍵を指す。
+  # IdentitiesOnly と併せて「このホストではこの鍵だけ試す」と指示し、
+  # sshd の MaxAuthTries（既定 6）に引っかからないようにする。
+  IdentityFile ~/.ssh/<key>.pub
+  IdentitiesOnly yes
+
+# 1Password のエージェントが使えないときの経路。
+# IdentityAgent none でエージェントを完全に外し、ファイル鍵だけを使う。
+Host <alias>-rescue
+  HostName <Same IP or MagicDNS>
+  User root
+  IdentityAgent none
+  IdentityFile ~/.ssh/homelab-break-glass
+  IdentitiesOnly yes

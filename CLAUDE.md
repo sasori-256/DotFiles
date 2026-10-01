@@ -92,6 +92,29 @@ darwinConfigurations.<hostname> = mkDarwinSystem {
 
 **formula は入れない。** `/opt/homebrew/bin` は `home.sessionPath` で PATH に通してあるが、これは `brew` 自体をデバッグ用に叩くため。`home.sessionPath` は PATH の**先頭**に足すので、`brew install <formula>` すると Nix 側の CLI ツールを黙って上書きする。CLI ツールは `home/packages.nix` に足すこと。
 
+### Xcode
+
+Xcode は Nix 管理外。App Store アプリから手で入れる（`homebrew.masApps` は一度試したが、初回ダウンロードが activation の中で走って固まるのでやめた）。
+
+**入れた直後は、switch より先にライセンス同意を済ませること。** `xcode-select` を明示設定していないと macOS は `/Applications/Xcode.app` があればそちらを優先するので、`/usr/bin/git` などが Xcode 経由になる。ライセンス未同意だと git が失敗し、Homebrew の `autoUpdate` がそれを叩くので activation が次のエラーで落ちる:
+
+```
+Homebrew bundle...
+Error: You have not agreed to the Xcode license. Please resolve this by running:
+  sudo xcodebuild -license accept
+```
+
+インストール後の初回手順:
+
+```bash
+sudo xcode-select -s /Applications/Xcode.app
+sudo xcodebuild -license accept
+xcodebuild -runFirstLaunch
+xcodebuild -downloadPlatform iOS   # iOS シミュレータランタイム
+```
+
+インストールを途中で止めて中途半端な `Xcode.app` が残った場合も同じエラーになる。そのときは `sudo rm -rf /Applications/Xcode.app` で Command Line Tools に戻す（`xcode-select -p` が `/Library/Developer/CommandLineTools` になればよい）。
+
 ### `brew bundle` の fetch 失敗
 
 ```
