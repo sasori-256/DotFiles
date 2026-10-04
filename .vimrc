@@ -246,7 +246,7 @@ call s:SetLayout(get(g:, 'default_layout', empty($VIM_LAYOUT) ? 'tomisuke' : $VI
 
 "------------------------------------------------------------------------------
 " 10. プラグイン (vim-plug)
-"   初回: :PlugSetup → Vim 再起動 → :PlugInstall
+"   初回: :SetupPlug → Vim 再起動 → :PlugInstall
 "   起動時の自動ダウンロードはしない（オフライン環境で固まるため）
 "   $VIM_NOPLUG=1 で無効化
 "------------------------------------------------------------------------------
@@ -265,17 +265,20 @@ function! s:PlugSetup() abort
   endif
   echo 'vim-plug を導入しました。Vim を再起動して :PlugInstall を実行してください'
 endfunction
-command! PlugSetup call s:PlugSetup()
+command! SetupPlug call s:PlugSetup()
 
-if filereadable(s:plug_path) && empty($VIM_NOPLUG)
-  call plug#begin(s:vimdir . '/plugged')
-  " gcc / gc{motion} でコメント切替
-  Plug 'tpope/vim-commentary'
-  " ds / cs / ys で囲み操作
-  Plug 'tpope/vim-surround'
-  " 配色
-  Plug 'catppuccin/vim', { 'as': 'catppuccin' }
-  call plug#end()
+" git が無い・plug.vim が壊れている環境ではプラグインなしで起動する
+if filereadable(s:plug_path) && executable('git') && empty($VIM_NOPLUG)
+  silent! call plug#begin(s:vimdir . '/plugged')
+  if exists(':Plug') == 2
+    " gcc / gc{motion} でコメント切替
+    Plug 'tpope/vim-commentary'
+    " ds / cs / ys で囲み操作
+    Plug 'tpope/vim-surround'
+    " 配色
+    Plug 'catppuccin/vim', { 'as': 'catppuccin' }
+    call plug#end()
+  endif
 endif
 
 "------------------------------------------------------------------------------
@@ -293,4 +296,3 @@ catch
   " Vim 9 同梱。Vim 8 では既定配色のまま
   silent! colorscheme habamax
 endtry
-
