@@ -151,6 +151,8 @@ set splitbelow splitright
 nnoremap Y y$
 nnoremap U <C-r>
 nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
+" 全選択（数値インクリメントの <C-a> は使えなくなる）
+nnoremap <C-a> ggVG
 
 " --- 簡易オートペア（閉じ括弧の上書き・ペア削除付き） ---
 function! s:NextChar() abort
@@ -267,9 +269,12 @@ command! PlugSetup call s:PlugSetup()
 
 if filereadable(s:plug_path) && empty($VIM_NOPLUG)
   call plug#begin(s:vimdir . '/plugged')
-  Plug 'tpope/vim-commentary'                    " gcc / gc{motion} でコメント切替
-  Plug 'tpope/vim-surround'                      " ds / cs / ys で囲み操作
-  Plug 'catppuccin/vim', { 'as': 'catppuccin' }  " 配色
+  " gcc / gc{motion} でコメント切替
+  Plug 'tpope/vim-commentary'
+  " ds / cs / ys で囲み操作
+  Plug 'tpope/vim-surround'
+  " 配色
+  Plug 'catppuccin/vim', { 'as': 'catppuccin' }
   call plug#end()
 endif
 
@@ -285,5 +290,7 @@ endif
 try
   colorscheme catppuccin_frappe
 catch
-  silent! colorscheme habamax                    " Vim 9 同梱。Vim 8 では既定配色
+  " Vim 9 同梱。Vim 8 では既定配色のまま
+  silent! colorscheme habamax
 endtry
+
