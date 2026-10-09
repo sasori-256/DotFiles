@@ -16,6 +16,7 @@
     ./programs/fzf.nix
     ./programs/git.nix
     ./programs/linearmouse.nix
+    ./programs/ollama.nix
     ./programs/orca.nix
     ./programs/starship.nix
     ./programs/typst.nix

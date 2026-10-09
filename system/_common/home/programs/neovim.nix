@@ -5,27 +5,6 @@
     enable = true;
     defaultEditor = true;
 
-    # TODO: nixpkgs 側が直ったら消す。
-    # vimPlugins.copilot-lua は tag = "v3.0.4" という可変 ref で src を取っているが、
-    # そのタグの中身が差し替わって (bundled な copilot/js が消えた) 記録済み hash と
-    # 合わなくなり、hash mismatch でビルドが落ちる。タグの指すコミットを直接固定する。
-    nixpkgs.overlays = [
-      (final: prev: {
-        vimPlugins = prev.vimPlugins.extend (
-          _: pluginsPrev: {
-            copilot-lua = pluginsPrev.copilot-lua.overrideAttrs {
-              src = final.fetchFromGitHub {
-                owner = "zbirenbaum";
-                repo = "copilot.lua";
-                rev = "9d391a02dc0281713cbb7c3bc87cdd38287b92eb"; # v3.0.4
-                hash = "sha256-kDQOm7/N6T7wOw1JlkcxNMnQrDE4oTRyGCZkvT8HZQw=";
-              };
-            };
-          }
-        );
-      })
-    ];
-
     globals = {
       mapleader = " ";
       autoformat = true;
@@ -903,22 +882,34 @@
         };
       };
 
-      copilot-lua = {
+      # AI completion via local Ollama (services.ollama in darwin home)
+      minuet = {
         enable = true;
         settings = {
-          suggestion = {
-            enable = true;
-            auto_trigger = true;
-            keymap = {
-              accept = "<C-CR>";
-              accept_line = false;
-              accept_word = false;
-              next = "<C-]>";
-              prev = "<C-[>";
-              dismiss = "<Esc>";
+          provider = "openai_fim_compatible";
+          n_completions = 1;
+          context_window = 1024;
+          request_timeout = 3;
+          provider_options.openai_fim_compatible = {
+            name = "Ollama";
+            api_key = "TERM"; # Ollama needs no key, but minuet requires an existing env var name
+            end_point = "http://localhost:11434/v1/completions";
+            model = "qwen2.5-coder:7b";
+            optional = {
+              max_tokens = 56;
+              top_p = 0.9;
             };
           };
-          panel.enable = false;
+          virtualtext = {
+            auto_trigger_ft = [ "*" ];
+            keymap = {
+              accept = "<C-CR>";
+              accept_line = "<C-l>";
+              next = "<C-]>";
+              prev = "<C-\\>"; # <C-[> is indistinguishable from <Esc> in terminals
+              dismiss = "<C-e>";
+            };
+          };
         };
       };
 
