@@ -24,6 +24,52 @@
       lib = nixpkgs.lib;
       df-root = path: ./../${path};
 
+      # darwin (home-manager.sharedModules) と Linux (standalone) の両方で使う
+      mkHomeShared =
+        { hostname, username }:
+        {
+          imports = [ nixvim.homeModules.nixvim ];
+
+          _module.args = {
+            inherit
+              lib
+              username
+              hostname
+              df-root
+              ;
+          };
+
+          # nixvim は nixpkgs.useGlobalPackages がデフォルト false なので、
+          # nixvim 自身の入力の nixpkgs を import して独自の pkgs を作る。
+          # そのインスタンスには下の nixpkgs.config が伝播しないため、
+          # nixvim 側にも同じ設定を渡し直す必要がある。
+          # (copilot-lua が unfree な copilot-language-server を引くため)
+          programs.nixvim.nixpkgs.config.allowUnfree = true;
+
+          nixpkgs.config.allowUnfree = true;
+
+          nixpkgs.overlays = [
+            (final: prev: {
+              moralerspace = prev.callPackage (df-root "fonts/moralerspace/default.nix") { };
+            })
+          ];
+        };
+
+      mkHome =
+        {
+          hostname,
+          username,
+          system ? "x86_64-linux",
+        }:
+        home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.${system};
+          modules = [
+            (mkHomeShared { inherit hostname username; })
+            ./linux/_common/home
+            ./linux/${hostname}/home.nix
+          ];
+        };
+
       mkDarwinSystem =
         { hostname, username }:
         nix-darwin.lib.darwinSystem {
@@ -54,32 +100,7 @@
               };
 
               home-manager.sharedModules = [
-                nixvim.homeModules.nixvim
-                {
-                  _module.args = {
-                    inherit
-                      lib
-                      username
-                      hostname
-                      df-root
-                      ;
-                  };
-
-                  # nixvim は nixpkgs.useGlobalPackages がデフォルト false なので、
-                  # nixvim 自身の入力の nixpkgs を import して独自の pkgs を作る。
-                  # そのインスタンスには下の nixpkgs.config が伝播しないため、
-                  # nixvim 側にも同じ設定を渡し直す必要がある。
-                  # (copilot-lua が unfree な copilot-language-server を引くため)
-                  programs.nixvim.nixpkgs.config.allowUnfree = true;
-
-                  nixpkgs.config.allowUnfree = true;
-
-                  nixpkgs.overlays = [
-                    (final: prev: {
-                      moralerspace = prev.callPackage (df-root "fonts/moralerspace/default.nix") { };
-                    })
-                  ];
-                }
+                (mkHomeShared { inherit hostname username; })
               ];
             }
           ];
@@ -93,6 +114,12 @@
       darwinConfigurations.hirasaka46 = mkDarwinSystem {
         hostname = "hirasaka46";
         username = "sasori";
+      };
+
+      # nh home switch は "$USER@$(hostname)" を探す
+      homeConfigurations."sasori-256@arch.hirasaka46" = mkHome {
+        hostname = "arch.hirasaka46";
+        username = "sasori-256";
       };
     };
 }

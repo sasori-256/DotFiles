@@ -882,7 +882,7 @@
         };
       };
 
-      # AI completion via local Ollama (services.ollama in darwin home)
+      # AI completion via local Ollama (services.ollama in ollama.nix)
       minuet = {
         enable = true;
         settings = {

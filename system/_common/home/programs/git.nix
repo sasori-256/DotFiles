@@ -1,4 +1,4 @@
-_:
+{ pkgs, lib, ... }:
 
 let
   # 1Password の SSH 鍵。この鍵を差し替えたら GitHub 側で Authentication Key と
@@ -28,7 +28,13 @@ in
       gpg = {
         format = "ssh";
         ssh = {
-          program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign";
+          # WSL では Windows 側の op-ssh-sign-wsl を使うので、ホスト側で上書きする
+          program = lib.mkDefault (
+            if pkgs.stdenv.hostPlatform.isDarwin then
+              "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+            else
+              "/opt/1Password/op-ssh-sign"
+          );
           allowedSignersFile = "~/.ssh/allowed_signers";
         };
       };
