@@ -14,7 +14,10 @@ nh darwin switch
 ```bash
 nh home switch
 ```
-`homeConfigurations."$USER@$(hostname)"` が選ばれる。初回（Nix 未導入）は `./setup-arch.sh` を実行する。pacman の `nix` を入れて `/etc/nix/nix.conf` を設定し、nix-daemon を有効化して home-manager の初回 switch まで行い、ログインシェルを `/usr/bin/zsh` に変える。再実行しても安全。
+`homeConfigurations."$USER@$(hostname)"` が選ばれる。初回（Nix 未導入）は `./setup-arch.sh` を実行する。nixos.org の公式インストーラ（デーモン方式）で Nix を入れて `/etc/nix/nix.conf` を設定し、home-manager の初回 switch まで行い、ログインシェルを `/usr/bin/zsh` に変える。再実行しても安全。
+
+- Nix は mac と同じ上流版に揃える。pacman の `nix` も Determinate 版も使わない
+- 前提として `/nix` を btrfs サブボリューム `@nix` にしておく（スクリプトが `findmnt` で確認し、違えば止まる）。`@` の中にあると snapper のスナップショットが膨らみ、`@` を差し替えて巻き戻したときに `/nix` だけ過去に戻って home-manager の世代と食い違う
 
 **Windows:**
 ```powershell
