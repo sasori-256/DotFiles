@@ -18,6 +18,8 @@
       "parsec"
       "microsoft-office"
       "blender"
+      "steam"
+      "Sikarugir-App/sikarugir/sikarugir"
     ];
   };
 }
