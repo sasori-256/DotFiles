@@ -29,7 +29,12 @@
       # ------------------------------------------------------------
       (lib.mkOrder 1000 ''
         # --- 1Password SSH Agent ---
-        export SSH_AUTH_SOCK="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+        export SSH_AUTH_SOCK="${
+          if pkgs.stdenv.hostPlatform.isDarwin then
+            "$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+          else
+            "$HOME/.1password/agent.sock"
+        }"
 
         # --- Proto Environment ---
         export PATH="$PROTO_HOME/shims:PROTO_HOME/bin:$PATH"
@@ -74,7 +79,6 @@
       # ------------------------------------------------------------
       (lib.mkOrder 1500 ''
         # --- Welcome Message ---
-        fastfetch
       '')
     ];
   };

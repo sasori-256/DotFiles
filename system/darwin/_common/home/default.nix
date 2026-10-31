@@ -8,20 +8,9 @@
 
 {
   imports = [
-    ../../../_common/home/programs/neovim.nix
-    ../../../_common/home/programs/nh.nix
-    ../../../_common/home/programs/ssh.nix
-    ./packages.nix
-    ./programs/direnv.nix
-    ./programs/fzf.nix
-    ./programs/git.nix
+    ../../../_common/home
     ./programs/linearmouse.nix
     ./programs/orca.nix
-    ./programs/starship.nix
-    ./programs/typst.nix
-    ./programs/wezterm.nix
-    ./programs/zoxide.nix
-    ./programs/zsh.nix
   ];
 
   home = {
@@ -40,6 +29,5 @@
       "/opt/homebrew/bin"
     ];
   };
-  programs.home-manager.enable = true;
   targets.darwin.linkApps.enable = true;
 }

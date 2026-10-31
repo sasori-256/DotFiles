@@ -10,6 +10,15 @@ nh darwin switch
 ```
 `nh` が自動で nix-output-monitor を使って出力を整形する。dry-run 確認は `nh darwin switch --dry-run`。
 
+**Linux (Arch + standalone home-manager):**
+```bash
+nh home switch
+```
+`homeConfigurations."$USER@$(hostname)"` が選ばれる。初回（Nix 未導入）は `./setup-arch.sh` を実行する。nixos.org の公式インストーラ（デーモン方式）で Nix を入れて `/etc/nix/nix.conf` を設定し、home-manager の初回 switch まで行い、ログインシェルを `/usr/bin/zsh` に変える。再実行しても安全。
+
+- Nix は mac と同じ上流版に揃える。pacman の `nix` も Determinate 版も使わない
+- 前提として `/nix` を btrfs サブボリューム `@nix` にしておく（スクリプトが `findmnt` で確認し、違えば止まる）。`@` の中にあると snapper のスナップショットが膨らみ、`@` を差し替えて巻き戻したときに `/nix` だけ過去に戻って home-manager の世代と食い違う
+
 **Windows:**
 ```powershell
 .\setup-windows.ps1   # Scoop/Winget インストール + シンボリックリンク
@@ -28,27 +37,32 @@ DotFiles/
 ├── powershell/          # PowerShell プロファイル
 ├── fonts/moralerspace/  # カスタムフォントの Nix derivation
 ├── setup-windows.ps1
-└── system/              # Nix 設定（macOS、将来 Linux も）
+├── setup-arch.sh        # Arch: Nix 導入 + home-manager 初回 switch
+└── system/              # Nix 設定（macOS + Linux）
     ├── flake.nix
-    ├── _common/
-    │   └── home/programs/
-    │       ├── neovim.nix   # NixVim 設定（macOS/Linux 共用）
-    │       └── nh.nix
-    └── darwin/
-        ├── _common/
-        │   ├── system.nix       # Homebrew casks、macOS defaults
-        │   └── home/
-        │       ├── default.nix  # home-manager エントリポイント
-        │       ├── packages.nix # home.packages（CLI ツール）
-        │       └── programs/    # darwin 固有: git, zsh, starship, wezterm 等
-        └── <hostname>/
-            ├── system.nix       # マシン固有の nix-darwin 設定
-            └── home.nix         # マシン固有の home-manager 設定
+    ├── _common/home/        # macOS/Linux 共用の home-manager 設定
+    │   ├── default.nix      # 共用モジュールの imports
+    │   ├── packages.nix     # home.packages（CLI ツール）
+    │   └── programs/        # neovim(NixVim), git, zsh, ssh, starship, wezterm 等
+    ├── darwin/
+    │   ├── _common/
+    │   │   ├── system.nix       # Homebrew casks、macOS defaults
+    │   │   └── home/
+    │   │       ├── default.nix  # darwin の home エントリポイント（_common/home を import）
+    │   │       └── programs/    # macOS 専用: linearmouse, orca
+    │   └── <hostname>/
+    │       ├── system.nix       # マシン固有の nix-darwin 設定
+    │       └── home.nix         # マシン固有の home-manager 設定
+    └── linux/                   # Arch など非 NixOS。standalone home-manager
+        ├── _common/home/default.nix  # Linux の home エントリポイント（_common/home を import）
+        └── <hostname>/home.nix       # マシン固有設定（stateVersion もここ）
 ```
 
 ### 重要な設計上の決定
 
-**`system/_common/` vs `system/darwin/_common/`**: `_common/home/programs/` が2箇所ある。`system/_common/` は将来の Linux 共用を想定した設定（現在は neovim.nix のみ）。`system/darwin/_common/home/programs/` は macOS 固有のツール設定。
+**`system/_common/` vs `system/{darwin,linux}/_common/`**: OS をまたいで使える設定は `system/_common/home/` に置く。パスなど OS で値が変わるだけのものは `pkgs.stdenv.hostPlatform.isDarwin` で分岐して共用側に残す（例: `ssh.nix` / `zsh.nix` の 1Password agent socket、`git.nix` の `op-ssh-sign`、`typst.nix` のパッケージディレクトリ）。そのアプリ自体が片方の OS にしか無いもの（linearmouse、Orca）だけを OS 別ディレクトリに置く。
+
+**Linux は NixOS ではなく standalone home-manager**: Arch の system 層（pacman、systemd、ログインシェル）は Nix 管理外。flake の `mkHome` が `homeConfigurations` を作り、darwin と同じ `mkHomeShared`（nixvim、allowUnfree、moralerspace overlay）を共有する。
 
 **`df-root`**: `system/flake.nix` からリポジトリルートへの参照。`fonts/moralerspace` など `system/` 外のファイルを Nix で参照するために使う。
 
@@ -59,6 +73,16 @@ DotFiles/
 **macOS の Neovim は NixVim**: `nvim-windows/` (LazyVim) は Windows 専用。macOS は `system/_common/home/programs/neovim.nix` で宣言的に管理し、`mason` や `lazy-lock.json` は不要。
 
 ## 新しいマシンを追加する
+
+**Linux**: `system/linux/<hostname>/home.nix` を作成し、`flake.nix` に追加:
+```nix
+homeConfigurations."<username>@<hostname>" = mkHome {
+  hostname = "<hostname>";
+  username = "<username>";
+};
+```
+
+**macOS**:
 
 1. `system/darwin/<hostname>/system.nix` を作成
 2. `system/darwin/<hostname>/home.nix` を作成
@@ -72,9 +96,9 @@ darwinConfigurations.<hostname> = mkDarwinSystem {
 
 ## 新しいプログラムを追加する
 
-- **パッケージのみ**: `system/darwin/_common/home/packages.nix` の `home.packages` に追加
-- **macOS 固有の home-manager モジュール**: `system/darwin/_common/home/programs/<name>.nix` を作成し、`default.nix` の `imports` に追加
-- **macOS/Linux 共用の home-manager モジュール**: `system/_common/home/programs/<name>.nix` を作成し、`darwin/_common/home/default.nix` の `imports` に追加
+- **パッケージのみ**: `system/_common/home/packages.nix` の `home.packages` に追加
+- **macOS/Linux 共用の home-manager モジュール**: `system/_common/home/programs/<name>.nix` を作成し、`system/_common/home/default.nix` の `imports` に追加
+- **macOS 固有の home-manager モジュール**: `system/darwin/_common/home/programs/<name>.nix` を作成し、`darwin/_common/home/default.nix` の `imports` に追加
 - **GUI アプリ**: `system/darwin/_common/system.nix` の `homebrew.casks` に追加
 
 ## Homebrew の運用
