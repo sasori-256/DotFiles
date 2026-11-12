@@ -11,6 +11,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixvim.url = "github:nix-community/nixvim";
+    # skill の取得元。flake ではないのでソースツリーだけ参照する
+    context7 = {
+      url = "github:upstash/context7";
+      flake = false;
+    };
   };
   outputs =
     {
@@ -19,6 +24,7 @@
       nix-darwin,
       home-manager,
       nixvim,
+      context7,
     }:
     let
       lib = nixpkgs.lib;
@@ -36,6 +42,7 @@
               username
               hostname
               df-root
+              context7
               ;
           };
 

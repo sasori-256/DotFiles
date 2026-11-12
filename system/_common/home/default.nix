@@ -10,6 +10,7 @@
     ./programs/nh.nix
     ./programs/nix-update.nix
     ./programs/ollama.nix
+    ./programs/skills.nix
     ./programs/ssh.nix
     ./programs/starship.nix
     ./programs/typst.nix

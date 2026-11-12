@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "context7": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1794484068,
+        "narHash": "sha256-Bpse9fh615u/fFwCOJxwgxz6sa5GA1J4WtwLINBKpyw=",
+        "owner": "upstash",
+        "repo": "context7",
+        "rev": "c5e26f6919055d29b8d3ead20500eb06e8036295",
+        "type": "github"
+      },
+      "original": {
+        "owner": "upstash",
+        "repo": "context7",
+        "type": "github"
+      }
+    },
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": [
@@ -115,6 +131,7 @@
     },
     "root": {
       "inputs": {
+        "context7": "context7",
         "home-manager": "home-manager",
         "nix-darwin": "nix-darwin",
         "nixpkgs": "nixpkgs",
