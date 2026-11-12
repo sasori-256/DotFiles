@@ -8,6 +8,7 @@
     ./programs/git.nix
     ./programs/neovim.nix
     ./programs/nh.nix
+    ./programs/nix-update.nix
     ./programs/ollama.nix
     ./programs/ssh.nix
     ./programs/starship.nix
