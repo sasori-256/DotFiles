@@ -129,13 +129,31 @@
         "type": "github"
       }
     },
+    "ponytail": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1793275171,
+        "narHash": "sha256-PhPtZbeX2wBp19GtWRy+fV93+fFYZe5S487eXPDl/us=",
+        "owner": "DietrichGebert",
+        "repo": "ponytail",
+        "rev": "96608e078b2d5ea607c5c3b8b5a54d1c1fba6846",
+        "type": "github"
+      },
+      "original": {
+        "owner": "DietrichGebert",
+        "repo": "ponytail",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "context7": "context7",
         "home-manager": "home-manager",
         "nix-darwin": "nix-darwin",
         "nixpkgs": "nixpkgs",
-        "nixvim": "nixvim"
+        "nixvim": "nixvim",
+        "ponytail": "ponytail",
+        "yomiyasu": "yomiyasu"
       }
     },
     "systems": {
@@ -152,6 +170,22 @@
         "owner": "nix-systems",
         "ref": "future-26.11",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "yomiyasu": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1794443311,
+        "narHash": "sha256-5CVfVx2cNxOdW8uKOdo3Gjs8zJrNYdBFqwR/qBg/Gpk=",
+        "owner": "nanaism",
+        "repo": "yomiyasu",
+        "rev": "db78b9bc5e868549b517a037df7a4d1c93edac23",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nanaism",
+        "repo": "yomiyasu",
         "type": "github"
       }
     }

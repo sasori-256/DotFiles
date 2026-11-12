@@ -16,6 +16,14 @@
       url = "github:upstash/context7";
       flake = false;
     };
+    ponytail = {
+      url = "github:DietrichGebert/ponytail";
+      flake = false;
+    };
+    yomiyasu = {
+      url = "github:nanaism/yomiyasu";
+      flake = false;
+    };
   };
   outputs =
     {
@@ -25,6 +33,8 @@
       home-manager,
       nixvim,
       context7,
+      ponytail,
+      yomiyasu,
     }:
     let
       lib = nixpkgs.lib;
@@ -43,6 +53,8 @@
               hostname
               df-root
               context7
+              ponytail
+              yomiyasu
               ;
           };
 

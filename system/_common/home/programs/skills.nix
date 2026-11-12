@@ -3,6 +3,8 @@
   lib,
   df-root,
   context7,
+  ponytail,
+  yomiyasu,
   ...
 }:
 
@@ -21,9 +23,11 @@ let
   own = lib.attrNames (lib.filterAttrs (_: type: type == "directory") (builtins.readDir (df-root "skills")));
 
   # 上流 skill: flake input で rev を固定している。
-  # 更新は `nix flake update context7`。
+  # 更新は `nix flake update <input名>`（context7 / ponytail / yomiyasu）。
   upstream = {
     find-docs = "${context7}/skills/find-docs";
+    ponytail = "${ponytail}/skills/ponytail";
+    yomiyasu = "${yomiyasu}/skills/yomiyasu";
   };
 
   entries =
