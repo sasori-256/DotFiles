@@ -25,6 +25,7 @@ in
 
       "*" = {
         IdentityAgent = ''"${agentSocket}"'';
+        IdentitiesOnly = true;
         AddKeysToAgent = "no";
         ServerAliveInterval = 60;
         ServerAliveCountMax = 3;

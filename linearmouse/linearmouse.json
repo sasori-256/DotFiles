@@ -57,6 +57,19 @@
       "scrolling" : {
         "reverse" : true
       }
+    },
+    {
+      "if" : {
+        "device" : {
+          "category" : "mouse",
+          "productID" : "0xfa10",
+          "productName" : "2.4G Wireless Receiver",
+          "vendorID" : "0x25a7"
+        }
+      },
+      "pointer" : {
+        "disableAcceleration" : true
+      }
     }
   ]
 }
