@@ -35,6 +35,7 @@ in
     # Edit
     (nmap "+" "<C-a>" null)
     (nmap "-" "<C-x>" null)
+    (nmap "<C-a>" "gg<S-v>G" "Select all")
     (nmap "Y" "y$" "Yank from here on")
     (nmap "U" "<C-r>" null)
     (nmap "x" "\"_x" null)
