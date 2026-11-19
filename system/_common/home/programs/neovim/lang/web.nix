@@ -1,5 +1,22 @@
-{ ... }:
+{ lib, ... }:
 
+let
+  biomeFts = [
+    "javascript"
+    "typescript"
+    "javascriptreact"
+    "typescriptreact"
+    "css"
+    "json"
+    "jsonc"
+  ];
+  jsFts = [
+    "javascript"
+    "typescript"
+    "javascriptreact"
+    "typescriptreact"
+  ];
+in
 {
   plugins = {
     treesitter.settings.ensure_installed = [
@@ -17,38 +34,27 @@
       jsonls.enable = true;
     };
 
-    conform-nvim.settings.formatters_by_ft = {
-      javascript.__raw = ''{ "biome", "prettierd", "prettier", stop_after_first = true }'';
-      typescript.__raw = ''{ "biome", "prettierd", "prettier", stop_after_first = true }'';
-      javascriptreact.__raw = ''{ "biome", "prettierd", "prettier", stop_after_first = true }'';
-      typescriptreact.__raw = ''{ "biome", "prettierd", "prettier", stop_after_first = true }'';
-      css.__raw = ''{ "biome", "prettierd", "prettier", stop_after_first = true }'';
-      json.__raw = ''{ "biome", "prettierd", "prettier", stop_after_first = true }'';
-      jsonc.__raw = ''{ "biome", "prettierd", "prettier", stop_after_first = true }'';
-      html.__raw = ''{ "prettierd", "prettier", stop_after_first = true }'';
-    };
+    conform-nvim.settings.formatters_by_ft =
+      lib.genAttrs biomeFts (_: [
+        "biome"
+        "prettierd"
+        "prettier"
+      ])
+      // {
+        html = [
+          "prettierd"
+          "prettier"
+        ];
+      };
 
-    lint.lintersByFt = {
-      javascript = [
+    lint.lintersByFt =
+      lib.genAttrs biomeFts (_: [ "biome" ])
+      // lib.genAttrs jsFts (_: [
         "biome"
         "eslint"
-      ];
-      typescript = [
-        "biome"
-        "eslint"
-      ];
-      javascriptreact = [
-        "biome"
-        "eslint"
-      ];
-      typescriptreact = [
-        "biome"
-        "eslint"
-      ];
-      css = [ "biome" ];
-      json = [ "biome" ];
-      jsonc = [ "biome" ];
-      html = [ "htmllint" ];
-    };
+      ])
+      // {
+        html = [ "htmllint" ];
+      };
   };
 }

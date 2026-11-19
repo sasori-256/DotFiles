@@ -9,8 +9,14 @@
     ];
 
     conform-nvim.settings.formatters_by_ft = {
-      markdown.__raw = ''{ "prettierd", "prettier", stop_after_first = true }'';
-      mdx.__raw = ''{ "prettierd", "prettier", stop_after_first = true }'';
+      markdown = [
+        "prettierd"
+        "prettier"
+      ];
+      mdx = [
+        "prettierd"
+        "prettier"
+      ];
     };
 
     lint.lintersByFt = {

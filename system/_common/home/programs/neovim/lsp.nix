@@ -34,6 +34,8 @@
     conform-nvim = {
       enable = true;
       settings = {
+        # Run only the first available formatter in each list
+        default_format_opts.stop_after_first = true;
         format_on_save = {
           timeout_ms = 500;
           lsp_fallback = true;
