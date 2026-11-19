@@ -11,7 +11,6 @@ in
     (nmap "<leader>fb" (luaCmd "Snacks.picker.buffers()") "Buffers")
     (nmap "<leader>fr" (luaCmd "Snacks.picker.recent()") "Recent files")
     (nmap "<leader>fs" (luaCmd "Snacks.picker.lsp_symbols()") "LSP symbols")
-    (nmap "<leader>fd" (luaCmd "Snacks.picker.diagnostics()") "Diagnostics")
 
     # --- Leader: Git ---
     (nmap "<leader>gg" (luaCmd "Snacks.lazygit()") "Lazygit")
