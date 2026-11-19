@@ -27,26 +27,26 @@ in
       enable = true;
       settings = {
         picker = {
-          enable = true;
+          enabled = true;
         };
         notifier = {
-          enable = true;
+          enabled = true;
         };
         lazygit = {
-          enable = true;
+          enabled = true;
         };
         indent = {
-          enable = false;
+          enabled = false;
         };
         # mini.animate is now enabled by default, but it can be disabled if you want to use Snacks.animate instead
         scroll = {
-          enable = false;
+          enabled = false;
         };
         words = {
-          enable = true;
+          enabled = true;
         };
         bigfile = {
-          enable = true;
+          enabled = true;
         };
       };
     };

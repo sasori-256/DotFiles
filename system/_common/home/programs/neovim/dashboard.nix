@@ -5,7 +5,7 @@
 
   plugins.snacks.settings = {
     dashboard = {
-      enable = true;
+      enabled = true;
       preset.header = ''
         ███████╗██████╗ ███████╗ █████╗ ██╗  ██╗██╗
         ██╔════╝██╔══██╗██╔════╝██╔══██╗██║ ██╔╝██║
