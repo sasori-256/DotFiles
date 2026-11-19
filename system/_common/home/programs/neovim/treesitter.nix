@@ -11,29 +11,8 @@
         auto_install = false;
         ensure_installed = [
           "bash"
-          "c"
-          "cpp"
-          "cmake"
-          "css"
-          "html"
-          "java"
-          "javascript"
-          "json"
-          "lua"
-          "luadoc"
-          "markdown"
-          "markdown_inline"
-          "mdx"
-          "nix"
-          "python"
-          "rust"
-          "scheme"
-          "toml"
-          "tsx"
-          "typescript"
           "vim"
           "vimdoc"
-          "yaml"
           "query"
         ];
       };
@@ -87,9 +66,4 @@
       };
     };
   };
-
-  extraConfigLua = ''
-    vim.filetype.add({ extension = { mdx = "mdx" } })
-    vim.treesitter.language.register("markdown", "mdx")
-  '';
 }

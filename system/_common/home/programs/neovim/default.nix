@@ -16,6 +16,7 @@
       ./dashboard.nix
       ./ui.nix
       ./editor.nix
+      ./lang
     ];
   };
 }

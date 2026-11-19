@@ -50,14 +50,6 @@
       enable = true;
     };
 
-    render-markdown = {
-      # "completion" is deprecated
-      enable = true;
-      settings = {
-        latex.enabled = false;
-      };
-    };
-
     # --- Indent Guide ---
     hlchunk = {
       enable = true;
