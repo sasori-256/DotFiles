@@ -92,7 +92,11 @@ in
         };
         ai = { };
         pairs = { };
-        animate = { };
+        animate = {
+          # Scroll animation restores the pre-scroll view first, so a held { / }
+          # keeps jumping to the same target and never gets past it
+          scroll.enable = false;
+        };
         hipatterns = {
           # highlighters = {
           #   fixme = {
