@@ -100,7 +100,6 @@
           indentscope_color = "";
         };
         noice = true; # default is false
-        notify = true; # default is false
         render_markdown = true;
         snacks = {
           enabled = true;

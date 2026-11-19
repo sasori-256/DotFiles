@@ -30,13 +30,6 @@
       };
     };
 
-    notify = {
-      enable = true;
-      settings = {
-        timeout = 10000;
-      };
-    };
-
     # --- Lualine ---
     lualine = {
       enable = true;

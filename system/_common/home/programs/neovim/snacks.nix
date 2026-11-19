@@ -31,6 +31,7 @@ in
         };
         notifier = {
           enabled = true;
+          timeout = 10000;
         };
         lazygit = {
           enabled = true;
