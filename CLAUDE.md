@@ -70,7 +70,7 @@ DotFiles/
 
 **CLI ツールは Nix、GUI アプリは Homebrew casks**: `darwin/_common/system.nix` に casks、`darwin/_common/home/packages.nix` に CLI ツールと分離している。
 
-**macOS の Neovim は NixVim**: `nvim-windows/` (LazyVim) は Windows 専用。macOS は `system/_common/home/programs/neovim.nix` で宣言的に管理し、`mason` や `lazy-lock.json` は不要。
+**macOS の Neovim は NixVim**: `nvim-windows/` (LazyVim) は Windows 専用。macOS は `system/_common/home/programs/neovim/` で宣言的に管理し（関心事ごとのファイルを `default.nix` の `imports` で束ねる nixvim モジュール）、`mason` や `lazy-lock.json` は不要。
 
 ## 新しいマシンを追加する
 

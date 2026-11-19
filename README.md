@@ -28,7 +28,7 @@ DotFiles/
     ├── flake.lock
     ├── _common/
     │   └── home/programs/
-    │       └── neovim.nix   # NixVim 設定 (macOS / Linux 共用)
+    │       └── neovim/      # NixVim 設定 (macOS / Linux 共用)
     └── darwin/
         ├── _common/
         │   ├── system.nix   # Homebrew casks、macOS defaults
