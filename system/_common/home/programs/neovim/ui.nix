@@ -50,38 +50,6 @@
       enable = true;
     };
 
-    # --- Indent Guide ---
-    hlchunk = {
-      enable = true;
-      settings = {
-        chunk = {
-          enable = true;
-          use_treesitter = true;
-          delay = 0;
-          duration = 0;
-          style = [
-            { fg = "#ca9ee6"; }
-            { fg = "#c6d0f5"; }
-          ];
-          chars = {
-            horizontal_line = "─";
-            vertical_line = "│";
-            left_top = "╭";
-            left_bottom = "╰";
-            right_arrow = "─";
-          };
-        };
-        indent = {
-          enable = true;
-          chars = [ " " ];
-          style = [
-            { fg = "#51576d"; }
-          ];
-        };
-        line_num.enable = false;
-        blank.enable = false;
-      };
-    };
   };
 
   extraConfigLua = ''

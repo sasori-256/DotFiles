@@ -104,7 +104,7 @@
         render_markdown = true;
         snacks = {
           enabled = true;
-          indent_scope_color = "";
+          indent_scope_color = "mauve";
         };
         treesitter = true;
         treesitter_context = true;

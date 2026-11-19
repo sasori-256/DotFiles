@@ -35,8 +35,19 @@ in
         lazygit = {
           enabled = true;
         };
+        # Show only the current code chunk, without indent guides
         indent = {
-          enabled = false;
+          enabled = true;
+          indent.enabled = false;
+          animate.enabled = false;
+          chunk = {
+            enabled = true;
+            char = {
+              corner_top = "╭";
+              corner_bottom = "╰";
+              arrow = "─";
+            };
+          };
         };
         # mini.animate is now enabled by default, but it can be disabled if you want to use Snacks.animate instead
         scroll = {
