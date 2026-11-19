@@ -3,7 +3,6 @@
 {
   globals = {
     mapleader = " ";
-    autoformat = true;
     snacks_animate = false;
   };
 
