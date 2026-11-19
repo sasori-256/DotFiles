@@ -3,7 +3,6 @@
 {
   globals = {
     mapleader = " ";
-    snacks_animate = false;
   };
 
   opts = {

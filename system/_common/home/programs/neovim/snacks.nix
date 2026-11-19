@@ -49,9 +49,15 @@ in
             };
           };
         };
-        # mini.animate is now enabled by default, but it can be disabled if you want to use Snacks.animate instead
+        # Used instead of mini.animate's scroll, which gets stuck on a held { / }
         scroll = {
-          enabled = false;
+          enabled = true;
+          # Animation for repeated scrolls (e.g. a held key). Keep it shorter than
+          # the key repeat interval (macOS KeyRepeat = 2 is 30ms) or presses get lost.
+          animate_repeat.duration = {
+            step = 5;
+            total = 20;
+          };
         };
         words = {
           enabled = true;
