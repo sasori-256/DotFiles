@@ -55,6 +55,29 @@ in
       enable = true;
       settings = {
         mode = "diagnostic"; # "workspace_diagnostics", "document_diagnostics", "quickfix", "lsp_references", "lsp_definitions", "lsp_implementations", "lsp_type_definitions", "lsp_calls"
+        # s and <c-s> collide with up / window-up in the Tomisuke layout
+        keys = {
+          s = false;
+          "<c-s>" = false;
+          "<c-v>" = false;
+          "-" = "jump_split";
+          "|" = "jump_vsplit";
+          # Same as trouble's default s
+          S = {
+            action.__raw = ''
+              function(view)
+                local f = view:get_filter("severity")
+                local severity = ((f and f.filter.severity or 0) + 1) % 5
+                view:filter({ severity = severity }, {
+                  id = "severity",
+                  template = "{hl:Title}Filter:{hl} {severity}",
+                  del = severity == 0,
+                })
+              end
+            '';
+            desc = "Toggle Severity Filter";
+          };
+        };
       };
     };
 
