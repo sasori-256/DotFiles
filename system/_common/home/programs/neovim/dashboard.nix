@@ -18,7 +18,7 @@
         {
           pane = 1;
           section = "terminal";
-          cmd = "chafa ~/Downloads/supiki.webp --size 50 --symbols vhalf";
+          cmd = "chafa ${./speaki.webp} --size 50 --symbols vhalf";
           height = 30;
           padding = 1;
           ttl = 300;
