@@ -1,5 +1,8 @@
-{ ... }:
+{ lib, ... }:
 
+let
+  inherit (import ./lib.nix { inherit lib; }) dir;
+in
 {
   plugins = {
     # --- Completion ---
@@ -18,14 +21,14 @@
             "accept"
             "fallback"
           ];
-          "<C-t>" = [
+          "<C-${dir.down}>" = [
             "select_next"
             "fallback"
-          ]; # t = downwards
-          "<C-s>" = [
+          ];
+          "<C-${dir.up}>" = [
             "select_prev"
             "fallback"
-          ]; # s = upwards
+          ];
           # Move placeholder when expanding snippet
           "<C-b>" = [
             "snippet_backward"

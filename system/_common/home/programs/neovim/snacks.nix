@@ -1,102 +1,24 @@
-{ ... }:
+{ lib, ... }:
 
+let
+  inherit (import ./lib.nix { inherit lib; }) nmap luaCmd;
+in
 {
   keymaps = [
     # --- Leader: Picker (Snacks) ---
-    {
-      mode = "n";
-      key = "<leader><leader>";
-      action = "<cmd>lua Snacks.picker.files()<CR>";
-      options = {
-        noremap = true;
-        silent = true;
-        desc = "Find files";
-      };
-    }
-    {
-      mode = "n";
-      key = "<leader>/";
-      action = "<cmd>lua Snacks.picker.grep()<CR>";
-      options = {
-        noremap = true;
-        silent = true;
-        desc = "Live grep";
-      };
-    }
-    {
-      mode = "n";
-      key = "<leader>fb";
-      action = "<cmd>lua Snacks.picker.buffers()<CR>";
-      options = {
-        noremap = true;
-        silent = true;
-        desc = "Buffers";
-      };
-    }
-    {
-      mode = "n";
-      key = "<leader>fr";
-      action = "<cmd>lua Snacks.picker.recent()<CR>";
-      options = {
-        noremap = true;
-        silent = true;
-        desc = "Recent files";
-      };
-    }
-    {
-      mode = "n";
-      key = "<leader>fs";
-      action = "<cmd>lua Snacks.picker.lsp_symbols()<CR>";
-      options = {
-        noremap = true;
-        silent = true;
-        desc = "LSP symbols";
-      };
-    }
-    {
-      mode = "n";
-      key = "<leader>fd";
-      action = "<cmd>lua Snacks.picker.diagnostics()<CR>";
-      options = {
-        noremap = true;
-        silent = true;
-        desc = "Diagnostics";
-      };
-    }
+    (nmap "<leader><leader>" (luaCmd "Snacks.picker.files()") "Find files")
+    (nmap "<leader>/" (luaCmd "Snacks.picker.grep()") "Live grep")
+    (nmap "<leader>fb" (luaCmd "Snacks.picker.buffers()") "Buffers")
+    (nmap "<leader>fr" (luaCmd "Snacks.picker.recent()") "Recent files")
+    (nmap "<leader>fs" (luaCmd "Snacks.picker.lsp_symbols()") "LSP symbols")
+    (nmap "<leader>fd" (luaCmd "Snacks.picker.diagnostics()") "Diagnostics")
 
     # --- Leader: Git ---
-    {
-      mode = "n";
-      key = "<leader>gg";
-      action = "<cmd>lua Snacks.lazygit()<CR>";
-      options = {
-        noremap = true;
-        silent = true;
-        desc = "Lazygit";
-      };
-    }
-    {
-      mode = "n";
-      key = "<leader>gl";
-      action = "<cmd>lua Snacks.picker.git_log()<CR>";
-      options = {
-        noremap = true;
-        silent = true;
-        desc = "Git log";
-      };
-    }
+    (nmap "<leader>gg" (luaCmd "Snacks.lazygit()") "Lazygit")
+    (nmap "<leader>gl" (luaCmd "Snacks.picker.git_log()") "Git log")
 
     # --- Leader: Notifications ---
-    {
-      mode = "n";
-      key = "<leader>nh";
-      action = "<cmd>lua Snacks.notifier.show_history()<CR>";
-      options = {
-        noremap = true;
-        silent = true;
-        desc = "Notification history";
-      };
-    }
+    (nmap "<leader>nh" (luaCmd "Snacks.notifier.show_history()") "Notification history")
   ];
 
   plugins = {

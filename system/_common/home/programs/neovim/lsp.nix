@@ -1,54 +1,31 @@
 { ... }:
 
 {
-  keymaps = [
-    # --- Leader: LSP ---
-    {
-      mode = "n";
-      key = "<leader>ld";
-      action = "<cmd>lua vim.lsp.buf.definition()<CR>";
-      options = {
-        noremap = true;
-        silent = true;
-        desc = "Go to definition";
-      };
-    }
-    {
-      mode = "n";
-      key = "<leader>lr";
-      action = "<cmd>lua vim.lsp.buf.references()<CR>";
-      options = {
-        noremap = true;
-        silent = true;
-        desc = "Show references";
-      };
-    }
-    {
-      mode = "n";
-      key = "<leader>li";
-      action = "<cmd>lua vim.lsp.buf.implementation()<CR>";
-      options = {
-        noremap = true;
-        silent = true;
-        desc = "Go to implementation";
-      };
-    }
-    {
-      mode = "n";
-      key = "<leader>ls";
-      action = "<cmd>lua vim.lsp.buf.signature_help()<CR>";
-      options = {
-        noremap = true;
-        silent = true;
-        desc = "Signature help";
-      };
-    }
-  ];
-
   plugins = {
     # --- LSP ---
     lsp = {
       enable = true;
+      keymaps = {
+        silent = true;
+        lspBuf = {
+          "<leader>ld" = {
+            action = "definition";
+            desc = "Go to definition";
+          };
+          "<leader>lr" = {
+            action = "references";
+            desc = "Show references";
+          };
+          "<leader>li" = {
+            action = "implementation";
+            desc = "Go to implementation";
+          };
+          "<leader>ls" = {
+            action = "signature_help";
+            desc = "Signature help";
+          };
+        };
+      };
       servers = {
         ruff.enable = true;
         ts_ls.enable = true;

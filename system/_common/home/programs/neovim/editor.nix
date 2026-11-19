@@ -1,40 +1,21 @@
-{ ... }:
+{ lib, ... }:
 
+let
+  inherit (import ./lib.nix { inherit lib; })
+    dir
+    nmap
+    cmd
+    luaCmd
+    ;
+in
 {
   keymaps = [
     # --- Leader: File ---
-    {
-      mode = "n";
-      key = "<leader>e";
-      action = "<cmd>lua MiniFiles.open()<CR>";
-      options = {
-        noremap = true;
-        silent = true;
-        desc = "File explorer";
-      };
-    }
+    (nmap "<leader>e" (luaCmd "MiniFiles.open()") "File explorer")
 
     # --- Leader: Diagnostics (Trouble) ---
-    {
-      mode = "n";
-      key = "<leader>xx";
-      action = "<cmd>Trouble diagnostics<CR>";
-      options = {
-        noremap = true;
-        silent = true;
-        desc = "Workspace diagnostics";
-      };
-    }
-    {
-      mode = "n";
-      key = "<leader>xd";
-      action = "<cmd>Trouble diagnostics filter.buf=0<CR>";
-      options = {
-        noremap = true;
-        silent = true;
-        desc = "Buffer diagnostics";
-      };
-    }
+    (nmap "<leader>xx" (cmd "Trouble diagnostics") "Workspace diagnostics")
+    (nmap "<leader>xd" (cmd "Trouble diagnostics filter.buf=0") "Buffer diagnostics")
   ];
 
   plugins = {
@@ -89,10 +70,10 @@
         files = {
           windows.preview = true;
           mappings = {
-            go_in = "k";
-            go_in_plus = "K";
-            go_out = "n";
-            go_out_plus = "N";
+            go_in = dir.right;
+            go_in_plus = lib.toUpper dir.right;
+            go_out = dir.left;
+            go_out_plus = lib.toUpper dir.left;
           };
         };
         icons = { };
