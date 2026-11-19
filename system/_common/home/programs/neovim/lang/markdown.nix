@@ -19,12 +19,10 @@
       ];
     };
 
-    lint.lintersByFt = {
-      markdown = [ "markdownlint" ];
-      mdx = [
-        "eslint"
-      ];
-    };
+    lint.lintersByFt.markdown = [ "markdownlint" ];
+
+    # Lint mdx through the eslint LSP (starts only with an eslint config, e.g. eslint-plugin-mdx)
+    lsp.servers.eslint.filetypes = [ "mdx" ];
 
     render-markdown = {
       # "completion" is deprecated
