@@ -51,9 +51,10 @@
       # Menu shortcuts for all applications
       CustomUserPreferences.NSGlobalDomain.NSUserKeyEquivalents = {
         # azooKey's "いい感じ変換" takes Ctrl+S even when disabled, swallowing
-        # single Ctrl+S presses in Japanese input mode. Move it to ⌃⌥S.
-        "いい感じ変換" = "^~s";
-        "いい感じ変換（無効/バックエンドなし）" = "^~s";
+        # single Ctrl+S presses in Japanese input mode. Move it to ⌃⌥⌘S (⌃⌥S is
+        # Raycast's bottom-right quarter).
+        "いい感じ変換" = "^~@s";
+        "いい感じ変換（無効/バックエンドなし）" = "^~@s";
       };
     };
   };
