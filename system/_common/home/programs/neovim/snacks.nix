@@ -1,7 +1,39 @@
 { lib, ... }:
 
 let
-  inherit (import ./lib.nix { inherit lib; }) nmap luaCmd;
+  inherit (import ./lib.nix { inherit lib; }) dir nmap luaCmd;
+
+  # Picker window keys in the Tomisuke layout. The key spelling must match
+  # snacks' defaults (lowercase <c-x>) for an override or `false` to apply.
+  pickerKeys =
+    inInsert:
+    let
+      act =
+        a:
+        if inInsert then
+          {
+            __unkeyed-1 = a;
+            mode = [
+              "i"
+              "n"
+            ];
+          }
+        else
+          a;
+    in
+    {
+      j = false;
+      k = false;
+      ${dir.down} = "list_down";
+      ${dir.up} = "list_up";
+      "<c-j>" = false;
+      "<c-k>" = false;
+      "<c-${dir.down}>" = act "list_down";
+      "<c-${dir.up}>" = act "list_up";
+      # <c-t> / <c-s> are taken by list movement above
+      "<c-x>" = act "edit_split";
+      "<c-cr>" = act "tab";
+    };
 in
 {
   keymaps = [
@@ -28,6 +60,10 @@ in
       settings = {
         picker = {
           enabled = true;
+          win = {
+            input.keys = pickerKeys true;
+            list.keys = pickerKeys false;
+          };
         };
         notifier = {
           enabled = true;
