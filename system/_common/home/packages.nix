@@ -22,6 +22,7 @@
     chafa # Create ASCII/Unicode art from images in the terminal
     p7zip
     ctx7
+    herdr
 
     # --- Fonts ---
     moralerspace
