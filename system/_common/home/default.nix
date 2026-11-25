@@ -6,6 +6,7 @@
     ./programs/direnv.nix
     ./programs/fzf.nix
     ./programs/git.nix
+    ./programs/herdr.nix
     ./programs/neovim
     ./programs/nh.nix
     ./programs/nix-update.nix
