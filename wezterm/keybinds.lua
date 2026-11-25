@@ -6,6 +6,8 @@ return {
 		{ key = "Tab", mods = "CTRL", action = act.ActivateTabRelative(1) },
 		{ key = "Tab", mods = "SHIFT|CTRL", action = act.ActivateTabRelative(-1) },
 		{ key = "Enter", mods = "LEADER", action = act.ToggleFullScreen },
+		-- Let Neovim tell Shift+Enter apart from Enter (CSI u encoding of <S-CR>)
+		{ key = "Enter", mods = "SHIFT", action = act.SendString("\x1b[13;2u") },
 		{ key = "-", mods = "CTRL|LEADER", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
 		{ key = "|", mods = "SHIFT|CTRL|LEADER", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
 		{ key = "+", mods = "SHIFT|LEADER", action = act.IncreaseFontSize },

@@ -1,9 +1,12 @@
 { lib, ... }:
 
 let
-  inherit (import ../lib.nix { inherit lib; }) nmap cmd;
+  inherit (import ../lib.nix { inherit lib; }) nmap cmd luaCmd;
 in
 {
+  # wezterm comes from the Homebrew cask (darwin/_common/system.nix)
+  dependencies.wezterm.enable = false;
+
   plugins = {
     treesitter.settings.ensure_installed = [ "python" ];
 
@@ -24,16 +27,19 @@ in
       enable = true;
       settings = {
         image_provider = "wezterm";
-        auto_open_output = true;
+        # The wezterm image provider does not support auto_open_output
+        auto_open_output = false;
         virt_text_output = true;
       };
     };
   };
 
   keymaps = [
+    (nmap "<S-CR>" (luaCmd "require('notebook-navigator').run_and_move()") "Run cell and move to next")
     (nmap "<leader>mi" (cmd "MoltenInit") "Molten: init kernel")
     (nmap "<leader>ml" (cmd "MoltenEvaluateLine") "Molten: run line")
     (nmap "<leader>mr" (cmd "MoltenReevaluateCell") "Molten: rerun cell")
     (nmap "<leader>mo" (cmd "MoltenEnterOutput") "Molten: open output")
+    (nmap "<leader>mp" (cmd "MoltenImagePopup") "Molten: show image")
   ];
 }
